@@ -63,7 +63,10 @@ void getProducts(const Request& req, Response& res) {
 ```
 
 3. **Populate the router:**
-   router.get("/api/products", getProducts);
+
+```cpp
+router.get("/api/products", getProducts);
+```
 
 ## Roadmap
 
