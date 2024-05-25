@@ -1,0 +1,20 @@
+# Ignore build directory
+build/
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore temporary files and directories
+*.log
+*.tmp
+*.swp
+
+# Ignore compiled object files
+*.o
+*.obj
+
+# Ignore executables
+*.exe
+*.out
+
+superFrmwrk

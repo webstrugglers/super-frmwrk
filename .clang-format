@@ -1,0 +1,11 @@
+﻿---
+BasedOnStyle: Chromium
+PointerAlignment: Left
+AccessModifierOffset: "1"
+AlignAfterOpenBracket: Align
+AlignConsecutiveAssignments: "true"
+AlignConsecutiveDeclarations: "true"
+AlignOperands: "true"
+AlignTrailingComments: "true"
+AllowAllConstructorInitializersOnNextLine: "false"
+IndentWidth: 4
