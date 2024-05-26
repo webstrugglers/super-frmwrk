@@ -1,6 +1,8 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#include <cstdint>
+
 class Server {
      private:
      public:
@@ -10,7 +12,7 @@ class Server {
     // TODO:
     ~Server();
 
-    void start(int port);
+    void start(std::uint16_t port);
 
      private:
 };

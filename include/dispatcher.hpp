@@ -4,6 +4,6 @@
 #include "constants.hpp"
 
 // TODO:
-bool take_over(SOCKET_FD);
+void take_over(SOCKET_FD);
 
 #endif  // !DISPATCHER_HPP

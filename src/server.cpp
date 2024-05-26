@@ -1,5 +1,6 @@
 #include "server.hpp"
 #include <netinet/in.h>
+#include <cstdint>
 #include <cstring>
 #include <iostream>
 #include <thread>
@@ -11,12 +12,7 @@ Server::Server(int port) {
     start(port);
 }
 
-void Server::start(int port) {
-    if (port < 0 || port > 65535) {
-        std::cerr << "You should choose port between 0 and 65535\n";
-        std::exit(EXIT_FAILURE);
-    }
-
+void Server::start(std::uint16_t port) {
     uint16_t  network_port = htons(port);
     SOCKET_FD s;
 
@@ -47,9 +43,13 @@ void Server::start(int port) {
     // server loop
     // let dispatcher take over request
     while (true) {
-        accept(s, 0, 0);
+        SOCKET_FD new_socket = accept(s, 0, 0);
+        if (new_socket == -1) {
+            std::cerr << strerror(errno) << std::endl;
+            std::exit(EXIT_FAILURE);
+        }
 
-        std::thread dispatcher = std::thread(take_over, s);
+        std::thread dispatcher = std::thread(take_over, new_socket);
 
         dispatcher.detach();
     }
