@@ -5,24 +5,21 @@
 #include <string>
 #include "path-and-type.hpp"
 
-// TODO: NEEDS OPTIONAL PATH VAR AND QUERY PARAMS
-
 class Request {
      private:
     PathAndType                        path_and_type;
     std::string                        body;
     std::map<std::string, std::string> headers;
-    std::map<std::string, std::string> query_params;
     std::string                        path_var;
+    std::map<std::string, std::string> query_params;
 
      public:
-    Request();
-
-    Request(const PathAndType& path_and_type                  = PathAndType(),
-            const std::string& body                           = "",
-            const std::map<std::string, std::string>& headers = {},
-            const std::map<std::string, std::string>& query_params = {},
-            const std::string&                        path_var     = "");
+    explicit Request(
+        const PathAndType&                        path_and_type = PathAndType(),
+        const std::string&                        body          = "",
+        const std::map<std::string, std::string>& headers       = {},
+        const std::string&                        path_var      = "",
+        const std::map<std::string, std::string>& query_params  = {});
 
     Request(const Request& req);
 

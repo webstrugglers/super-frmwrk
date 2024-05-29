@@ -10,8 +10,9 @@ class PathAndType {
     MethodType  method_type;
 
      public:
-    PathAndType();
-    PathAndType(const std::string& path, const MethodType method_type);
+    explicit PathAndType(const std::string& path        = "/",
+                         const MethodType   method_type = GET);
+
     PathAndType(const PathAndType& pat);
 
     std::string getPath() const;

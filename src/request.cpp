@@ -1,31 +1,17 @@
 #include "request.hpp"
 
-// TODO:
-
-Request::Request()
-    : path_and_type(),
-      body(""),
-      headers(),
-      query_params(),
-      path_var("") {}
-
 Request::Request(const PathAndType&                        path_and_type,
                  const std::string&                        body,
                  const std::map<std::string, std::string>& headers,
-                 const std::map<std::string, std::string>& query_params,
-                 const std::string&                        path_var)
+                 const std::string&                        path_var,
+                 const std::map<std::string, std::string>& query_params)
     : path_and_type(path_and_type),
       body(body),
       headers(headers),
-      query_params(query_params),
-      path_var(path_var) {}
+      path_var(path_var),
+      query_params(query_params) {}
 
-Request::Request(const Request& req)
-    : path_and_type(req.path_and_type),
-      body(req.body),
-      headers(req.headers),
-      query_params(req.query_params),
-      path_var(req.path_var) {}
+Request::Request(const Request& req) = default;
 
 PathAndType Request::getPathAndType() const {
     return path_and_type;

@@ -2,15 +2,11 @@
 #include <string>
 #include "constants.hpp"
 
-PathAndType::PathAndType() : path(""), method_type(GET) {}
-
 PathAndType::PathAndType(const std::string& path, const MethodType method_type)
     : path(path),
       method_type(method_type) {}
 
-PathAndType::PathAndType(const PathAndType& pat)
-    : path(pat.path),
-      method_type(pat.method_type) {}
+PathAndType::PathAndType(const PathAndType& pat) = default;
 
 std::string PathAndType::getPath() const {
     return this->path;
