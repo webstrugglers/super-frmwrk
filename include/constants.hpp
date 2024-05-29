@@ -2,6 +2,7 @@
 #define CONSTANTS_HPP
 
 #define SOCKET_FD int
+#define REQ_BUF_SIZE 4096
 
 enum HttpStatus {
     CONTINUE = 100,
@@ -68,7 +69,7 @@ enum HttpStatus {
     INSUFFICIENT_STORAGE,
     LOOP_DETECTED,
     NOT_EXTENDED = 510,
-    NETWORK_AUTHENTICATION_REQUIRED
+    NETWORK_AUTHENTICATION_REQUIRED,
 };
 
 enum MethodType {
