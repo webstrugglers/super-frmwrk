@@ -1,6 +1,7 @@
 #include "path-and-type.hpp"
-#include <string>
 #include "constants.hpp"
+
+PathAndType::PathAndType() : path("/"), method_type(GET) {}
 
 PathAndType::PathAndType(const std::string& path, const MethodType method_type)
     : path(path),
@@ -31,3 +32,17 @@ PathAndType& PathAndType::operator=(const PathAndType& pat) {
     }
     return *this;
 }
+
+bool PathAndType::operator==(const PathAndType& pat) const {
+    return (this->method_type == pat.method_type) && (this->path == pat.path);
+}
+
+namespace std {
+std::size_t hash<PathAndType>::operator()(const PathAndType& pat) const {
+    std::hash<std::string> stringHasher;
+    std::hash<MethodType>  enumHasher;
+    std::size_t            pathHash       = stringHasher(pat.getPath());
+    std::size_t            methodTypeHash = enumHasher(pat.getMethodType());
+    return pathHash ^ (methodTypeHash << 1);
+}
+}  // namespace std
