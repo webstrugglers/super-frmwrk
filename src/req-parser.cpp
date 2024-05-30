@@ -1,4 +1,0 @@
-class ReqParser {
-     private:
-     public:
-}

@@ -5,15 +5,17 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include "constants.hpp"
 
 // TODO:
 void take_over(SOCKET_FD socket) {
     std::cout << "Hello, world from dispatcher\n";
 
-    char        buffer[4096];
+    char        buffer[REQ_BUF_SIZE];
     ssize_t     bytes_received;
     std::string request;
 
+    // FIX:
     while ((bytes_received = recv(socket, buffer, sizeof(buffer), 0)) > 0) {
         request.append(buffer, bytes_received);
 
@@ -23,6 +25,7 @@ void take_over(SOCKET_FD socket) {
     // Check for errors or end-of-file
     if (bytes_received < 0)
         perror("recv failed");
+
 
     close(socket);
 }

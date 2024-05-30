@@ -1,9 +1,24 @@
 #include <iostream>
-#include "dispatcher.hpp"
+#include "path-and-type.hpp"
 
-int main(int argc, char* argv[]) {
-    std::cout << "Hello, world!\n";
-    take_over(0);
+void mojafunc1() {
+    std::cout << "Hello pat 1\n";
+}
+
+void mojafunc2() {
+    std::cout << "Hello pat 2\n";
+}
+
+int main() {
+    PathAndType pat;
+    PathAndType pat2("/home", POST);
+
+    std::unordered_map<PathAndType, std::function<void()>> mapa = {
+        {pat, mojafunc1},
+        {pat2, mojafunc2},
+    };
+
+    mapa[pat2]();
 
     return 0;
 }
