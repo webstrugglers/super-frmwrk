@@ -1,8 +1,6 @@
 #include "path-and-type.hpp"
 #include "constants.hpp"
 
-PathAndType::PathAndType() : path("/"), method_type(GET) {}
-
 PathAndType::PathAndType(const std::string& path, const MethodType method_type)
     : path(path),
       method_type(method_type) {}
