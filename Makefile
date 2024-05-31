@@ -1,6 +1,6 @@
 # compiler flags
 CXX := g++
-CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Iinclude
+CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Iinclude
 
 # Directories
 SRCDIR := src
