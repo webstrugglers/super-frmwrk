@@ -1,4 +1,5 @@
 #include "request.hpp"
+#include "constants.hpp"
 
 Request::Request(const PathAndType&                        path_and_type,
                  const std::string&                        body,
@@ -31,6 +32,14 @@ std::map<std::string, std::string> Request::getQueryParams() const {
 
 std::string Request::getPathVar() const {
     return path_var;
+}
+
+MethodType Request::getMethodType() const {
+    return path_and_type.getMethodType();
+}
+
+std::string Request::getPath() const {
+    return path_and_type.getPath();
 }
 
 void Request::setPathAndType(const PathAndType& path_and_type) {

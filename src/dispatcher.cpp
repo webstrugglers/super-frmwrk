@@ -23,9 +23,9 @@ void take_over(SOCKET_FD socket) {
     }
 
     // Check for errors or end-of-file
-    if (bytes_received < 0)
+    if (bytes_received < 0) {
         perror("recv failed");
-
+    }
 
     close(socket);
 }

@@ -3,8 +3,17 @@
 
 #include <map>
 #include <string>
+#include "constants.hpp"
 #include "path-and-type.hpp"
 
+/**
+ * @class Request
+ * @brief A class to represent an HTTP request.
+ *
+ * This class encapsulates the details of an HTTP request, including the method,
+ * URI, headers, and body. It provides methods to access and manipulate these
+ * details.
+ */
 class Request {
      private:
     PathAndType                        path_and_type;
@@ -28,6 +37,8 @@ class Request {
     std::map<std::string, std::string> getHeaders() const;
     std::map<std::string, std::string> getQueryParams() const;
     std::string                        getPathVar() const;
+    MethodType                         getMethodType() const;
+    std::string                        getPath() const;
 
     void setPathAndType(const PathAndType& path_and_type);
     void setBody(const std::string& body);
