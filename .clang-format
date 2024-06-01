@@ -1,7 +1,7 @@
 ﻿---
 BasedOnStyle: Chromium
 PointerAlignment: Left
-AccessModifierOffset: "1"
+AccessModifierOffset: "-4"
 AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: "true"
 AlignConsecutiveDeclarations: "true"
@@ -9,3 +9,5 @@ AlignOperands: "true"
 AlignTrailingComments: "true"
 AllowAllConstructorInitializersOnNextLine: "false"
 IndentWidth: 4
+AllowShortLoopsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse

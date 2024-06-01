@@ -1,4 +1,5 @@
 #include <iostream>
+#include "constants.hpp"
 #include "path-and-type.hpp"
 #include "request.hpp"
 #include "router.hpp"
@@ -15,9 +16,15 @@ void mojafunc3(const Request& req, const Response& res) {
     std::cout << "Hello pat 3\n";
 }
 
+void controller(const Request& req, Response& res) {
+    res.status(OK);
+    std::cout << "Hello from controller\n";
+}
+
 int main() {
     PathAndType pat;
     PathAndType pat2("/home", POST);
+    PathAndType pat3("/home", PUT);
 
     std::unordered_map<PathAndType, std::function<void()>> mapa = {
         {pat, mojafunc1},
@@ -36,6 +43,9 @@ int main() {
     Response res;
 
     router.table()[pat1](req, res);
+    router.route(pat3, controller);
+
+    router.table()[pat3](req, res);
 
     return 0;
 }

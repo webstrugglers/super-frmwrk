@@ -3,10 +3,10 @@
 
 // @brief thread safe logger
 class SafeLogger {
-     private:
+private:
     static std::mutex mex;
 
-     public:
+public:
     static void log(const char* output);
 
     static void log(const int _errnum);

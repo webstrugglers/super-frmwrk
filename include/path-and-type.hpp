@@ -6,11 +6,11 @@
 #include "constants.hpp"
 
 class PathAndType {
-     private:
+private:
     std::string path;
     MethodType  method_type;
 
-     public:
+public:
     explicit PathAndType(const std::string& path        = "/",
                          const MethodType   method_type = GET);
     PathAndType(const PathAndType& pat);

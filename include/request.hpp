@@ -15,14 +15,14 @@
  * details.
  */
 class Request {
-     private:
+private:
     PathAndType                        path_and_type;
     std::string                        body;
     std::map<std::string, std::string> headers;
     std::string                        path_var;
     std::map<std::string, std::string> query_params;
 
-     public:
+public:
     explicit Request(
         const PathAndType&                        path_and_type = PathAndType(),
         const std::string&                        body          = "",

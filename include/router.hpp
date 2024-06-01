@@ -4,11 +4,11 @@
 #include "request.hpp"
 #include "response.hpp"
 
+// TODO: jos metoda za lakse koriscenje
 class Router {
 private:
-    std::unordered_map<
-        PathAndType,
-        std::function<void(const Request& req, const Response& res)>>
+    std::unordered_map<PathAndType,
+                       std::function<void(const Request& req, Response& res)>>
         routing_table;
 
 public:
@@ -18,9 +18,8 @@ public:
      * @brief Returns routing table used for routing
      *
      */
-    std::unordered_map<
-        PathAndType,
-        std::function<void(const Request& req, const Response& res)>>
+    std::unordered_map<PathAndType,
+                       std::function<void(const Request& req, Response& res)>>
     table() const;
 
     /**
@@ -33,18 +32,22 @@ public:
      * @param path The URL path.
      * @param controller The controller function to handle the request.
      */
-    void route(const MethodType                                method_type,
-               const char*                                     path,
-               const std::function<void(const Request&  req,
-                                        const Response& res)>& controller);
+    void route(const MethodType method_type,
+               const char*      path,
+               const std::function<void(const Request& req, Response& res)>&
+                   controller);
+
+    void route(PathAndType& pat,
+               const std::function<void(const Request& req, Response& res)>&
+                   controller);
 
     void get(const char* path,
-             const std::function<void(const Request& req, const Response& res)>&
+             const std::function<void(const Request& req, Response& res)>&
                  controller);
     void put(const char* path,
-             const std::function<void(const Request& req, const Response& res)>&
+             const std::function<void(const Request& req, Response& res)>&
                  controller);
-    void post(const char*                                     path,
-              const std::function<void(const Request&  req,
-                                       const Response& res)>& controller);
+    void post(const char* path,
+              const std::function<void(const Request& req, Response& res)>&
+                  controller);
 };

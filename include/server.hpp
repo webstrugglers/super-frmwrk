@@ -10,8 +10,8 @@
  * This class provides functionalities to start and manage an HTTP server.
  */
 class Server {
-     private:
-     public:
+private:
+public:
     Server();
     Server(std::uint16_t port);
 
@@ -29,8 +29,6 @@ class Server {
      * connections.
      */
     void start(std::uint16_t port);
-
-     private:
 };
 
 #endif  // !SERVER_HPP
