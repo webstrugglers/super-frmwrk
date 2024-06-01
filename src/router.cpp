@@ -18,15 +18,15 @@ void Router::get(const char*                                     path,
     route(GET, path, controller);
 }
 
-void Router::post(const char*                                    path,
+void Router::post(const char*                                     path,
                   const std::function<void(const Request&  req,
-                                           const Response& res)> controller) {
+                                           const Response& res)>& controller) {
     route(POST, path, controller);
 }
 
-void Router::put(const char*                                    path,
+void Router::put(const char*                                     path,
                  const std::function<void(const Request&  req,
-                                          const Response& res)> controller) {
+                                          const Response& res)>& controller) {
     route(PUT, path, controller);
 }
 

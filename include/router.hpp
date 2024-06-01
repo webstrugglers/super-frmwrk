@@ -5,13 +5,13 @@
 #include "response.hpp"
 
 class Router {
-     private:
+private:
     std::unordered_map<
         PathAndType,
         std::function<void(const Request& req, const Response& res)>>
         routing_table;
 
-     public:
+public:
     Router();
 
     /**
@@ -42,9 +42,9 @@ class Router {
              const std::function<void(const Request& req, const Response& res)>&
                  controller);
     void put(const char* path,
-             const std::function<void(const Request& req, const Response& res)>
+             const std::function<void(const Request& req, const Response& res)>&
                  controller);
-    void post(const char* path,
-              const std::function<void(const Request& req, const Response& res)>
-                  controller);
+    void post(const char*                                     path,
+              const std::function<void(const Request&  req,
+                                       const Response& res)>& controller);
 };
