@@ -31,6 +31,6 @@ clean:
 	rm -rf $(BUILDDIR) $(TARGET)
 
 docs:
-	cd $(DOCDIR) && doxygen Doxyfile > /dev/null
+	doxygen Doxyfile > /dev/null
 
 .PHONY: all clean docs
