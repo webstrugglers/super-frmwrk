@@ -1,9 +1,16 @@
+/**
+ * @file path-and-type.cpp
+ * @brief This file implements PathAndType class
+ *
+ */
+
 #include "path-and-type.hpp"
 #include "constants.hpp"
 
-PathAndType::PathAndType(const std::string& path, const MethodType method_type)
-    : path(path),
-      method_type(method_type) {}
+PathAndType::PathAndType(const std::string& new_path,
+                         const MethodType   new_method_type)
+    : path(new_path),
+      method_type(new_method_type) {}
 
 PathAndType::PathAndType(const PathAndType& pat) = default;
 
@@ -15,12 +22,12 @@ MethodType PathAndType::getMethodType() const {
     return this->method_type;
 }
 
-void PathAndType::setPath(const std::string& path) {
-    this->path = path;
+void PathAndType::setPath(const std::string& new_path) {
+    this->path = new_path;
 }
 
-void PathAndType::setMethodType(const MethodType method_type) {
-    this->method_type = method_type;
+void PathAndType::setMethodType(const MethodType new_method_type) {
+    this->method_type = new_method_type;
 }
 
 PathAndType& PathAndType::operator=(const PathAndType& pat) {

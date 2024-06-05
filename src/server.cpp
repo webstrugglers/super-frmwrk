@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief Implements HTTP server
+ */
+
 #include "server.hpp"
 #include <netinet/in.h>
 #include <cstdint>

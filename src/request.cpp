@@ -1,16 +1,22 @@
+/**
+ * @file
+ * @brief Implements the Request class used for representing HTTP requests
+ */
+
 #include "request.hpp"
 #include "constants.hpp"
 
-Request::Request(const PathAndType&                        path_and_type,
-                 const std::string&                        body,
-                 const std::map<std::string, std::string>& headers,
-                 const std::string&                        path_var,
-                 const std::map<std::string, std::string>& query_params)
-    : path_and_type(path_and_type),
-      body(body),
-      headers(headers),
-      path_var(path_var),
-      query_params(query_params) {}
+Request::Request(
+    const PathAndType&                                  new_path_and_type,
+    const std::string&                                  new_body,
+    const std::unordered_map<std::string, std::string>& new_headers,
+    const std::string&                                  new_path_var,
+    const std::unordered_map<std::string, std::string>& new_query_params)
+    : path_and_type(new_path_and_type),
+      body(new_body),
+      headers(new_headers),
+      path_var(new_path_var),
+      query_params(new_query_params) {}
 
 Request::Request(const Request& req) = default;
 
@@ -22,11 +28,11 @@ std::string Request::getBody() const {
     return body;
 }
 
-std::map<std::string, std::string> Request::getHeaders() const {
+std::unordered_map<std::string, std::string> Request::getHeaders() const {
     return headers;
 }
 
-std::map<std::string, std::string> Request::getQueryParams() const {
+std::unordered_map<std::string, std::string> Request::getQueryParams() const {
     return query_params;
 }
 
@@ -42,23 +48,24 @@ std::string Request::getPath() const {
     return path_and_type.getPath();
 }
 
-void Request::setPathAndType(const PathAndType& path_and_type) {
-    this->path_and_type = PathAndType(path_and_type);
+void Request::setPathAndType(const PathAndType& new_path_and_type) {
+    this->path_and_type = PathAndType(new_path_and_type);
 }
 
-void Request::setBody(const std::string& body) {
-    this->body = body;
+void Request::setBody(const std::string& new_body) {
+    this->body = new_body;
 }
 
-void Request::setHeaders(const std::map<std::string, std::string>& headers) {
-    this->headers = headers;
+void Request::setHeaders(
+    const std::unordered_map<std::string, std::string>& new_headers) {
+    this->headers = new_headers;
 }
 
 void Request::setQueryParams(
-    const std::map<std::string, std::string>& query_params) {
-    this->query_params = query_params;
+    const std::unordered_map<std::string, std::string>& new_query_params) {
+    this->query_params = new_query_params;
 }
 
-void Request::setPathVar(const std::string& path_var) {
-    this->path_var = path_var;
+void Request::setPathVar(const std::string& new_path_var) {
+    this->path_var = new_path_var;
 }

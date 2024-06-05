@@ -1,3 +1,12 @@
+/**
+ * @file dispatcher.cpp
+ * @brief This file implements the dispatcher thread
+ *
+ * This function runs in a separate thread for each connection and is
+ * responsible for reading data from the socket, processing the request, and
+ * sending a response.
+ */
+
 #include "dispatcher.hpp"
 #include <sys/socket.h>
 #include <unistd.h>

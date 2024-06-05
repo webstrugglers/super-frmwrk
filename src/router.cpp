@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @brief Implements Router class for mapping http request to specified
+ * controllers
+ */
+
 #include "router.hpp"
 #include "constants.hpp"
 #include "path-and-type.hpp"

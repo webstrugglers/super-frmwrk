@@ -6,6 +6,7 @@ CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedan
 SRCDIR := src
 BUILDDIR := build
 INCLUDEDIR := include
+DOCDIR := docs
 #
 # Files
 SOURCES := $(wildcard $(SRCDIR)/*.cpp)
@@ -15,7 +16,7 @@ OBJECTS := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
 TARGET := superFrmwrk
 
 # Rules
-all: $(TARGET)
+all: $(TARGET) docs
 
 $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
@@ -29,4 +30,7 @@ $(BUILDDIR):
 clean:
 	rm -rf $(BUILDDIR) $(TARGET)
 
-.PHONY: all clean
+docs:
+	cd $(DOCDIR) && doxygen Doxyfile > /dev/null
+
+.PHONY: all clean docs
