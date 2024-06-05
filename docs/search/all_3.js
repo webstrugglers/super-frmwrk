@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['body_0',['body',['../classResponse.html#abdd1b308b79ddfb3981c4c24f42cb8f5',1,'Response']]]
+  ['features_0',['Features',['../md_README.html#autotoc_md3',1,'']]],
+  ['framework_1',['C++ HTTP Framework',['../md_README.html',1,'']]]
 ];
