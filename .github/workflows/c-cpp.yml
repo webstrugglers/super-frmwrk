@@ -1,0 +1,16 @@
+name: Build and Document
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up dependencies
+      run: sudo apt-get update && sudo apt-get install -y doxygen g++
+
+    - name: Build project and generate documentation
+      run: make

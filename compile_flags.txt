@@ -1,4 +1,7 @@
 -std=c++17
 -Wall
 -Wextra
+-Wshadow
+-Wnon-virtual-dtor
+-pedantic
 -Iinclude
