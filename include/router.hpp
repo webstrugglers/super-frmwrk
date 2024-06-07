@@ -61,7 +61,7 @@ public:
              const std::function<void(const Request& req, Response& res)>&
                  controller);
     /**
-     * docs test 1
+     * docs test 2
      */
     void post(const char* path,
               const std::function<void(const Request& req, Response& res)>&
