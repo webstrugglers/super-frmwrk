@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['server_0',['Server',['../classServer.html#a48c8203ca321a55383145647522fe545',1,'Server']]],
-  ['set_1',['set',['../classResponse.html#a768aa21e3a9f54af8342cafa6d08f7a3',1,'Response']]],
-  ['start_2',['start',['../classServer.html#a08b15723047dd78d58ded22f2a893a2f',1,'Server']]],
-  ['status_3',['status',['../classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4',1,'Response']]]
+  ['route_41',['route',['../classRouter.html#aed151339ab9cebb5e0882b75e43da511',1,'Router::route(const MethodType method_type, const char *path, const std::function&lt; void(const Request &amp;req, Response &amp;res)&gt; &amp;controller)'],['../classRouter.html#a0977063163575665055638c38ac2a8f2',1,'Router::route(PathAndType &amp;pat, const std::function&lt; void(const Request &amp;req, Response &amp;res)&gt; &amp;controller)']]]
 ];

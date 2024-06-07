@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['features_0',['Features',['../md_README.html#autotoc_md3',1,'']]],
-  ['framework_1',['C++ HTTP Framework',['../md_README.html',1,'']]]
+  ['hash_3c_20pathandtype_20_3e_3',['hash&lt; PathAndType &gt;',['../structstd_1_1hash_3_01PathAndType_01_4.html',1,'std']]]
 ];

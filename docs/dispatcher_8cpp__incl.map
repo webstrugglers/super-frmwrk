@@ -1,20 +1,11 @@
 <map id="dispatcher.cpp" name="dispatcher.cpp">
-<area shape="rect" id="Node000001" title="This file implements the dispatcher thread." alt="" coords="347,5,463,33"/>
-<area shape="rect" id="Node000002" href="$dispatcher_8hpp_source.html" title=" " alt="" coords="5,81,122,109"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="347,36,138,80,137,75,346,30"/>
-<area shape="rect" id="Node000003" href="$constants_8hpp_source.html" title=" " alt="" coords="55,157,168,184"/>
-<area shape="poly" id="edge9_Node000001_Node000003" title=" " alt="" coords="347,29,267,47,225,63,186,83,153,112,129,145,125,142,150,109,183,79,223,58,266,42,346,24"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="197,81,298,109"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="378,36,290,77,288,72,376,31"/>
-<area shape="rect" id="Node000005" title=" " alt="" coords="323,81,396,109"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="399,35,378,69,373,66,394,32"/>
-<area shape="rect" id="Node000006" title=" " alt="" coords="420,81,480,109"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="415,32,436,66,432,69,411,35"/>
-<area shape="rect" id="Node000007" title=" " alt="" coords="504,81,570,109"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="430,31,501,71,499,75,427,36"/>
-<area shape="rect" id="Node000008" title=" " alt="" coords="593,81,673,109"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="446,31,579,74,578,79,445,36"/>
-<area shape="rect" id="Node000009" title=" " alt="" coords="697,81,755,109"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="464,29,683,78,681,83,462,34"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="74,108,97,142,92,145,70,111"/>
+<area shape="rect" id="node1" title="This file implements the dispatcher thread." alt="" coords="350,5,466,32"/>
+<area shape="rect" id="node2" href="$dispatcher_8hpp_source.html" title=" " alt="" coords="5,80,123,107"/>
+<area shape="rect" id="node3" href="$constants_8hpp_source.html" title=" " alt="" coords="55,155,169,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="198,80,301,107"/>
+<area shape="rect" id="node5" title=" " alt="" coords="325,80,400,107"/>
+<area shape="rect" id="node6" title=" " alt="" coords="424,80,485,107"/>
+<area shape="rect" id="node7" title=" " alt="" coords="509,80,576,107"/>
+<area shape="rect" id="node8" title=" " alt="" coords="600,80,680,107"/>
+<area shape="rect" id="node9" title=" " alt="" coords="704,80,763,107"/>
 </map>

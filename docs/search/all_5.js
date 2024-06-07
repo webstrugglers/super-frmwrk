@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['license_0',['License',['../md_README.html#autotoc_md6',1,'']]],
-  ['log_1',['log',['../classSafeLogger.html#a6bb77e05edcd1c468d2008270cbccdd2',1,'SafeLogger::log(const char *output)'],['../classSafeLogger.html#ab9804d6360b4181a1cdbd73b3412611c',1,'SafeLogger::log(const int _errnum)']]],
-  ['logger_2ecpp_2',['logger.cpp',['../logger_8cpp.html',1,'']]]
+  ['path_2dand_2dtype_2ecpp_6',['path-and-type.cpp',['../path-and-type_8cpp.html',1,'']]],
+  ['pathandtype_7',['PathAndType',['../classPathAndType.html',1,'']]],
+  ['post_8',['post',['../classRouter.html#a15aa38ce85d4d181052b3238009bd72c',1,'Router']]]
 ];
