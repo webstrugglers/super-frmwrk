@@ -61,7 +61,8 @@ public:
              const std::function<void(const Request& req, Response& res)>&
                  controller);
     /**
-     * Workflow test 3
+     * @brief workflow test 4
+     *
      */
     void post(const char* path,
               const std::function<void(const Request& req, Response& res)>&
