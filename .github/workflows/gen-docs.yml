@@ -22,7 +22,7 @@ jobs:
           persist-credentials: true
 
       - name: Install Doxygen
-        run: sudo apt-get install -y doxygen graphviz doxygen-latex doxygen-doc doxygen-gui gsfonts graphviz-doc xapian-tools
+        run: sudo apt-get install -y doxygen graphviz
 
       - name: Generate Doxygen documentation
         run: make docs
