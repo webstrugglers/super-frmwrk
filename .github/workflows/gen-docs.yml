@@ -5,37 +5,37 @@ on:
     branches:
       - main
     paths:
-    - 'src/**'
-    - 'include/**'
-    
+      - "src/**"
+      - "include/**"
+
 permissions:
   contents: write
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: true
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
-    - name: Install Doxygen
-      run: sudo apt-get install -y doxygen graphviz
+      - name: Install Doxygen
+        run: sudo apt-get install -y doxygen graphviz doxygen-latex doxygen-doc doxygen-gui gsfonts graphviz-doc xapian-tools
 
-    - name: Generate Doxygen documentation
-      run: make docs
+      - name: Generate Doxygen documentation
+        run: make docs
 
-    - name: Configure Git
-      run: |
-        git config --global user.name 'github-actions[bot]'
-        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-    - name: Commit changes
-      run: |
-        git add docs
-        git commit -m "Update Doxygen docs"
-        git push origin main
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        run: |
+          git add docs
+          git commit -m "Update Doxygen docs"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
