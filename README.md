@@ -15,6 +15,8 @@ This project is a lightweight HTTP framework written in C++ designed for C++ pro
 
 This HTTP framework provides a foundation for building web servers in C++. It features a modular design that allows for easy integration and extension. The core components include a server, a dispatcher thread, a request parser, a request object trimmer, a router, and a controller. We aim to have Express.js-like syntax.
 
+![Framework design](FRMWRKv3.png)
+
 ## Features
 
 - **HTTP 1.0 Server**: Basic server implementation for handling HTTP 1.0 requests.
