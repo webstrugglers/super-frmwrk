@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up dependencies
-        run: sudo apt-get update && sudo apt-get install -y doxygen g++
+        run: sudo apt-get update && sudo apt-get install -y g++
 
-      - name: Build project and generate documentation
+      - name: Build project
         run: make

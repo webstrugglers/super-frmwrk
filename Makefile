@@ -16,7 +16,7 @@ OBJECTS := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
 TARGET := superFrmwrk
 
 # Rules
-all: $(TARGET) docs
+all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
