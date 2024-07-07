@@ -17,6 +17,11 @@ void SafeLogger::log(const char* output) {
     std::cerr << output << std::endl;
 }
 
+void SafeLogger::log(const std::string& output) {
+    std::unique_lock<std::mutex> lock(mex);
+    std::cerr << output << std::endl;
+}
+
 /// Safely prints provided message to std::cerr
 void SafeLogger::log(const int _errnum) {
     std::unique_lock<std::mutex> lock(mex);

@@ -12,8 +12,6 @@ PathAndType::PathAndType(const std::string& new_path,
     : path(new_path),
       method_type(new_method_type) {}
 
-PathAndType::PathAndType(const PathAndType& pat) = default;
-
 std::string PathAndType::getPath() const {
     return this->path;
 }

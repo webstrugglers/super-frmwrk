@@ -20,8 +20,7 @@ private:
 
 public:
     explicit PathAndType(const std::string& new_path        = "/",
-                         const MethodType   new_method_type = GET);
-    PathAndType(const PathAndType& pat);
+                         const MethodType   new_method_type = HTTP_GET);
 
     std::string getPath() const;
     MethodType  getMethodType() const;

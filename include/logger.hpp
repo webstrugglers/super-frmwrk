@@ -1,5 +1,6 @@
 #include <cerrno>
 #include <mutex>
+#include <string>
 
 /**
  * @class SafeLogger
@@ -13,6 +14,9 @@ private:
 public:
     /// Safely prints provided message to std::cerr
     static void log(const char* output);
+
+    /// Safely prints provided message to std::cerr
+    static void log(const std::string& output);
 
     /// Safely prints provided message to std::cerr
     static void log(const int _errnum);

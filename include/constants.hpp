@@ -1,6 +1,9 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
+#include <cstring>
+#include <sstream>
+#include <string>
 #define SOCKET_FD int
 #define REQ_BUF_SIZE 4096
 
@@ -73,15 +76,105 @@ enum HttpStatus {
 };
 
 enum MethodType {
-    GET,
-    HEAD,
-    POST,
-    PUT,
-    DELETE,
-    CONNECT,
-    OPTIONS,
-    TRACE,
-    PATCH
+    HTTP_GET,
+    HTTP_HEAD,
+    HTTP_POST,
+    HTTP_PUT,
+    HTTP_DELETE,
+    HTTP_CONNECT,
+    HTTP_OPTIONS,
+    HTTP_TRACE,
+    HTTP_PATCH,
 };
+
+inline std::ostream& operator<<(std::ostream& os, const MethodType mt) {
+    switch (mt) {
+        case HTTP_GET:
+            os << "GET";
+            break;
+        case HTTP_HEAD:
+            os << "HEAD";
+            break;
+        case HTTP_POST:
+            os << "POST";
+            break;
+        case HTTP_PUT:
+            os << "PUT";
+            break;
+        case HTTP_DELETE:
+            os << "DELETE";
+            break;
+        case HTTP_CONNECT:
+            os << "CONNECT";
+            break;
+        case HTTP_OPTIONS:
+            os << "OPTIONS";
+            break;
+        case HTTP_TRACE:
+            os << "TRACE";
+            break;
+        case HTTP_PATCH:
+            os << "PATCH";
+            break;
+    }
+    return os;
+}
+
+inline std::string methodTypeToString(MethodType mt) {
+    std::string ret;
+    switch (mt) {
+        case HTTP_GET:
+            ret = "GET";
+            break;
+        case HTTP_HEAD:
+            ret = "HEAD";
+            break;
+        case HTTP_POST:
+            ret = "POST";
+            break;
+        case HTTP_PUT:
+            ret = "PUT";
+            break;
+        case HTTP_DELETE:
+            ret = "DELETE";
+            break;
+        case HTTP_CONNECT:
+            ret = "CONNECT";
+            break;
+        case HTTP_OPTIONS:
+            ret = "OPTIONS";
+            break;
+        case HTTP_TRACE:
+            ret = "TRACE";
+            break;
+        case HTTP_PATCH:
+            ret = "PATCH";
+            break;
+        default:
+            ret = "UNKNOWN";
+            break;
+    }
+    return ret;
+}
+
+inline std::string operator+(std::string str, const MethodType mt) {
+    std::ostringstream stream;
+    stream << mt;
+    return str + stream.str();
+}
+
+/*//  @brief  Concatenate C string and MethodType.*/
+/*inline char* operator+(char* cstr, const MethodType mt) {*/
+/*    std::strcat(cstr, methodTypeToString(mt).c_str());*/
+/*    return cstr;*/
+/*}*/
+/**/
+/*//  @brief  Concatenate MethodType and C string.*/
+/*inline char* operator+(MethodType mt, const char* cstr) {*/
+/*    std::string mt_str = methodTypeToString(mt);*/
+/*    mt_str += cstr;*/
+/**/
+/*    /*return mt_str.c_str();*/
+/*}*/
 
 #endif  // !CONSTANTS_HPP

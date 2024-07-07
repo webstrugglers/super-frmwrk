@@ -31,8 +31,6 @@ public:
         const std::unordered_map<std::string, std::string>& new_query_params =
             {});
 
-    Request(const Request& req);
-
     PathAndType                                  getPathAndType() const;
     std::string                                  getBody() const;
     std::unordered_map<std::string, std::string> getHeaders() const;

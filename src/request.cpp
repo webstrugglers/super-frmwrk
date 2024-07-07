@@ -18,8 +18,6 @@ Request::Request(
       path_var(new_path_var),
       query_params(new_query_params) {}
 
-Request::Request(const Request& req) = default;
-
 PathAndType Request::getPathAndType() const {
     return path_and_type;
 }

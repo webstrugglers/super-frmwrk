@@ -23,8 +23,9 @@ void controller(const Request& req, Response& res) {
 
 int main() {
     PathAndType pat;
-    PathAndType pat2("/home", POST);
-    PathAndType pat3("/home", PUT);
+    PathAndType pat2("/home", HTTP_POST);
+    PathAndType pat3("/home", HTTP_PUT);
+    PathAndType pat4("/home", HTTP_POST);
 
     std::unordered_map<PathAndType, std::function<void()>> mapa = {
         {pat, mojafunc1},
@@ -33,19 +34,12 @@ int main() {
 
     mapa[pat2]();
 
-    Router router;
-
-    router.get("/home", mojafunc3);
-
-    PathAndType pat1("/home", GET);
-
+    Router   router;
     Request  req;
     Response res;
 
-    router.table()[pat1](req, res);
-    router.route(pat3, controller);
-
-    router.table()[pat3](req, res);
+    router.route(pat2, controller);
+    router.route(pat4, controller);
 
     return 0;
 }
