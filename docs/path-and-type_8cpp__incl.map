@@ -1,7 +1,9 @@
 <map id="path&#45;and&#45;type.cpp" name="path&#45;and&#45;type.cpp">
-<area shape="rect" id="node1" title="This file implements PathAndType class." alt="" coords="130,5,271,32"/>
-<area shape="rect" id="node2" href="$path-and-type_8hpp_source.html" title=" " alt="" coords="75,80,217,107"/>
-<area shape="rect" id="node5" href="$constants_8hpp_source.html" title=" " alt="" coords="200,155,313,181"/>
+<area shape="rect" id="node1" title="This file implements PathAndType class." alt="" coords="106,5,247,32"/>
+<area shape="rect" id="node2" href="$path-and-type_8hpp_source.html" title=" " alt="" coords="51,80,193,107"/>
+<area shape="rect" id="node5" href="$constants_8hpp_source.html" title=" " alt="" coords="168,155,281,181"/>
 <area shape="rect" id="node3" title=" " alt="" coords="5,155,92,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="117,155,175,181"/>
+<area shape="rect" id="node4" title=" " alt="" coords="105,229,163,256"/>
+<area shape="rect" id="node6" title=" " alt="" coords="189,229,255,256"/>
+<area shape="rect" id="node7" title=" " alt="" coords="279,229,354,256"/>
 </map>
