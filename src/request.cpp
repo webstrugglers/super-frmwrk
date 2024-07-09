@@ -12,6 +12,8 @@ Request::Request(
     const std::unordered_map<std::string, std::string>& new_headers,
     const std::string&                                  new_path_var,
     const std::unordered_map<std::string, std::string>& new_query_params)
+    // WARN: koristimo deprecated feature kompajlera (automatski u pozadini
+    // pravi copy construktor) treba naci resenje koje se ne oslanja na copy
     : path_and_type(new_path_and_type),
       body(new_body),
       headers(new_headers),

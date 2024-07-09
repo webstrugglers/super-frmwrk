@@ -27,12 +27,11 @@ int main() {
     PathAndType pat3("/home", HTTP_PUT);
     PathAndType pat4("/home", HTTP_POST);
 
-    std::unordered_map<PathAndType, std::function<void()>> mapa = {
-        {pat, mojafunc1},
-        {pat2, mojafunc2},
-    };
+    /*std::unordered_map<PathAndType, std::function<void()>> mapa = {*/
+    /*    {pat, mojafunc1},*/
+    /*};*/
 
-    mapa[pat2]();
+    /*mapa[pat2]();*/
 
     Router   router;
     Request  req;

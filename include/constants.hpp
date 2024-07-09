@@ -1,9 +1,7 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
-#include <cstring>
-#include <sstream>
-#include <string>
+#include <ostream>
 #define SOCKET_FD int
 #define REQ_BUF_SIZE 4096
 
@@ -158,23 +156,7 @@ inline std::string methodTypeToString(MethodType mt) {
 }
 
 inline std::string operator+(std::string str, const MethodType mt) {
-    std::ostringstream stream;
-    stream << mt;
-    return str + stream.str();
+    return str + methodTypeToString(mt);
 }
-
-/*//  @brief  Concatenate C string and MethodType.*/
-/*inline char* operator+(char* cstr, const MethodType mt) {*/
-/*    std::strcat(cstr, methodTypeToString(mt).c_str());*/
-/*    return cstr;*/
-/*}*/
-/**/
-/*//  @brief  Concatenate MethodType and C string.*/
-/*inline char* operator+(MethodType mt, const char* cstr) {*/
-/*    std::string mt_str = methodTypeToString(mt);*/
-/*    mt_str += cstr;*/
-/**/
-/*    /*return mt_str.c_str();*/
-/*}*/
 
 #endif  // !CONSTANTS_HPP
