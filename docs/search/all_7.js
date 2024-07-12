@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['safelogger_16',['SafeLogger',['../classSafeLogger.html',1,'']]],
-  ['server_17',['Server',['../classServer.html',1,'']]],
-  ['server_2ecpp_18',['server.cpp',['../server_8cpp.html',1,'']]],
-  ['set_19',['set',['../classResponse.html#ac6e627ad5207cf157b437186535e41a7',1,'Response']]],
-  ['start_20',['start',['../classServer.html#a08b15723047dd78d58ded22f2a893a2f',1,'Server']]],
-  ['status_21',['status',['../classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4',1,'Response']]]
+  ['request_10',['Request',['../classRequest.html',1,'']]],
+  ['request_2ecpp_11',['request.cpp',['../request_8cpp.html',1,'']]],
+  ['response_12',['Response',['../classResponse.html',1,'']]],
+  ['response_2ecpp_13',['response.cpp',['../response_8cpp.html',1,'']]],
+  ['route_14',['route',['../classRouter.html#aed151339ab9cebb5e0882b75e43da511',1,'Router::route(const MethodType method_type, const char *path, const std::function&lt; void(const Request &amp;req, Response &amp;res)&gt; &amp;controller)'],['../classRouter.html#a0977063163575665055638c38ac2a8f2',1,'Router::route(PathAndType &amp;pat, const std::function&lt; void(const Request &amp;req, Response &amp;res)&gt; &amp;controller)']]],
+  ['router_15',['Router',['../classRouter.html',1,'']]],
+  ['router_2ecpp_16',['router.cpp',['../router_8cpp.html',1,'']]]
 ];

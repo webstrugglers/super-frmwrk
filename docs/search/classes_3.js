@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['safelogger_29',['SafeLogger',['../classSafeLogger.html',1,'']]],
-  ['server_30',['Server',['../classServer.html',1,'']]]
+  ['safelogger_30',['SafeLogger',['../classSafeLogger.html',1,'']]],
+  ['server_31',['Server',['../classServer.html',1,'']]]
 ];

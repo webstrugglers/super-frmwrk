@@ -1,5 +1,9 @@
 var searchData=
 [
-  ['table_22',['table',['../classRouter.html#a380fbe090e8d6d285a613159a580af5c',1,'Router']]],
-  ['take_5fover_23',['take_over',['../dispatcher_8cpp.html#a393215171b4db48f49f4b35fe0208ef1',1,'dispatcher.cpp']]]
+  ['safelogger_17',['SafeLogger',['../classSafeLogger.html',1,'']]],
+  ['server_18',['Server',['../classServer.html',1,'']]],
+  ['server_2ecpp_19',['server.cpp',['../server_8cpp.html',1,'']]],
+  ['set_20',['set',['../classResponse.html#ac6e627ad5207cf157b437186535e41a7',1,'Response']]],
+  ['start_21',['start',['../classServer.html#a08b15723047dd78d58ded22f2a893a2f',1,'Server']]],
+  ['status_22',['status',['../classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4',1,'Response']]]
 ];
