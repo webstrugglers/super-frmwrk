@@ -10,10 +10,8 @@
 #include "dispatcher.hpp"
 #include <sys/socket.h>
 #include <unistd.h>
-#include <cstdio>
 #include <cstring>
 #include <iostream>
-#include <string>
 #include "constants.hpp"
 
 // TODO:
@@ -24,7 +22,8 @@ void take_over(SOCKET_FD socket) {
     ssize_t     bytes_received;
     std::string request;
 
-    // FIX:
+    // FIX: 1. optimizovati
+    //      2. ne prekida konekciju
     while ((bytes_received = recv(socket, buffer, sizeof(buffer), 0)) > 0) {
         request.append(buffer, bytes_received);
 
@@ -37,4 +36,6 @@ void take_over(SOCKET_FD socket) {
     }
 
     close(socket);
+
+    std::cout << request;
 }

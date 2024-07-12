@@ -5,16 +5,17 @@
 
 #include "server.hpp"
 #include <netinet/in.h>
-#include <cstdint>
-#include <cstring>
+#include <unistd.h>
 #include <thread>
 #include "dispatcher.hpp"
 #include "logger.hpp"
 
-Server::Server() = default;
+Server::Server() : ss(-1) {}
 
-Server::Server(std::uint16_t port) {
-    start(port);
+Server::~Server() {
+    if (this->ss != -1) {
+        close(this->ss);
+    }
 }
 
 void Server::start(std::uint16_t port) {
@@ -44,6 +45,9 @@ void Server::start(std::uint16_t port) {
         SafeLogger::log(errno);
         return;
     }
+
+    ;
+    SafeLogger::log("Server listening on port " + std::to_string(port));
 
     // server loop
     // let dispatcher take over request

@@ -3,6 +3,7 @@
 #include "path-and-type.hpp"
 #include "request.hpp"
 #include "router.hpp"
+#include "server.hpp"
 
 void mojafunc1() {
     std::cout << "Hello pat 1\n";
@@ -37,8 +38,10 @@ int main() {
     Request  req;
     Response res;
 
-    router.route(pat2, controller);
     router.route(pat4, controller);
+
+    Server server;
+    server.start(5000);
 
     return 0;
 }

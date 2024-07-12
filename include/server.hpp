@@ -2,6 +2,7 @@
 #define SERVER_HPP
 
 #include <cstdint>
+#include "constants.hpp"
 
 /**
  * @class Server
@@ -11,22 +12,11 @@
  */
 class Server {
 private:
+    SOCKET_FD ss;
+
 public:
     Server();
 
-    /**
-     * @brief Starts the server on the given port.
-     *
-     * This function initializes and starts the server, making it listen on the
-     * specified port. It accepts incoming connections and spawns a new
-     * dispatcher thread for each connection.
-     *
-     * @param port The port number on which the server will listen for incoming
-     * connections.
-     */
-    Server(std::uint16_t port);
-
-    // TODO:
     ~Server();
 
     /**
