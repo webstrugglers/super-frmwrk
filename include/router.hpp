@@ -1,10 +1,11 @@
 #include <functional>
-#include <unordered_map>
-#include "path-and-type.hpp"
 #include "request.hpp"
 #include "response.hpp"
 
 // TODO: jos metoda za lakse koriscenje
+/**
+ * @class Router
+ */
 class Router {
 private:
     std::unordered_map<PathAndType,

@@ -1,36 +1,29 @@
 #ifndef PATH_AND_TYPE_HPP
 #define PATH_AND_TYPE_HPP
 
-#include <functional>
-#include <string>
 #include "constants.hpp"
 
 /**
- * @class PathAndType
- * @brief Encapsulates an HTTP method and URI path.
+ * @struct PathAndType
+ * @brief Encapsulates an http method and uri path.
  *
- * This class is used to combine an HTTP method (e.g., GET, POST) with a URI
- * path. Objects of this type are primarily used internally by components such
- * as the Router and Request classes.
+ * This struct is used to combine an http method (e.g., get, post) with a
+ * uri path. Objects of this type are primarily used internally by components
+ * such as the router and request classes.
+ *
  */
-class PathAndType {
-private:
-    std::string path;
-    MethodType  method_type;
+using PathAndType = struct PathAndType {
+    std::string path; /**< Represents path */
 
-public:
-    explicit PathAndType(const std::string& new_path        = "/",
-                         const MethodType   new_method_type = HTTP_GET);
-
-    std::string getPath() const;
-    MethodType  getMethodType() const;
-
-    void setPath(const std::string& new_path);
-    void setMethodType(const MethodType new_method_type);
-
-    PathAndType& operator=(const PathAndType& pat);
-    bool         operator==(const PathAndType& pat) const;
+    MethodType method_type; /**< Represents HTTP method type */
+    PathAndType();
+    PathAndType(std::string p, const MethodType mt);
 };
+
+/**
+ * @brief Compare 2 Objects of type PathAndType. Necessary for router
+ */
+bool operator==(const PathAndType& pat1, const PathAndType& pat2);
 
 namespace std {
 template <>

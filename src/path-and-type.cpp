@@ -5,47 +5,23 @@
  */
 
 #include "path-and-type.hpp"
-#include "constants.hpp"
 
-PathAndType::PathAndType(const std::string& new_path,
-                         const MethodType   new_method_type)
-    : path(new_path),
-      method_type(new_method_type) {}
+PathAndType::PathAndType() : path("/"), method_type(HTTP_GET) {}
 
-std::string PathAndType::getPath() const {
-    return this->path;
-}
+PathAndType::PathAndType(std::string p, const MethodType mt)
+    : path(std::move(p)),
+      method_type(mt) {}
 
-MethodType PathAndType::getMethodType() const {
-    return this->method_type;
-}
-
-void PathAndType::setPath(const std::string& new_path) {
-    this->path = new_path;
-}
-
-void PathAndType::setMethodType(const MethodType new_method_type) {
-    this->method_type = new_method_type;
-}
-
-PathAndType& PathAndType::operator=(const PathAndType& pat) {
-    if (this != &pat) {
-        path        = pat.path;
-        method_type = pat.method_type;
-    }
-    return *this;
-}
-
-bool PathAndType::operator==(const PathAndType& pat) const {
-    return (this->method_type == pat.method_type) && (this->path == pat.path);
+bool operator==(const PathAndType& pat1, const PathAndType& pat2) {
+    return (pat1.path == pat2.path) && (pat1.method_type == pat2.method_type);
 }
 
 namespace std {
 std::size_t hash<PathAndType>::operator()(const PathAndType& pat) const {
     std::hash<std::string> stringHasher;
     std::hash<MethodType>  enumHasher;
-    std::size_t            pathHash       = stringHasher(pat.getPath());
-    std::size_t            methodTypeHash = enumHasher(pat.getMethodType());
+    std::size_t            pathHash       = stringHasher(pat.path);
+    std::size_t            methodTypeHash = enumHasher(pat.method_type);
     return pathHash ^ (methodTypeHash << 1);
 }
 }  // namespace std

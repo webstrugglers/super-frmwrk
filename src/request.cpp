@@ -4,20 +4,17 @@
  */
 
 #include "request.hpp"
-#include "constants.hpp"
 
 Request::Request(
     const PathAndType&                                  new_path_and_type,
-    const std::string&                                  new_body,
+    std::string                                         new_body,
     const std::unordered_map<std::string, std::string>& new_headers,
-    const std::string&                                  new_path_var,
+    std::string                                         new_path_var,
     const std::unordered_map<std::string, std::string>& new_query_params)
-    // WARN: koristimo deprecated feature kompajlera (automatski u pozadini
-    // pravi copy construktor) treba naci resenje koje se ne oslanja na copy
-    : path_and_type(new_path_and_type),
-      body(new_body),
+    : path_and_type(new_path_and_type.path, new_path_and_type.method_type),
+      body(std::move(new_body)),
       headers(new_headers),
-      path_var(new_path_var),
+      path_var(std::move(new_path_var)),
       query_params(new_query_params) {}
 
 PathAndType Request::getPathAndType() const {
@@ -41,15 +38,16 @@ std::string Request::getPathVar() const {
 }
 
 MethodType Request::getMethodType() const {
-    return path_and_type.getMethodType();
+    return path_and_type.method_type;
 }
 
 std::string Request::getPath() const {
-    return path_and_type.getPath();
+    return path_and_type.path;
 }
 
 void Request::setPathAndType(const PathAndType& new_path_and_type) {
-    this->path_and_type = PathAndType(new_path_and_type);
+    this->path_and_type.path        = new_path_and_type.path;
+    this->path_and_type.method_type = new_path_and_type.method_type;
 }
 
 void Request::setBody(const std::string& new_body) {

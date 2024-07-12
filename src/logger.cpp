@@ -7,7 +7,6 @@
 #include "logger.hpp"
 #include <cstring>
 #include <iostream>
-#include <mutex>
 
 std::mutex SafeLogger::mex;
 

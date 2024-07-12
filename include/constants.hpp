@@ -155,7 +155,7 @@ inline std::string methodTypeToString(MethodType mt) {
     return ret;
 }
 
-inline std::string operator+(std::string str, const MethodType mt) {
+inline std::string operator+(const std::string& str, const MethodType mt) {
     return str + methodTypeToString(mt);
 }
 

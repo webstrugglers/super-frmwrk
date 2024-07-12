@@ -5,10 +5,7 @@
  */
 
 #include "router.hpp"
-#include <utility>
-#include "constants.hpp"
 #include "logger.hpp"
-#include "path-and-type.hpp"
 
 Router::Router() = default;
 
@@ -21,8 +18,8 @@ void Router::route(
     PathAndType pat = PathAndType(path, method_type);
 
     if (routing_table.find(pat) != routing_table.end()) {
-        SafeLogger::log("You tried mapping Path (" + pat.getPath() +
-                        ") and method type (" + pat.getMethodType() +
+        SafeLogger::log("You tried mapping Path (" + pat.path +
+                        ") and method type (" + pat.method_type +
                         ") more than once");
         exit(EXIT_FAILURE);
     }
@@ -34,8 +31,8 @@ void Router::route(
     PathAndType&                                                  pat,
     const std::function<void(const Request& req, Response& res)>& controller) {
     if (routing_table.find(pat) != routing_table.end()) {
-        SafeLogger::log("You tried mapping Path (" + pat.getPath() +
-                        ") and method type (" + pat.getMethodType() +
+        SafeLogger::log("You tried mapping Path (" + pat.path +
+                        ") and method type (" + pat.method_type +
                         ") more than once");
 
         exit(EXIT_FAILURE);

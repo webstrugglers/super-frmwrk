@@ -13,11 +13,11 @@ void mojafunc2() {
     std::cout << "Hello pat 2\n";
 }
 
-void mojafunc3(const Request& req, const Response& res) {
+void mojafunc3(const Request&, const Response&) {
     std::cout << "Hello pat 3\n";
 }
 
-void controller(const Request& req, Response& res) {
+void controller(const Request&, Response& res) {
     res.status(OK);
     std::cout << "Hello from controller\n";
 }
@@ -34,11 +34,14 @@ int main() {
 
     /*mapa[pat2]();*/
 
-    Router   router;
-    Request  req;
+    Router  router;
+    Request req;
+    req.setPathAndType(PathAndType());
     Response res;
 
     router.route(pat4, controller);
+    std::cout << req.getPathAndType().path;
+    std::cout << req.getPathAndType().method_type;
 
     Server server;
     server.start(5000);

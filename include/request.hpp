@@ -25,9 +25,9 @@ private:
 public:
     explicit Request(
         const PathAndType& new_path_and_type = PathAndType(),
-        const std::string& new_body          = "",
+        std::string        new_body          = "",
         const std::unordered_map<std::string, std::string>& new_headers  = {},
-        const std::string&                                  new_path_var = "",
+        std::string                                         new_path_var = "",
         const std::unordered_map<std::string, std::string>& new_query_params =
             {});
 
