@@ -41,10 +41,15 @@ void take_over(SOCKET_FD socket) {
 
     RequestParser requestParser(request);
     Request       newRequest = requestParser.parseRequest(request);
-    std::cout << "Method: " << newRequest.getMethodType() << std::endl;
+    std::cout << "\nMethod: " << newRequest.getMethodType() << std::endl;
     std::cout << "Path: " << newRequest.getPath() << std::endl;
     std::cout << "Headers:" << std::endl;
     for (const auto& header : newRequest.getHeaders()) {
         std::cout << header.first << ":" << header.second << std::endl;
     }
+    std::cout << "Query params:" << std::endl;
+    for (const auto& param : newRequest.getQueryParams()) {
+        std::cout << param.first << ":" << param.second << std::endl;
+    }
+    std::cout << "Body:" << std::endl << newRequest.getBody() << std::endl;
 }

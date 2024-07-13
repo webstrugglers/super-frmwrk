@@ -5,7 +5,8 @@
 #include "constants.hpp"
 #include "path-and-type.hpp"
 #include "request.hpp"
-using Headers = std::unordered_map<std::string, std::string>;
+using Headers     = std::unordered_map<std::string, std::string>;
+using QueryParams = std::unordered_map<std::string, std::string>;
 class RequestParser {
 private:
     std::string rawHttpRequest;
@@ -21,6 +22,12 @@ public:
 
     [[nodiscard]] MethodType parseMethod(const std::string& request) const;
 
-    Headers parseHeaders(std::istringstream& request, Headers& headers) const;
+    void parseHeaders(std::istringstream& request, Headers& headers) const;
+
+    std::string parseBody(std::istringstream& request) const;
+
+    bool lineNotEmpty(std::string& line) const;
+
+    void parseQueryParams(const std::string& path, QueryParams& queryParams);
 };
 #endif

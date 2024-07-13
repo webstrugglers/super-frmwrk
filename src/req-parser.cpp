@@ -11,32 +11,37 @@ RequestParser::RequestParser(const std::string& rawRequest)
 
 void RequestParser::printRawHttpRequest(const std::string& request) {
     std::cout << "RAW REQUEST:\n" << request << std::endl;
-};
+}
 Request RequestParser::parseRequest(const std::string& request) {
     Request            parsedRequest;
     std::istringstream rawRequest(request);
     PathAndType        pathAndType = parsePathAndType(rawRequest);
     parsedRequest.setPathAndType(pathAndType);
     std::unordered_map<std::string, std::string> headers;
+    std::unordered_map<std::string, std::string> params;
     parseHeaders(rawRequest, headers);
     parsedRequest.setHeaders(headers);
-
+    // provera jel body prazan
+    if (std::stoi(headers["Content-Length"]) > 0) {
+        parsedRequest.setBody(parseBody(rawRequest));
+    } else {
+        parsedRequest.setBody("");
+    }
+    parseQueryParams(pathAndType.path, params);
+    parsedRequest.setQueryParams(params);
     return parsedRequest;
-};
+}
 PathAndType RequestParser::parsePathAndType(std::istringstream& request) const {
     std::string data;
-    std::string path;
     std::string http_version;
     getline(request, data, ' ');
     MethodType method = parseMethod(data);
-    // Potencijalno da ovo odvojim u funkciju koja ce da
-    // postavi methodtype da malo bude citljivije?
     getline(request, data, ' ');
     PathAndType pathAndType(data, method);
     getline(request, data, '\n');
     http_version = data;
     return pathAndType;
-};
+}
 MethodType RequestParser::parseMethod(const std::string& request) const {
     if (request == "GET") {
         return MethodType::HTTP_GET;
@@ -59,13 +64,15 @@ MethodType RequestParser::parseMethod(const std::string& request) const {
     } else {
         return MethodType::HTTP_GET;
     }
-};
-Headers RequestParser::parseHeaders(std::istringstream& request,
-                                    Headers&            headers) const {
+}
+void RequestParser::parseHeaders(std::istringstream& request,
+                                 Headers&            headers) const {
     std::string line;
     std::string headervalue;
     std::string headername;
-    while (getline(request, line) && !line.empty()) {
+    // proverava da li smo na kraju headera tako sto prepoznaje da je poslednja
+    // linija empty ili je samo ispunjena whitespaceovima
+    while (getline(request, line) && lineNotEmpty(line)) {
         unsigned long int separator_index = line.find(':');
         if (line.find(' ') > separator_index + 1) {
             continue;
@@ -74,5 +81,34 @@ Headers RequestParser::parseHeaders(std::istringstream& request,
         headervalue = line.substr(separator_index + 2, line.length() - 1);
         headers[headername] = headervalue;
     }
-    return headers;
+}
+bool RequestParser::lineNotEmpty(std::string& line) const {
+    return !line.empty() &&
+           (line.find_first_not_of("\r\n \t") != std::string::npos);
+}
+std::string RequestParser::parseBody(std::istringstream& request) const {
+    std::string line;
+    getline(request, line, '\0');
+    return line;
+}
+
+void RequestParser::parseQueryParams(const std::string& path,
+                                     QueryParams&       queryParams) {
+    std::istringstream pathStream(path);
+    std::string        line;
+    if (path.find('?') != std::string::npos &&
+        path.find('=') != std::string::npos) {
+        std::cout << "Ima param" << std::endl;
+    } else {
+        std::cout << "Nema param";
+    }
+    getline(pathStream, line, '?');
+    std::string name;
+    std::string value;
+    while (getline(pathStream, line, '=') && !line.empty()) {
+        name = line;
+        getline(pathStream, line, '&');
+        value             = line;
+        queryParams[name] = value;
+    }
 }
