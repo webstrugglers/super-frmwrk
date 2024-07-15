@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['path_2dand_2dtype_2ecpp_6',['path-and-type.cpp',['../path-and-type_8cpp.html',1,'']]],
-  ['pathandtype_7',['PathAndType',['../classPathAndType.html',1,'']]],
-  ['post_8',['post',['../classRouter.html#a15aa38ce85d4d181052b3238009bd72c',1,'Router']]]
+  ['operator_3d_3d_6',['operator==',['../path-and-type_8cpp.html#a1dad103c775d5d739b8051820d983087',1,'path-and-type.cpp']]]
 ];

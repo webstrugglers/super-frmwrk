@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pathandtype_25',['PathAndType',['../classPathAndType.html',1,'']]]
+  ['pathandtype_26',['PathAndType',['../structPathAndType.html',1,'']]]
 ];
