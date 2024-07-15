@@ -21,37 +21,41 @@
 
 #define REQ_BUF_SIZE 4096
 
-// TODO:
+// TODO: thread safety kad se poziva funkcija
+// pustiti router da poziva controller
 void take_over(SOCKET_FD csock, Router& router) {
     std::cout << "Hello, world from dispatcher\n";
 
-    ssize_t     bytes_received = 0;
-    std::string request;
-    ReqParser   rqp;
+    ssize_t       bytes_received = 0;
+    ReqParser     rqp;
+    unsigned long headers_end = 0;
 
-    // receive raw http request
-    std::array<char, REQ_BUF_SIZE> buffer{};
-    bytes_received = recv(csock, buffer.data(), buffer.size(), 0);
-    if (bytes_received < 0) {
-        perror("recv failed");
+    {
+        std::string request;
+
+        // receive raw http request
+        std::array<char, REQ_BUF_SIZE> buffer{};
+        bytes_received = recv(csock, buffer.data(), buffer.size(), 0);
+        if (bytes_received < 0) {
+            perror("recv failed");
+        }
+
+        request.append(buffer.data(), bytes_received);
+
+        std::cout << request;
+
+        headers_end = request.find("\r\n\r\n");
+
+        if (headers_end == std::string::npos) {
+            perror("Error parsing request");
+            close(csock);
+            return;
+        }
+
+        rqp.parseHeaderSection(request.substr(0, headers_end));
     }
 
-    request.append(buffer.data(), bytes_received);
-
-    std::cout << request;
-
-    auto headers_end = request.find("\r\n\r\n");
-
-    if (headers_end == std::string::npos) {
-        perror("Error parsing request");
-        close(csock);
-        return;
-    }
-
-    auto sss = request.substr(0, headers_end);
-    rqp.parseHeaderSection(sss);
     std::unique_ptr<Request> req = rqp.moveRequest();
-    std::cout << "\n" + req->getPath() + " " + req->getMethodType() + "\n";
 
     Response res;
 
@@ -67,22 +71,9 @@ void take_over(SOCKET_FD csock, Router& router) {
 
     fja(*req, std::ref(res));
 
-    const auto* body = res.pSendData();
-    if (sizeof(body) != 0) {
-        std::cout << "Body je veci od 0";
-    }
+    auto odg = res.to_string();
 
-    // Prepare the HTTP response header
-    std::string response_header =
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: text/html\r\n"
-        "Content-Length: " +
-        std::to_string(strlen(body)) +
-        "\r\n"
-        "\r\n";
-    response_header.append(body);
-
-    send(csock, response_header.data(), response_header.size(), 0);
+    send(csock, odg.data(), odg.size(), 0);
 
     close(csock);
 }
