@@ -1,4 +1,5 @@
 #include "req-parser.hpp"
+#include <iostream>
 #include "constants.hpp"
 #include "request.hpp"
 
@@ -9,10 +10,11 @@ void ReqParser::parseReqLine(std::string str) {}
 void ReqParser::parseHeaders(std::string str) {}
 
 void ReqParser::parseHeaderSection(const std::string& str) {
-    auto        firstSP  = str.find(' ');
-    std::string path     = str.substr(0, firstSP);
+    auto        firstSP = str.find(' ');
+    std::string mt1     = str.substr(0, firstSP);
+
     auto        secondSP = str.find(' ', firstSP + 1);
-    std::string mt1      = str.substr(firstSP + 1, secondSP);
+    std::string path     = str.substr(firstSP + 1, secondSP - firstSP - 1);
 
     MethodType mt2 = HTTP_GET;
 

@@ -51,14 +51,16 @@ void take_over(SOCKET_FD csock, Router& router) {
     auto sss = request.substr(0, headers_end);
     rqp.parseHeaderSection(sss);
     std::unique_ptr<Request> req = rqp.moveRequest();
+    std::cout << "\n" + req->getPath() + " " + req->getMethodType() + "\n";
 
     Response res;
 
-    auto fja = router.table()[PathAndType("/home", HTTP_GET)];
+    auto fja = router.table()[req->getPathAndType()];
 
     if (fja != nullptr) {
         std::cout << "Pronasao fja iterator";
     } else {
+        std::cout << "\n Nisam pronasao kontroler\n";
         close(csock);
         return;
     }
