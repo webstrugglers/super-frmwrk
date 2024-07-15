@@ -2,6 +2,7 @@
 #define DISPATCHER_HPP
 
 #include "constants.hpp"
+#include "router.hpp"
 
 /**
  * @brief The dispatcher function to handle incoming requests.
@@ -12,6 +13,10 @@
  *
  * @param client_socket The socket file descriptor for the client connection.
  */
-void take_over(SOCKET_FD socket);
+void take_over(SOCKET_FD socket, Router& router);
+
+void recv_headers(SOCKET_FD sock, void* buffer);
+
+void recv_body();
 
 #endif  // !DISPATCHER_HPP

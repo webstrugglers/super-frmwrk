@@ -1,3 +1,6 @@
+#ifndef ROUTER_HPP
+#define ROUTER_HPP
+
 #include <functional>
 #include "request.hpp"
 #include "response.hpp"
@@ -21,8 +24,8 @@ public:
      *
      */
     std::unordered_map<PathAndType,
-                       std::function<void(const Request& req, Response& res)>>
-    table() const;
+                       std::function<void(const Request& req, Response& res)>>&
+    table();
 
     /**
      * @brief Maps an HTTP method and path to a controller function.
@@ -69,3 +72,5 @@ public:
               const std::function<void(const Request& req, Response& res)>&
                   controller);
 };
+
+#endif  // !ROUTER_HPP

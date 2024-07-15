@@ -50,8 +50,8 @@ void Request::setPathAndType(const PathAndType& new_path_and_type) {
     this->path_and_type.method_type = new_path_and_type.method_type;
 }
 
-void Request::setBody(const std::string& new_body) {
-    this->body = new_body;
+void Request::setBody(std::string new_body) {
+    this->body = std::move(new_body);
 }
 
 void Request::setHeaders(

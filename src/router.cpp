@@ -60,7 +60,7 @@ void Router::put(
 }
 
 std::unordered_map<PathAndType,
-                   std::function<void(const Request& req, Response& res)>>
-Router::table() const {
+                   std::function<void(const Request& req, Response& res)>>&
+Router::table() {
     return routing_table;
 }

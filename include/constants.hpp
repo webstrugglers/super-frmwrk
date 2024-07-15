@@ -3,7 +3,6 @@
 
 #include <ostream>
 #define SOCKET_FD int
-#define REQ_BUF_SIZE 4096
 
 enum HttpStatus {
     CONTINUE = 100,

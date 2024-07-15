@@ -1,3 +1,6 @@
+#ifndef RESPONSE_HPP
+#define RESPONSE_HPP
+
 #include <filesystem>
 #include <string>
 #include <unordered_map>
@@ -32,7 +35,9 @@ public:
      * When serializing response object, it will automatically assign the
      * Content-Length HTTP response header field.
      */
-    Response& body(const char* body);
+    Response& body(std::string str);
+
+    const char* pSendData() const;
 
 private:
     // TODO: lista todo stvari za ovaj objekat
@@ -44,3 +49,5 @@ private:
     // dinamicko prevodjenje podataka u json. Nama nepoznat objekat
     Response& json();
 };
+
+#endif  // !RESPONSE_HPP
