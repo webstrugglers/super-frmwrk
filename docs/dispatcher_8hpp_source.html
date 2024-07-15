@@ -74,11 +74,17 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define DISPATCHER_HPP</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;constants.hpp&quot;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> <a class="code" href="dispatcher_8cpp.html#a393215171b4db48f49f4b35fe0208ef1">take_over</a>(SOCKET_FD socket);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// !DISPATCHER_HPP</span></div>
-<div class="ttc" id="adispatcher_8cpp_html_a393215171b4db48f49f4b35fe0208ef1"><div class="ttname"><a href="dispatcher_8cpp.html#a393215171b4db48f49f4b35fe0208ef1">take_over</a></div><div class="ttdeci">void take_over(SOCKET_FD socket)</div><div class="ttdoc">The dispatcher function to handle incoming requests.</div><div class="ttdef"><b>Definition:</b> dispatcher.cpp:17</div></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;router.hpp&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> <a class="code" href="dispatcher_8cpp.html#af4878ab9323d8f62b045dfb0299d71f4">take_over</a>(SOCKET_FD csock, <a class="code" href="classRouter.html">Router</a>&amp; router);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> recv_headers(SOCKET_FD sock, <span class="keywordtype">void</span>* buffer);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> recv_body();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif  </span><span class="comment">// !DISPATCHER_HPP</span></div>
+<div class="ttc" id="aclassRouter_html"><div class="ttname"><a href="classRouter.html">Router</a></div><div class="ttdef"><b>Definition:</b> router.hpp:12</div></div>
+<div class="ttc" id="adispatcher_8cpp_html_af4878ab9323d8f62b045dfb0299d71f4"><div class="ttname"><a href="dispatcher_8cpp.html#af4878ab9323d8f62b045dfb0299d71f4">take_over</a></div><div class="ttdeci">void take_over(SOCKET_FD csock, Router &amp;router)</div><div class="ttdoc">The dispatcher function to handle incoming requests.</div><div class="ttdef"><b>Definition:</b> dispatcher.cpp:26</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
