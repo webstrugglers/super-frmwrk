@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <string>
 #include <unordered_map>
-#include "constants.hpp"
+#include "http-status-codes.hpp"
 
 // http://expressjs.com/en/5x/api.html#res
 // po uzoru na express
@@ -27,8 +27,7 @@ public:
      */
     Response& set(char* field, char& value);
     /**
-     * Sets the HTTP status for the response.
-     * It will also automatically set the status message.
+     * Sets the HTTP status code and message for the response.
      */
     Response& status(const HttpStatus status_code);
     /** Sets the body for the response.
@@ -37,7 +36,14 @@ public:
      */
     Response& body(std::string str);
 
-    const char* pSendData() const;
+    /**
+     * Converts Response object to string (http representation), which will be
+     * used by dispatcher. Generates status line, headers and optional body
+     * @brief Returns string (http) representation of Response object
+     *
+     * @return String (http) representation of Response object
+     */
+    std::string to_string();
 
 private:
     // TODO: lista todo stvari za ovaj objekat
