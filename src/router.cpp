@@ -27,20 +27,6 @@ void Router::route(
     routing_table.insert(std::pair(pat, controller));
 }
 
-void Router::route(
-    PathAndType&                                                  pat,
-    const std::function<void(const Request& req, Response& res)>& controller) {
-    if (routing_table.find(pat) != routing_table.end()) {
-        SafeLogger::log("You tried mapping Path (" + pat.path +
-                        ") and method type (" + pat.method_type +
-                        ") more than once");
-
-        exit(EXIT_FAILURE);
-    }
-
-    routing_table.insert(std::pair(pat, controller));
-}
-
 void Router::get(
     const char*                                                   path,
     const std::function<void(const Request& req, Response& res)>& controller) {
@@ -63,4 +49,12 @@ std::unordered_map<PathAndType,
                    std::function<void(const Request& req, Response& res)>>&
 Router::table() {
     return routing_table;
+}
+
+// TODO:
+void Router::call(const PathAndType& pat, const Request& req, Response& res) {
+    auto func = this->routing_table.find(pat);
+    if (func == this->routing_table.end()) {
+    }
+    func->second(std::ref(req), std::ref(res));
 }

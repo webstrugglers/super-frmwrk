@@ -28,6 +28,20 @@ public:
     table();
 
     /**
+     * @brief Used internally to allow dispatcher to call appropriate
+     * controller.
+     *
+     * A method that will call the appropriate controller function based on the
+     * provided PathAndType object. Used internally to allow dispatcher to call
+     * appropriate controller.
+     *
+     * @param pat PathAndType object used for finding appropriate controller
+     * @param req Reference to Request object representing HTTP request
+     * @param res Reference to Response object that is manipulated by developer
+     */
+    void call(const PathAndType& pat, const Request& req, Response& res);
+
+    /**
      * @brief Maps an HTTP method and path to a controller function.
      *
      * Associates a specified HTTP method and URL path with a controller
@@ -40,21 +54,6 @@ public:
      */
     void route(const MethodType method_type,
                const char*      path,
-               const std::function<void(const Request& req, Response& res)>&
-                   controller);
-
-    /**
-     * @brief Maps a PathAndType object to a controller function.
-     *
-     * Associates a PathAndType object, which contains an HTTP method and URL
-     * path, with a controller function that will handle incoming requests
-     * matching the given method and path.
-     *
-     * @param pat The PathAndType object containing the HTTP method and URL
-     * path.
-     * @param controller The controller function to handle the requests.
-     */
-    void route(PathAndType& pat,
                const std::function<void(const Request& req, Response& res)>&
                    controller);
 
