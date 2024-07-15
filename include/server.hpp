@@ -30,6 +30,8 @@ public:
      *
      * @param port The port number on which the server will listen for incoming
      * connections.
+     *
+     * @param router Reference to the router
      */
     void start(std::uint16_t port, Router& router);
 };

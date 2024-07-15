@@ -1,5 +1,4 @@
 #include "req-parser.hpp"
-#include <iostream>
 #include "constants.hpp"
 #include "request.hpp"
 
