@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "bcdhloprst",
   1: "hprs",
   2: "dlprs",
-  3: "bloprst",
+  3: "bcloprst",
   4: "c"
 };
 

@@ -72,16 +72,16 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a380fbe090e8d6d285a613159a580af5c"><td class="memItemLeft" align="right" valign="top"><a id="a380fbe090e8d6d285a613159a580af5c"></a>
-std::unordered_map&lt; <a class="el" href="structPathAndType.html">PathAndType</a>, std::function&lt; void(const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a380fbe090e8d6d285a613159a580af5c">table</a> () const</td></tr>
-<tr class="memdesc:a380fbe090e8d6d285a613159a580af5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns routing table used for routing. <br /></td></tr>
-<tr class="separator:a380fbe090e8d6d285a613159a580af5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96e426e94080ec80021877972c1f6d63"><td class="memItemLeft" align="right" valign="top"><a id="a96e426e94080ec80021877972c1f6d63"></a>
+std::unordered_map&lt; <a class="el" href="structPathAndType.html">PathAndType</a>, std::function&lt; void(const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)&gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a96e426e94080ec80021877972c1f6d63">table</a> ()</td></tr>
+<tr class="memdesc:a96e426e94080ec80021877972c1f6d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns routing table used for routing. <br /></td></tr>
+<tr class="separator:a96e426e94080ec80021877972c1f6d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a102e332a6b8a077b6855240a0b1d8368"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a102e332a6b8a077b6855240a0b1d8368">call</a> (const <a class="el" href="structPathAndType.html">PathAndType</a> &amp;pat, const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)</td></tr>
+<tr class="memdesc:a102e332a6b8a077b6855240a0b1d8368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used internally to allow dispatcher to call appropriate controller.  <a href="classRouter.html#a102e332a6b8a077b6855240a0b1d8368">More...</a><br /></td></tr>
+<tr class="separator:a102e332a6b8a077b6855240a0b1d8368"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed151339ab9cebb5e0882b75e43da511"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#aed151339ab9cebb5e0882b75e43da511">route</a> (const MethodType method_type, const char *path, const std::function&lt; void(const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)&gt; &amp;controller)</td></tr>
 <tr class="memdesc:aed151339ab9cebb5e0882b75e43da511"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps an HTTP method and path to a controller function.  <a href="classRouter.html#aed151339ab9cebb5e0882b75e43da511">More...</a><br /></td></tr>
 <tr class="separator:aed151339ab9cebb5e0882b75e43da511"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0977063163575665055638c38ac2a8f2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classRouter.html#a0977063163575665055638c38ac2a8f2">route</a> (<a class="el" href="structPathAndType.html">PathAndType</a> &amp;pat, const std::function&lt; void(const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)&gt; &amp;controller)</td></tr>
-<tr class="memdesc:a0977063163575665055638c38ac2a8f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a <a class="el" href="structPathAndType.html" title="Encapsulates an http method and uri path.">PathAndType</a> object to a controller function.  <a href="classRouter.html#a0977063163575665055638c38ac2a8f2">More...</a><br /></td></tr>
-<tr class="separator:a0977063163575665055638c38ac2a8f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7bc4ce5abc5d8522eaa3fd2b5eff4564"><td class="memItemLeft" align="right" valign="top"><a id="a7bc4ce5abc5d8522eaa3fd2b5eff4564"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (const char *path, const std::function&lt; void(const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)&gt; &amp;controller)</td></tr>
 <tr class="separator:a7bc4ce5abc5d8522eaa3fd2b5eff4564"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -94,8 +94,53 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a15aa38ce85d4d181052b3238009bd72c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a102e332a6b8a077b6855240a0b1d8368"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a102e332a6b8a077b6855240a0b1d8368">&#9670;&nbsp;</a></span>call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Router::call </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structPathAndType.html">PathAndType</a> &amp;&#160;</td>
+          <td class="paramname"><em>pat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classRequest.html">Request</a> &amp;&#160;</td>
+          <td class="paramname"><em>req</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td>
+          <td class="paramname"><em>res</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Used internally to allow dispatcher to call appropriate controller. </p>
+<p>A method that will call the appropriate controller function based on the provided <a class="el" href="structPathAndType.html" title="Encapsulates an http method and uri path.">PathAndType</a> object. Used internally to allow dispatcher to call appropriate controller.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pat</td><td><a class="el" href="structPathAndType.html" title="Encapsulates an http method and uri path.">PathAndType</a> object used for finding appropriate controller </td></tr>
+    <tr><td class="paramname">req</td><td>Reference to <a class="el" href="classRequest.html" title="A class to represent an HTTP request.">Request</a> object representing HTTP request </td></tr>
+    <tr><td class="paramname">res</td><td>Reference to <a class="el" href="classResponse.html">Response</a> object that is manipulated by developer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aed151339ab9cebb5e0882b75e43da511"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed151339ab9cebb5e0882b75e43da511">&#9670;&nbsp;</a></span>route() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aed151339ab9cebb5e0882b75e43da511">&#9670;&nbsp;</a></span>route()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -132,44 +177,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
   <table class="params">
     <tr><td class="paramname">method_type</td><td>The HTTP method (e.g., GET, POST). </td></tr>
     <tr><td class="paramname">path</td><td>The URL path. </td></tr>
-    <tr><td class="paramname">controller</td><td>The controller function to handle the requests. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a0977063163575665055638c38ac2a8f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0977063163575665055638c38ac2a8f2">&#9670;&nbsp;</a></span>route() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Router::route </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structPathAndType.html">PathAndType</a> &amp;&#160;</td>
-          <td class="paramname"><em>pat</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::function&lt; void(const <a class="el" href="classRequest.html">Request</a> &amp;req, <a class="el" href="classResponse.html">Response</a> &amp;res)&gt; &amp;&#160;</td>
-          <td class="paramname"><em>controller</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Maps a <a class="el" href="structPathAndType.html" title="Encapsulates an http method and uri path.">PathAndType</a> object to a controller function. </p>
-<p>Associates a <a class="el" href="structPathAndType.html" title="Encapsulates an http method and uri path.">PathAndType</a> object, which contains an HTTP method and URL path, with a controller function that will handle incoming requests matching the given method and path.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pat</td><td>The <a class="el" href="structPathAndType.html" title="Encapsulates an http method and uri path.">PathAndType</a> object containing the HTTP method and URL path. </td></tr>
     <tr><td class="paramname">controller</td><td>The controller function to handle the requests. </td></tr>
   </table>
   </dd>
