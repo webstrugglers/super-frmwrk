@@ -24,7 +24,7 @@ jobs:
           persist-credentials: true
 
       - name: Install Doxygen
-        run: sudo apt-get install -y doxygen graphviz make
+        run: sudo apt install -y doxygen graphviz make
 
       - name: Configure Git
         run: |
@@ -37,6 +37,7 @@ jobs:
 
       - name: Commit changes
         run: |
+          git status
           git add .
           git commit -m "Update Doxygen docs"
           git push origin docs

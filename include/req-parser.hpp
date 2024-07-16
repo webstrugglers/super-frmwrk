@@ -4,6 +4,11 @@
 #include <memory>
 #include "request.hpp"
 
+/**
+ * @class ReqParser
+ * @brief Used for transforming http request to Request object
+ *
+ */
 class ReqParser {
 private:
     std::unique_ptr<Request> req;
