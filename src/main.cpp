@@ -7,7 +7,7 @@
 /*#define port 5000*/
 
 void hello_world(const Request& /*unused*/, Response& res) {
-    res.body("Hello, world from controller function!!").status(OK);
+    res.send("Hello, world from controller function!!").status(OK);
 }
 
 void init_router(Router& router) {

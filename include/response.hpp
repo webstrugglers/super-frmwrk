@@ -8,6 +8,15 @@
 
 // http://expressjs.com/en/5x/api.html#res
 // po uzoru na express
+
+/**
+ * @class Response
+ * @brief A class to represent HTTP response. For developers to use.
+ *
+ * This class will be transformed to HTTP response and sent to the client.
+ * Provides expressjs-like API for developer to manipulate and use for crafting
+ * responses(e.g. res.status(HttpStatus).send("Hello")).
+ */
 class Response {
 private:
     std::string http_version; /**< The HTTP version (e.g., "HTTP/1.1") */
@@ -34,7 +43,7 @@ public:
      * When serializing response object, it will automatically assign the
      * Content-Length HTTP response header field.
      */
-    Response& body(std::string str);
+    Response& send(std::string str);
 
     /**
      * Converts Response object to string (http representation), which will be

@@ -8,6 +8,10 @@
 // TODO: jos metoda za lakse koriscenje
 /**
  * @class Router
+ * @brief Class used for routing
+ *
+ * Router uses std::unordered_map internally to map HTTP request method and path
+ * to a developer defined controller function.
  */
 class Router {
 private:
