@@ -31,6 +31,7 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b docs
+          git pull --no-rebase origin docs
 
       - name: Generate Doxygen documentation
         run: |

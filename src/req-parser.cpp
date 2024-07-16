@@ -1,3 +1,8 @@
+/**
+ * @file
+ * @brief Implementation of ReqParser class
+ */
+
 #include "req-parser.hpp"
 #include "constants.hpp"
 #include "request.hpp"
