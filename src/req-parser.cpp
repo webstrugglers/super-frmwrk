@@ -8,7 +8,7 @@ void ReqParser::parseReqLine(std::string str) {}
 
 void ReqParser::parseHeaders(std::string str) {}
 
-void ReqParser::parseHeaderSection(const std::string& str) {
+std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
     auto        firstSP = str.find(' ');
     std::string mt1     = str.substr(0, firstSP);
 
@@ -40,8 +40,6 @@ void ReqParser::parseHeaderSection(const std::string& str) {
     }
 
     this->req->setPathAndType(PathAndType(path, mt2));
-}
 
-std::unique_ptr<Request> ReqParser::moveRequest() {
-    return std::move(req);
+    return std::move(this->req);
 }

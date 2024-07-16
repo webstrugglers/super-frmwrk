@@ -18,8 +18,7 @@ public:
 
     void                     parseReqLine(std::string str);
     void                     parseHeaders(std::string str);
-    void                     parseHeaderSection(const std::string& str);
-    std::unique_ptr<Request> moveRequest();
+    std::unique_ptr<Request> parseHeaderSection(const std::string& str);
 };
 
 #endif  // DEBUG

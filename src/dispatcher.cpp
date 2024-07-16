@@ -26,9 +26,10 @@
 void take_over(SOCKET_FD csock, Router& router) {
     std::cout << "Hello, world from dispatcher\n";
 
-    ssize_t       bytes_received = 0;
-    ReqParser     rqp;
-    unsigned long headers_end = 0;
+    ssize_t                  bytes_received = 0;
+    unsigned long            headers_end    = 0;
+    ReqParser                rqp;
+    std::unique_ptr<Request> req;
 
     {
         std::string request;
@@ -52,11 +53,10 @@ void take_over(SOCKET_FD csock, Router& router) {
             return;
         }
 
-        rqp.parseHeaderSection(request.substr(0, headers_end));
+        req = rqp.parseHeaderSection(request.substr(0, headers_end));
     }
 
-    std::unique_ptr<Request> req = rqp.moveRequest();
-    Response                 res;
+    Response res;
 
     router.call(req->getPathAndType(), *req, std::ref(res));
 
