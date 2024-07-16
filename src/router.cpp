@@ -54,7 +54,7 @@ Router::table() {
 // TODO:
 void Router::call(const PathAndType& pat, const Request& req, Response& res) {
     auto func = this->routing_table.find(pat);
-    if (func == this->routing_table.end()) {
+    if (func != this->routing_table.end()) {
+        func->second(std::ref(req), std::ref(res));
     }
-    func->second(std::ref(req), std::ref(res));
 }
