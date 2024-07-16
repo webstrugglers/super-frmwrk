@@ -33,11 +33,12 @@ jobs:
           git checkout -b docs
 
       - name: Generate Doxygen documentation
-        run: make docs
+        run: |
+          rm -rf docs/*
+          make docs
 
       - name: Commit changes
         run: |
-          git status
           git add .
           git commit -m "Update Doxygen docs"
           git push origin docs
