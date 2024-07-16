@@ -31,7 +31,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b docs
-          git pull --no-rebase origin docs
 
       - name: Generate Doxygen documentation
         run: |
@@ -39,9 +38,11 @@ jobs:
           make docs
 
       - name: Commit changes
+        # we only care about documentation on the main branch
+        # so force push is okay
         run: |
           git add .
           git commit -m "Update Doxygen docs"
-          git push origin docs
+          git push --force origin docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
