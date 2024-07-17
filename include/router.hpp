@@ -81,8 +81,10 @@ public:
              const std::function<void(const Request& req, Response& res)>&
                  controller);
     /**
-     * @brief workflow test 5
+     * @brief Same as Router::route(HTTP_POST, path, controller)
      *
+     * @param path The URL path.
+     * @param controller The controller function to handle the requests.
      */
     void post(const char* path,
               const std::function<void(const Request& req, Response& res)>&

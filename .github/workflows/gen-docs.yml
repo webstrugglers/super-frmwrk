@@ -18,6 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: main
           persist-credentials: true
 
       - name: Install Doxygen
@@ -35,7 +36,7 @@ jobs:
           make docs
 
       - name: Commit changes
-        # we only care about documentation on the main branch
+        # we only care about documentation on the docs branch
         # so force push is okay
         run: |
           git add .
