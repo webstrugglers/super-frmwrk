@@ -16,7 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        ref: docs
+        with:
+          ref: docs
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
