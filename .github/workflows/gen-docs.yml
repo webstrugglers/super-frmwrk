@@ -6,9 +6,6 @@ on:
     types: [completed]
     branches:
       - "main"
-    paths:
-      - "src/**"
-      - "include/**"
 
 permissions:
   contents: write

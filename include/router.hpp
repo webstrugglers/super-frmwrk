@@ -61,6 +61,12 @@ public:
                const std::function<void(const Request& req, Response& res)>&
                    controller);
 
+    /**
+     * @brief Same as Router::route(HTTP_GET, path, controller)
+     *
+     * @param path The URL path.
+     * @param controller The controller function to handle the requests.
+     */
     void get(const char* path,
              const std::function<void(const Request& req, Response& res)>&
                  controller);
