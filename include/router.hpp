@@ -70,6 +70,13 @@ public:
     void get(const char* path,
              const std::function<void(const Request& req, Response& res)>&
                  controller);
+
+    /**
+     * @brief Same as Router::route(HTTP_PUT, path, controller)
+     *
+     * @param path The URL path.
+     * @param controller The controller function to handle the requests.
+     */
     void put(const char* path,
              const std::function<void(const Request& req, Response& res)>&
                  controller);
