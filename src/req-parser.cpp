@@ -4,6 +4,7 @@
  */
 
 #include "req-parser.hpp"
+#include <algorithm>
 #include <cstddef>
 #include <iostream>
 #include <string>
@@ -11,11 +12,45 @@
 #include "path-and-type.hpp"
 #include "request.hpp"
 
-RequestParser::RequestParser(std::string& request) : rawHttpRequest(request) {}
+ReqParser::ReqParser(std::string& request) : rawHttpRequest(request) {}
+std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
+    auto        firstSP = str.find(' ');
+    std::string mt1     = str.substr(0, firstSP);
 
+    auto        secondSP = str.find(' ', firstSP + 1);
+    std::string path     = str.substr(firstSP + 1, secondSP - firstSP - 1);
+
+    MethodType mt2 = HTTP_GET;
+
+    if (mt1 == "GET") {
+        mt2 = MethodType::HTTP_GET;
+    } else if (mt1 == "PUT") {
+        mt2 = MethodType::HTTP_PUT;
+    } else if (mt1 == "POST") {
+        mt2 = MethodType::HTTP_POST;
+    } else if (mt1 == "DELETE") {
+        mt2 = MethodType::HTTP_DELETE;
+    } else if (mt1 == "HEAD") {
+        mt2 = MethodType::HTTP_HEAD;
+    } else if (mt1 == "TRACE") {
+        mt2 = MethodType::HTTP_TRACE;
+    } else if (mt1 == "PATCH") {
+        mt2 = MethodType::HTTP_PATCH;
+    } else if (mt1 == "OPTIONS") {
+        mt2 = MethodType::HTTP_OPTIONS;
+    } else if (mt1 == "CONNECT") {
+        mt2 = MethodType::HTTP_CONNECT;
+    } else {
+        mt2 = MethodType::HTTP_GET;
+    }
+
+    this->req->setPathAndType(PathAndType(path, mt2));
+
+    return std::move(this->req);
+}
 /// Parses raw HTTP Request directly from original request string
 /// and puts parsed data into field of Request object
-Request RequestParser::parseRequest(std::string& request) {
+Request ReqParser::parseRequest(std::string& request) {
     Request     parsedRequest;
     PathAndType pathAndType = parsePathAndType(request);
     parsedRequest.setPathAndType(pathAndType);
@@ -32,7 +67,7 @@ Request RequestParser::parseRequest(std::string& request) {
     return parsedRequest;
 }
 /// Parses path and type of HTTP Request into PathAndType enum
-PathAndType RequestParser::parsePathAndType(std::string& request) {
+PathAndType ReqParser::parsePathAndType(std::string& request) {
     size_t      pos        = request.find(' ');
     std::string data       = request.substr(0, pos);
     MethodType  methodType = parseMethod(data);
@@ -49,7 +84,7 @@ PathAndType RequestParser::parsePathAndType(std::string& request) {
     return pathAndType;
 }
 /// Parses only method type of HTTP Request into MethodType enum
-MethodType RequestParser::parseMethod(std::string& request) {
+MethodType ReqParser::parseMethod(std::string& request) {
     if (request == "GET") {
         return MethodType::HTTP_GET;
     } else if (request == "PUT") {
@@ -73,7 +108,7 @@ MethodType RequestParser::parseMethod(std::string& request) {
     }
 }
 /// Parses headers from HTTP Request into unordered_map
-void RequestParser::parseHeaders(std::string& request, Headers& headers) const {
+void ReqParser::parseHeaders(std::string& request, Headers& headers) const {
     size_t      pos             = 0;
     size_t      end_pos         = 0;
     size_t      separator_index = 0;
@@ -93,13 +128,12 @@ void RequestParser::parseHeaders(std::string& request, Headers& headers) const {
     request.erase(0, end_pos + 1);
 }
 /// Checks if line that is currently being parsed is not empty
-bool RequestParser::lineNotEmpty(std::string& line) const {
+bool ReqParser::lineNotEmpty(std::string& line) const {
     return !line.empty() &&
            (line.find_first_not_of("\r\n \t") != std::string::npos);
 }
 /// Parses queryParams of HTTP Request into unordered_map
-void RequestParser::parseQueryParams(std::string& path,
-                                     QueryParams& queryParams) {
+void ReqParser::parseQueryParams(std::string& path, QueryParams& queryParams) {
     size_t pos = path.find('?');
     if (pos == std::string::npos || path.find('=') == std::string::npos) {
     } else {
