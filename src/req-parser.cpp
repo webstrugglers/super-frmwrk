@@ -1,48 +1,55 @@
+/**
+ * @file
+ * @brief Parses raw HTTP request and returns a Request object.
+ */
+
 #include "req-parser.hpp"
+#include <cstddef>
 #include <iostream>
-#include <sstream>
 #include <string>
 #include "constants.hpp"
 #include "path-and-type.hpp"
 #include "request.hpp"
 
-RequestParser::RequestParser(const std::string& rawRequest)
-    : rawHttpRequest(rawRequest) {}
+RequestParser::RequestParser(std::string& request) : rawHttpRequest(request) {}
 
-void RequestParser::printRawHttpRequest(const std::string& request) {
-    std::cout << "RAW REQUEST:\n" << request << std::endl;
-}
-Request RequestParser::parseRequest(const std::string& request) {
-    Request            parsedRequest;
-    std::istringstream rawRequest(request);
-    PathAndType        pathAndType = parsePathAndType(rawRequest);
+/// Parses raw HTTP Request directly from original request string
+/// and puts parsed data into field of Request object
+Request RequestParser::parseRequest(std::string& request) {
+    Request     parsedRequest;
+    PathAndType pathAndType = parsePathAndType(request);
     parsedRequest.setPathAndType(pathAndType);
     std::unordered_map<std::string, std::string> headers;
     std::unordered_map<std::string, std::string> params;
-    parseHeaders(rawRequest, headers);
+    parseHeaders(request, headers);
+
     parsedRequest.setHeaders(headers);
-    // provera jel body prazan
-    if (std::stoi(headers["Content-Length"]) > 0) {
-        parsedRequest.setBody(parseBody(rawRequest));
-    } else {
-        parsedRequest.setBody("");
-    }
+    std::string body = std::move(request);
+    parsedRequest.setBody(body);
+
     parseQueryParams(pathAndType.path, params);
     parsedRequest.setQueryParams(params);
     return parsedRequest;
 }
-PathAndType RequestParser::parsePathAndType(std::istringstream& request) const {
-    std::string data;
-    std::string http_version;
-    getline(request, data, ' ');
-    MethodType method = parseMethod(data);
-    getline(request, data, ' ');
-    PathAndType pathAndType(data, method);
-    getline(request, data, '\n');
-    http_version = data;
+/// Parses path and type of HTTP Request into PathAndType enum
+PathAndType RequestParser::parsePathAndType(std::string& request) {
+    size_t      pos        = request.find(' ');
+    std::string data       = request.substr(0, pos);
+    MethodType  methodType = parseMethod(data);
+
+    request.erase(0, pos + 1);
+    pos = request.find(' ');
+    PathAndType pathAndType(request.substr(0, pos), methodType);
+
+    request.erase(0, pos + 1);
+    pos = request.find('\r');
+    request.erase(0, pos + 2);
+
+    // ako zatreba HTTP version on je ovde
     return pathAndType;
 }
-MethodType RequestParser::parseMethod(const std::string& request) const {
+/// Parses only method type of HTTP Request into MethodType enum
+MethodType RequestParser::parseMethod(std::string& request) {
     if (request == "GET") {
         return MethodType::HTTP_GET;
     } else if (request == "PUT") {
@@ -65,50 +72,56 @@ MethodType RequestParser::parseMethod(const std::string& request) const {
         return MethodType::HTTP_GET;
     }
 }
-void RequestParser::parseHeaders(std::istringstream& request,
-                                 Headers&            headers) const {
-    std::string line;
-    std::string headervalue;
+/// Parses headers from HTTP Request into unordered_map
+void RequestParser::parseHeaders(std::string& request, Headers& headers) const {
+    size_t      pos             = 0;
+    size_t      end_pos         = 0;
+    size_t      separator_index = 0;
     std::string headername;
-    // proverava da li smo na kraju headera tako sto prepoznaje da je poslednja
-    // linija empty ili je samo ispunjena whitespaceovima
-    while (getline(request, line) && lineNotEmpty(line)) {
-        unsigned long int separator_index = line.find(':');
-        if (line.find(' ') > separator_index + 1) {
-            continue;
+    std::string headervalue = "alo";
+    while (((end_pos = request.find('\n', pos)) != std::string::npos)) {
+        separator_index = request.find(':', pos);
+        if (separator_index == std::string::npos || separator_index > end_pos) {
+            break;
         }
-        headername  = line.substr(0, separator_index);
-        headervalue = line.substr(separator_index + 2, line.length() - 1);
+        headername = request.substr(pos, separator_index - pos);
+        headervalue =
+            request.substr(separator_index + 2, end_pos - separator_index - 3);
         headers[headername] = headervalue;
+        pos                 = end_pos + 1;
     }
+    request.erase(0, end_pos + 1);
 }
+/// Checks if line that is currently being parsed is not empty
 bool RequestParser::lineNotEmpty(std::string& line) const {
     return !line.empty() &&
            (line.find_first_not_of("\r\n \t") != std::string::npos);
 }
-std::string RequestParser::parseBody(std::istringstream& request) const {
-    std::string line;
-    getline(request, line, '\0');
-    return line;
-}
-
-void RequestParser::parseQueryParams(const std::string& path,
-                                     QueryParams&       queryParams) {
-    std::istringstream pathStream(path);
-    std::string        line;
-    if (path.find('?') != std::string::npos &&
-        path.find('=') != std::string::npos) {
-        std::cout << "Ima param" << std::endl;
+/// Parses queryParams of HTTP Request into unordered_map
+void RequestParser::parseQueryParams(std::string& path,
+                                     QueryParams& queryParams) {
+    size_t pos = path.find('?');
+    if (pos == std::string::npos || path.find('=') == std::string::npos) {
     } else {
-        std::cout << "Nema param";
-    }
-    getline(pathStream, line, '?');
-    std::string name;
-    std::string value;
-    while (getline(pathStream, line, '=') && !line.empty()) {
-        name = line;
-        getline(pathStream, line, '&');
-        value             = line;
-        queryParams[name] = value;
+        size_t end_pos         = 0;
+        size_t separator_index = 0;
+        path.erase(0, pos + 1);
+        std::string name;
+        std::string value;
+        pos = 0;
+
+        while (pos < path.length()) {
+            end_pos = path.find('&', pos);
+            if (end_pos == std::string::npos) {
+                end_pos = path.length();
+            }
+            separator_index = path.find('=', pos);
+            name            = path.substr(pos, separator_index - pos);
+            value =
+                path.substr(separator_index + 1, end_pos - separator_index - 1);
+            queryParams[name] = value;
+            pos               = end_pos + 1;
+        }
+        path.erase(0, end_pos);
     }
 }

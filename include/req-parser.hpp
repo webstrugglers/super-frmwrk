@@ -1,33 +1,42 @@
 #ifndef REQ_PARSER_HPP
 #define REQ_PARSER_HPP
-#include <sstream>
 #include <string>
 #include "constants.hpp"
 #include "path-and-type.hpp"
 #include "request.hpp"
 using Headers     = std::unordered_map<std::string, std::string>;
 using QueryParams = std::unordered_map<std::string, std::string>;
+/**
+ * @class RequestParser
+ * @brief Class that servers purpose of parsing raw HTTP request.
+ *
+ */
 class RequestParser {
 private:
     std::string rawHttpRequest;
 
 public:
-    explicit RequestParser(const std::string& request);
+    explicit RequestParser(std::string& request);
 
-    static void printRawHttpRequest(const std::string& request);
+    /**
+     * @brief Takes raw HTTP request as a string, returns Request object
+     *
+     * @param request raw HTTP request as a string
+     * @return Request object.
+     */
+    Request parseRequest(std::string& request);
 
-    Request parseRequest(const std::string& request);
+private:
+    PathAndType parsePathAndType(std::string& request);
 
-    PathAndType parsePathAndType(std::istringstream& request) const;
+    MethodType parseMethod(std::string& request);
 
-    [[nodiscard]] MethodType parseMethod(const std::string& request) const;
+    void parseHeaders(std::string& request, Headers& headers) const;
 
-    void parseHeaders(std::istringstream& request, Headers& headers) const;
-
-    std::string parseBody(std::istringstream& request) const;
+    std::string parseBody(std::string& request) const;
 
     bool lineNotEmpty(std::string& line) const;
 
-    void parseQueryParams(const std::string& path, QueryParams& queryParams);
+    void parseQueryParams(std::string& path, QueryParams& queryParams);
 };
 #endif
