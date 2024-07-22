@@ -1,48 +1,50 @@
+/**
+ * @file
+ * @brief Implementation of ReqParser class
+ */
+
 #include "req-parser.hpp"
-#include <iostream>
-#include <sstream>
-#include <string>
 #include "constants.hpp"
-#include "path-and-type.hpp"
 #include "request.hpp"
 
-RequestParser::RequestParser(const std::string& rawRequest)
-    : rawHttpRequest(rawRequest) {}
+ReqParser::ReqParser() : req(std::make_unique<Request>()) {}
 
-void RequestParser::printRawHttpRequest(const std::string& request) {
-    std::cout << "RAW REQUEST:\n" << request << std::endl;
-};
-Request RequestParser::parseRequest(const std::string& request) {
-    Request            parsedRequest;
-    std::istringstream rawRequest(request);
-    std::string        data;
-    std::string        path;
-    std::string        http_version;
-    MethodType         methodType = MethodType::HTTP_GET;
-    getline(rawRequest, data, ' ');
-    // Potencijalno da ovo odvojim u funkciju koja ce da
-    // postavi methodtype da malo bude citljivije?
-    if (data == "PUT") {
-        methodType = MethodType::HTTP_PUT;
-    } else if (data == "POST") {
-        methodType = MethodType::HTTP_POST;
-    } else if (data == "DELETE") {
-        methodType = MethodType::HTTP_DELETE;
-    } else if (data == "HEAD") {
-        methodType = MethodType::HTTP_HEAD;
-    } else if (data == "TRACE") {
-        methodType = MethodType::HTTP_TRACE;
-    } else if (data == "PATCH") {
-        methodType = MethodType::HTTP_PATCH;
-    } else if (data == "OPTIONS") {
-        methodType = MethodType::HTTP_OPTIONS;
-    } else if (data == "CONNECT") {
-        methodType = MethodType::HTTP_CONNECT;
+void ReqParser::parseReqLine(std::string str) {}
+
+void ReqParser::parseHeaders(std::string str) {}
+
+std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
+    auto        firstSP = str.find(' ');
+    std::string mt1     = str.substr(0, firstSP);
+
+    auto        secondSP = str.find(' ', firstSP + 1);
+    std::string path     = str.substr(firstSP + 1, secondSP - firstSP - 1);
+
+    MethodType mt2 = HTTP_GET;
+
+    if (mt1 == "GET") {
+        mt2 = MethodType::HTTP_GET;
+    } else if (mt1 == "PUT") {
+        mt2 = MethodType::HTTP_PUT;
+    } else if (mt1 == "POST") {
+        mt2 = MethodType::HTTP_POST;
+    } else if (mt1 == "DELETE") {
+        mt2 = MethodType::HTTP_DELETE;
+    } else if (mt1 == "HEAD") {
+        mt2 = MethodType::HTTP_HEAD;
+    } else if (mt1 == "TRACE") {
+        mt2 = MethodType::HTTP_TRACE;
+    } else if (mt1 == "PATCH") {
+        mt2 = MethodType::HTTP_PATCH;
+    } else if (mt1 == "OPTIONS") {
+        mt2 = MethodType::HTTP_OPTIONS;
+    } else if (mt1 == "CONNECT") {
+        mt2 = MethodType::HTTP_CONNECT;
+    } else {
+        mt2 = MethodType::HTTP_GET;
     }
-    getline(rawRequest, data, ' ');
-    PathAndType pathAndType(data, methodType);
-    getline(rawRequest, data, '\n');
-    http_version = data;
-    parsedRequest.setPathAndType(pathAndType);
-    return parsedRequest;
-};
+
+    this->req->setPathAndType(PathAndType(path, mt2));
+
+    return std::move(this->req);
+}

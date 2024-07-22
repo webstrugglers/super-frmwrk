@@ -6,6 +6,7 @@
 #include "server.hpp"
 #include <netinet/in.h>
 #include <unistd.h>
+#include <functional>
 #include <thread>
 #include "dispatcher.hpp"
 #include "logger.hpp"
@@ -18,7 +19,7 @@ Server::~Server() {
     }
 }
 
-void Server::start(std::uint16_t port) {
+void Server::start(std::uint16_t port, Router& router) {
     uint16_t  network_port  = htons(port);
     SOCKET_FD server_socket = -1;
 
@@ -55,10 +56,11 @@ void Server::start(std::uint16_t port) {
         SOCKET_FD new_socket = accept(server_socket, nullptr, nullptr);
         if (new_socket == -1) {
             SafeLogger::log(errno);
-            return;
+            continue;
         }
 
-        std::thread dispatcher = std::thread(take_over, new_socket);
+        std::thread dispatcher =
+            std::thread(take_over, new_socket, std::ref(router));
 
         dispatcher.detach();
     }

@@ -1,16 +1,24 @@
-#ifndef REQ_PARSER_HPP
-#define REQ_PARSER_HPP
-#include <string>
+#ifndef REQPARSER_HPP
+#define REQPARSER_HPP
+
+#include <memory>
 #include "request.hpp"
-class RequestParser {
+
+/**
+ * @class ReqParser
+ * @brief Used for transforming http request to Request object
+ *
+ */
+class ReqParser {
 private:
-    std::string rawHttpRequest;
+    std::unique_ptr<Request> req;
 
 public:
-    explicit RequestParser(const std::string& request);
+    ReqParser();
 
-    static void printRawHttpRequest(const std::string& request);
-
-    Request parseRequest(const std::string& request);
+    void                     parseReqLine(std::string str);
+    void                     parseHeaders(std::string str);
+    std::unique_ptr<Request> parseHeaderSection(const std::string& str);
 };
-#endif
+
+#endif  // DEBUG

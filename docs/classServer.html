@@ -77,16 +77,16 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a08b15723047dd78d58ded22f2a893a2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#a08b15723047dd78d58ded22f2a893a2f">start</a> (std::uint16_t port)</td></tr>
-<tr class="memdesc:a08b15723047dd78d58ded22f2a893a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the server on the given port.  <a href="classServer.html#a08b15723047dd78d58ded22f2a893a2f">More...</a><br /></td></tr>
-<tr class="separator:a08b15723047dd78d58ded22f2a893a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723e9348ef188ae2c22b3f03f82c753e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classServer.html#a723e9348ef188ae2c22b3f03f82c753e">start</a> (std::uint16_t port, <a class="el" href="classRouter.html">Router</a> &amp;router)</td></tr>
+<tr class="memdesc:a723e9348ef188ae2c22b3f03f82c753e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the server on the given port.  <a href="classServer.html#a723e9348ef188ae2c22b3f03f82c753e">More...</a><br /></td></tr>
+<tr class="separator:a723e9348ef188ae2c22b3f03f82c753e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A class to represent the HTTP server. </p>
 <p>This class provides functionalities to start and manage an HTTP server. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a08b15723047dd78d58ded22f2a893a2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a08b15723047dd78d58ded22f2a893a2f">&#9670;&nbsp;</a></span>start()</h2>
+<a id="a723e9348ef188ae2c22b3f03f82c753e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a723e9348ef188ae2c22b3f03f82c753e">&#9670;&nbsp;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -95,8 +95,18 @@ Public Member Functions</h2></td></tr>
           <td class="memname">void Server::start </td>
           <td>(</td>
           <td class="paramtype">std::uint16_t&#160;</td>
-          <td class="paramname"><em>port</em></td><td>)</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classRouter.html">Router</a> &amp;&#160;</td>
+          <td class="paramname"><em>router</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -105,7 +115,8 @@ Public Member Functions</h2></td></tr>
 <p>This function initializes and starts the server, making it listen on the specified port. It accepts incoming connections and spawns a new dispatcher thread for each connection.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">port</td><td>The port number on which the server will listen for incoming connections. </td></tr>
+    <tr><td class="paramname">port</td><td>The port number on which the server will listen for incoming connections.</td></tr>
+    <tr><td class="paramname">router</td><td>Reference to the router </td></tr>
   </table>
   </dd>
 </dl>

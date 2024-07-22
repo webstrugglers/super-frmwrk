@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['table_47',['table',['../classRouter.html#a380fbe090e8d6d285a613159a580af5c',1,'Router']]],
-  ['take_5fover_48',['take_over',['../dispatcher_8cpp.html#a393215171b4db48f49f4b35fe0208ef1',1,'dispatcher.cpp']]]
+  ['set_49',['set',['../classResponse.html#ac6e627ad5207cf157b437186535e41a7',1,'Response']]],
+  ['start_50',['start',['../classServer.html#a723e9348ef188ae2c22b3f03f82c753e',1,'Server']]],
+  ['status_51',['status',['../classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4',1,'Response']]]
 ];

@@ -1,12 +1,11 @@
 name: Update Doxygen Docs
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Build"]
+    types: [completed]
     branches:
-      - main
-    paths:
-      - "src/**"
-      - "include/**"
+      - "main"
 
 permissions:
   contents: write
@@ -19,23 +18,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: main
           persist-credentials: true
 
       - name: Install Doxygen
-        run: sudo apt-get install -y doxygen graphviz
-
-      - name: Generate Doxygen documentation
-        run: make docs
+        run: sudo apt install -y doxygen graphviz make
 
       - name: Configure Git
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b docs
+
+      - name: Generate Doxygen documentation
+        run: |
+          rm -rf docs/*
+          make docs
 
       - name: Commit changes
+        # we only care about documentation on the docs branch
+        # so force push is okay
         run: |
-          git add docs
+          git add .
           git commit -m "Update Doxygen docs"
-          git push origin main
+          git push --force origin docs
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

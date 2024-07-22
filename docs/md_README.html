@@ -113,15 +113,15 @@ Usage</h1>
 <div class="line">    router.get(<span class="stringliteral">&quot;/api/v1/products&quot;</span>, getProducts);</div>
 <div class="line"> </div>
 <div class="line">    <span class="comment">// Start the server</span></div>
-<div class="line">    server.<a class="code" href="classServer.html#a08b15723047dd78d58ded22f2a893a2f">start</a>(router);</div>
+<div class="line">    server.<a class="code" href="classServer.html#a723e9348ef188ae2c22b3f03f82c753e">start</a>(router);</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassRequest_html"><div class="ttname"><a href="classRequest.html">Request</a></div><div class="ttdoc">A class to represent an HTTP request.</div><div class="ttdef"><b>Definition:</b> request.hpp:17</div></div>
-<div class="ttc" id="aclassResponse_html"><div class="ttname"><a href="classResponse.html">Response</a></div><div class="ttdef"><b>Definition:</b> response.hpp:8</div></div>
-<div class="ttc" id="aclassRouter_html"><div class="ttname"><a href="classRouter.html">Router</a></div><div class="ttdef"><b>Definition:</b> router.hpp:9</div></div>
-<div class="ttc" id="aclassServer_html"><div class="ttname"><a href="classServer.html">Server</a></div><div class="ttdoc">A class to represent the HTTP server.</div><div class="ttdef"><b>Definition:</b> server.hpp:13</div></div>
-<div class="ttc" id="aclassServer_html_a08b15723047dd78d58ded22f2a893a2f"><div class="ttname"><a href="classServer.html#a08b15723047dd78d58ded22f2a893a2f">Server::start</a></div><div class="ttdeci">void start(std::uint16_t port)</div><div class="ttdoc">Starts the server on the given port.</div><div class="ttdef"><b>Definition:</b> server.cpp:21</div></div>
+<div class="ttc" id="aclassResponse_html"><div class="ttname"><a href="classResponse.html">Response</a></div><div class="ttdef"><b>Definition:</b> response.hpp:11</div></div>
+<div class="ttc" id="aclassRouter_html"><div class="ttname"><a href="classRouter.html">Router</a></div><div class="ttdef"><b>Definition:</b> router.hpp:12</div></div>
+<div class="ttc" id="aclassServer_html"><div class="ttname"><a href="classServer.html">Server</a></div><div class="ttdoc">A class to represent the HTTP server.</div><div class="ttdef"><b>Definition:</b> server.hpp:15</div></div>
+<div class="ttc" id="aclassServer_html_a723e9348ef188ae2c22b3f03f82c753e"><div class="ttname"><a href="classServer.html#a723e9348ef188ae2c22b3f03f82c753e">Server::start</a></div><div class="ttdeci">void start(std::uint16_t port, Router &amp;router)</div><div class="ttdoc">Starts the server on the given port.</div><div class="ttdef"><b>Definition:</b> server.cpp:22</div></div>
 </div><!-- fragment --><ol type="1">
 <li><b>Defining a controller function:</b></li>
 </ol>
@@ -129,7 +129,7 @@ Usage</h1>
 <div class="line">    <span class="comment">// Implement your logic...</span></div>
 <div class="line">    res.<a class="code" href="classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4">status</a>(200).send(<span class="stringliteral">&quot;Product list&quot;</span>);</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassResponse_html_a36d551bcf0e16939a6ebc3f47ccc49e4"><div class="ttname"><a href="classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4">Response::status</a></div><div class="ttdeci">Response &amp; status(const HttpStatus status_code)</div><div class="ttdef"><b>Definition:</b> response.cpp:10</div></div>
+<div class="ttc" id="aclassResponse_html_a36d551bcf0e16939a6ebc3f47ccc49e4"><div class="ttname"><a href="classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4">Response::status</a></div><div class="ttdeci">Response &amp; status(const HttpStatus status_code)</div><div class="ttdef"><b>Definition:</b> response.cpp:15</div></div>
 </div><!-- fragment --><ol type="1">
 <li><b>Populate the router:</b></li>
 </ol>

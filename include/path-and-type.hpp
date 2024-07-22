@@ -7,7 +7,7 @@
  * @struct PathAndType
  * @brief Encapsulates an http method and uri path.
  *
- * This struct is used to combine an http method (e.g., get, post) with a
+ * This struct is used to combine an http method (e.g., GET, POST) with a
  * uri path. Objects of this type are primarily used internally by components
  * such as the router and request classes.
  *

@@ -1,3 +1,6 @@
+#ifndef LOGGER_HPP
+#define LOGGER_HPP
+
 #include <cerrno>
 #include <mutex>
 #include <string>
@@ -21,3 +24,5 @@ public:
     /// Safely prints provided message to std::cerr
     static void log(const int _errnum);
 };
+
+#endif  // !LOGGER_HPP

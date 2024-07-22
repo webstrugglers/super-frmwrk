@@ -2,76 +2,8 @@
 #define CONSTANTS_HPP
 
 #include <ostream>
+
 #define SOCKET_FD int
-#define REQ_BUF_SIZE 4096
-
-enum HttpStatus {
-    CONTINUE = 100,
-    SWITCHING_PROTOCOLS,
-    PROCESSING,
-    EARLY_HINTS,
-
-    OK = 200,
-    CREATED,
-    ACCEPTED,
-    NON_AUTHORITATIVE_INFORMATION,
-    NO_CONTENT,
-    RESET_CONTENT,
-    PARTIAL_CONTENT,
-    MULTI_STATUS,
-    ALREADY_REPORTED,
-    IM_USED = 226,
-
-    MULTIPLE_CHOICES = 300,
-    MOVED_PERMANENTLY,
-    FOUND,
-    SEE_OTHER,
-    NOT_MODIFIED,
-    TEMPORARY_REDIRECT = 307,
-    PERMANENT_REDIRECT,
-
-    BAD_REQUEST = 400,
-    UNAUTHORIZED,
-    PAYMENT_REQUIRED,
-    FORBIDDEN,
-    NOT_FOUND,
-    METHOD_NOT_ALLOWED,
-    NOT_ACCEPTABLE,
-    PROXY_AUTHENTICATION_REQUIRED,
-    REQUEST_TIMEOUT,
-    CONFLICT,
-    GONE,
-    LENGTH_REQUIRED,
-    PRECONDITION_FAILED,
-    PAYLOAD_TOO_LARGE,
-    URI_TOO_LONG,
-    UNSUPPORTED_MEDIA_TYPE,
-    RANGE_NOT_SATISFIABLE,
-    EXPECTATION_FAILED,
-    IM_A_TEAPOT,
-    MISDIRECTED_REQUEST = 421,
-    UNPROCESSABLE_CONTENT,
-    LOCKED,
-    FAILED_DEPENDENCY,
-    TOO_EARLY,
-    UPGRADE_REQUIRED,
-    PRECONDITION_REQUIRED = 428,
-    TOO_MANY_REQUESTS,
-    REQUEST_HEADER_FIELDS_TOO_LARGE = 431,
-    UNAVAILABLE_FOR_LEGAL_REASON    = 451,
-
-    INTERNAL_SERVER_ERROR = 500,
-    NOT_IMPLEMENTED,
-    BAD_GATEWAY,
-    SERVICE_UNAVAILABLE,
-    GATEWAY_TIMEOUT,
-    HTTP_VERSION_NOT_SUPPORTED,
-    VARIANT_ALSO_NEGOTIATES,
-    INSUFFICIENT_STORAGE,
-    LOOP_DETECTED,
-    NOT_EXTENDED = 510,
-    NETWORK_AUTHENTICATION_REQUIRED,
-};
 
 enum MethodType {
     HTTP_GET,
@@ -84,6 +16,65 @@ enum MethodType {
     HTTP_TRACE,
     HTTP_PATCH,
 };
+
+constexpr char PAGE_NOT_FOUND_HTML[] = R"(
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 Not Found</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f3f4f6;
+        color: #333;
+      }
+      .container {
+        text-align: center;
+      }
+      .container h1 {
+        font-size: 10em;
+        margin: 0;
+      }
+      .container h2 {
+        font-size: 2em;
+        margin: 0.5em 0;
+      }
+      .container p {
+        margin: 1em 0;
+        font-size: 1.2em;
+      }
+      .container a {
+        display: inline-block;
+        margin-top: 1em;
+        padding: 0.5em 1em;
+        background: #ff12ba;
+        color: white;
+        text-decoration: none;
+        border-radius: 0.3em;
+        transition: background 0.3s;
+      }
+      .container a:hover {
+        background: #ff12ba;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>404</h1>
+      <h2>Page Not Found</h2>
+      <p>Sorry, the page you are looking for does not exist.</p>
+      <a href="/">Go to Homepage</a>
+    </div>
+  </body>
+</html>
+)";
 
 inline std::ostream& operator<<(std::ostream& os, const MethodType mt) {
     switch (mt) {

@@ -40,7 +40,7 @@ public:
     std::string                                  getPath() const;
 
     void setPathAndType(const PathAndType& new_path_and_type);
-    void setBody(const std::string& new_body);
+    void setBody(std::string new_body);
     void setHeaders(
         const std::unordered_map<std::string, std::string>& new_headers);
     void setQueryParams(

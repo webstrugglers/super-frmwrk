@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_3d_3d_41',['operator==',['../path-and-type_8cpp.html#a1dad103c775d5d739b8051820d983087',1,'path-and-type.cpp']]]
+  ['log_45',['log',['../classSafeLogger.html#a6bb77e05edcd1c468d2008270cbccdd2',1,'SafeLogger::log(const char *output)'],['../classSafeLogger.html#abee63527ba50561e4d4aefb9e3a399c6',1,'SafeLogger::log(const std::string &amp;output)'],['../classSafeLogger.html#ab9804d6360b4181a1cdbd73b3412611c',1,'SafeLogger::log(const int _errnum)']]]
 ];

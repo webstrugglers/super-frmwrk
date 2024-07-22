@@ -76,21 +76,24 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac6e627ad5207cf157b437186535e41a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36d551bcf0e16939a6ebc3f47ccc49e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4">status</a> (const HttpStatus status_code)</td></tr>
 <tr class="separator:a36d551bcf0e16939a6ebc3f47ccc49e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1858e0f150a22e839efd666d0984c5f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#aa1858e0f150a22e839efd666d0984c5f">body</a> (const char *body)</td></tr>
-<tr class="separator:aa1858e0f150a22e839efd666d0984c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6aae52f3904149b9779661e2a24b3aec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a6aae52f3904149b9779661e2a24b3aec">body</a> (std::string str)</td></tr>
+<tr class="separator:a6aae52f3904149b9779661e2a24b3aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea95f486e37d324bf4eedbd606f5a280"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#aea95f486e37d324bf4eedbd606f5a280">to_string</a> ()</td></tr>
+<tr class="memdesc:aea95f486e37d324bf4eedbd606f5a280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns string (http) representation of <a class="el" href="classResponse.html">Response</a> object.  <a href="classResponse.html#aea95f486e37d324bf4eedbd606f5a280">More...</a><br /></td></tr>
+<tr class="separator:aea95f486e37d324bf4eedbd606f5a280"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa1858e0f150a22e839efd666d0984c5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1858e0f150a22e839efd666d0984c5f">&#9670;&nbsp;</a></span>body()</h2>
+<a id="a6aae52f3904149b9779661e2a24b3aec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6aae52f3904149b9779661e2a24b3aec">&#9670;&nbsp;</a></span>body()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classResponse.html">Response</a>&amp; Response::body </td>
+          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::body </td>
           <td>(</td>
-          <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>body</em></td><td>)</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -149,7 +152,28 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the HTTP status for the response. It will also automatically set the status message. </p>
+<p>Sets the HTTP status code and message for the response. </p>
+
+</div>
+</div>
+<a id="aea95f486e37d324bf4eedbd606f5a280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea95f486e37d324bf4eedbd606f5a280">&#9670;&nbsp;</a></span>to_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Response::to_string </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns string (http) representation of <a class="el" href="classResponse.html">Response</a> object. </p>
+<p>Converts <a class="el" href="classResponse.html">Response</a> object to string (http representation), which will be used by dispatcher. Generates status line, headers and optional body</p>
+<dl class="section return"><dt>Returns</dt><dd>String (http) representation of <a class="el" href="classResponse.html">Response</a> object </dd></dl>
 
 </div>
 </div>

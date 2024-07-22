@@ -2,7 +2,9 @@
 #define SERVER_HPP
 
 #include <cstdint>
+
 #include "constants.hpp"
+#include "router.hpp"
 
 /**
  * @class Server
@@ -28,8 +30,10 @@ public:
      *
      * @param port The port number on which the server will listen for incoming
      * connections.
+     *
+     * @param router Reference to the router
      */
-    void start(std::uint16_t port);
+    void start(std::uint16_t port, Router& router);
 };
 
 #endif  // !SERVER_HPP
