@@ -1,11 +1,5 @@
 /**
  * @file
-<<<<<<< HEAD
- * @brief Implementation of ReqParser class
- */
-
-#include "req-parser.hpp"
-=======
  * @brief Parses raw HTTP request and returns a Request object.
  */
 
@@ -14,27 +8,14 @@
 #include <cstddef>
 #include <iostream>
 #include <string>
->>>>>>> 347df8a8b8ddc375ac9860339126f6e03954cf91
 #include "constants.hpp"
 #include "request.hpp"
 
 ReqParser::ReqParser() : req(std::make_unique<Request>()) {}
-<<<<<<< HEAD
-
-void ReqParser::parseReqLine(std::string str) {}
-
-void ReqParser::parseHeaders(std::string str) {}
-
 std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
     auto        firstSP = str.find(' ');
     std::string mt1     = str.substr(0, firstSP);
 
-=======
-std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
-    auto        firstSP = str.find(' ');
-    std::string mt1     = str.substr(0, firstSP);
-
->>>>>>> 347df8a8b8ddc375ac9860339126f6e03954cf91
     auto        secondSP = str.find(' ', firstSP + 1);
     std::string path     = str.substr(firstSP + 1, secondSP - firstSP - 1);
 
@@ -66,8 +47,6 @@ std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
 
     return std::move(this->req);
 }
-<<<<<<< HEAD
-=======
 /// Parses raw HTTP Request directly from original request string
 /// and puts parsed data into field of Request object
 Request ReqParser::parseRequest(std::string& request) {
@@ -179,4 +158,3 @@ void ReqParser::parseQueryParams(std::string& path, QueryParams& queryParams) {
         path.erase(0, end_pos);
     }
 }
->>>>>>> 347df8a8b8ddc375ac9860339126f6e03954cf91
