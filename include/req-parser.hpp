@@ -18,7 +18,7 @@ private:
     std::unique_ptr<Request> req;
 
 public:
-    explicit ReqParser(std::string& request);
+    explicit ReqParser();
 
     /**
      * @brief Takes raw HTTP request as a string, returns Request object

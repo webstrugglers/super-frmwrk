@@ -12,7 +12,7 @@
 #include "path-and-type.hpp"
 #include "request.hpp"
 
-ReqParser::ReqParser(std::string& request) : rawHttpRequest(request) {}
+ReqParser::ReqParser() : req(std::make_unique<Request>()) {}
 std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
     auto        firstSP = str.find(' ');
     std::string mt1     = str.substr(0, firstSP);
