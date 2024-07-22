@@ -17,6 +17,65 @@ enum MethodType {
     HTTP_PATCH,
 };
 
+constexpr char PAGE_NOT_FOUND_HTML[] = R"(
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 Not Found</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #f3f4f6;
+        color: #333;
+      }
+      .container {
+        text-align: center;
+      }
+      .container h1 {
+        font-size: 10em;
+        margin: 0;
+      }
+      .container h2 {
+        font-size: 2em;
+        margin: 0.5em 0;
+      }
+      .container p {
+        margin: 1em 0;
+        font-size: 1.2em;
+      }
+      .container a {
+        display: inline-block;
+        margin-top: 1em;
+        padding: 0.5em 1em;
+        background: #ff12ba;
+        color: white;
+        text-decoration: none;
+        border-radius: 0.3em;
+        transition: background 0.3s;
+      }
+      .container a:hover {
+        background: #ff12ba;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>404</h1>
+      <h2>Page Not Found</h2>
+      <p>Sorry, the page you are looking for does not exist.</p>
+      <a href="/">Go to Homepage</a>
+    </div>
+  </body>
+</html>
+)";
+
 inline std::ostream& operator<<(std::ostream& os, const MethodType mt) {
     switch (mt) {
         case HTTP_GET:
