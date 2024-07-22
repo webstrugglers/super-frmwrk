@@ -21,7 +21,7 @@ Response& Response::status(HttpStatus code) {
 // WARN: kopirati string ili da bude const ref ili std::move()?
 Response& Response::send(std::string str) {
     this->data.append(str);
-    headers["Content-Type"]   = "text/plain";
+    headers["Content-Type"]   = "text/html";
     headers["Content-Length"] = std::to_string(this->data.size());
 
     return *this;
