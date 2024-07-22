@@ -4,6 +4,11 @@
 #include "constants.hpp"
 #include "router.hpp"
 
+constexpr int     REQ_BUF_SIZE = 4096;
+constexpr int     MAX_RETRIES  = 2;  // Maximum number of retries to get headers
+constexpr int     SLEEP_TIME_MS    = 500;  // Sleep time in milliseconds
+constexpr ssize_t MAX_HEADERS_SIZE = 16384;
+
 /**
  * @brief The dispatcher function to handle incoming requests.
  *
@@ -16,7 +21,15 @@
  */
 void take_over(SOCKET_FD csock, Router& router);
 
-void recv_headers(SOCKET_FD sock, void* buffer);
+/**
+ * @brief Read request line and headers
+ *
+ * @param csock client socket
+ * @param buffer to which buffer to read
+ * @return The starting index of the payload. Returns std::string::npos in case
+ * of a bad request (e.g. bad request, doesn't respect HTTP)
+ */
+std::size_t recv_headers(SOCKET_FD csock, std::string& request);
 
 void recv_body();
 
