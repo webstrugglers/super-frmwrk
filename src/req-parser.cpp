@@ -4,9 +4,7 @@
  */
 
 #include "req-parser.hpp"
-#include <algorithm>
 #include <cstddef>
-#include <iostream>
 #include <string>
 #include "constants.hpp"
 #include "request.hpp"
@@ -43,7 +41,7 @@ std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
         mt2 = MethodType::HTTP_GET;
     }
 
-    this->req->setPathAndType(PathAndType(path, mt2));
+    this->req->path_and_type = PathAndType(path, mt2);
 
     return std::move(this->req);
 }
@@ -51,18 +49,18 @@ std::unique_ptr<Request> ReqParser::parseHeaderSection(const std::string& str) {
 /// and puts parsed data into field of Request object
 Request ReqParser::parseRequest(std::string& request) {
     Request     parsedRequest;
-    PathAndType pathAndType = parsePathAndType(request);
-    parsedRequest.setPathAndType(pathAndType);
+    PathAndType pathAndType     = parsePathAndType(request);
+    parsedRequest.path_and_type = pathAndType;
     std::unordered_map<std::string, std::string> headers;
     std::unordered_map<std::string, std::string> params;
     parseHeaders(request, headers);
 
-    parsedRequest.setHeaders(headers);
-    std::string body = std::move(request);
-    parsedRequest.setBody(body);
+    parsedRequest.headers = headers;
+    std::string body      = std::move(request);
+    parsedRequest.body    = body;
 
     parseQueryParams(pathAndType.path, params);
-    parsedRequest.setQueryParams(params);
+    parsedRequest.query_params = params;
     return parsedRequest;
 }
 /// Parses path and type of HTTP Request into PathAndType enum
