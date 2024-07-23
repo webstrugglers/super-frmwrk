@@ -70,7 +70,7 @@ void take_over(SOCKET_FD csock, Router& router) {
         req = rqp.parseHeaderSection(request.substr(0, headers_end));
     }
 
-    router.call(req->getPathAndType(), *req, res);
+    router.call(req->path_and_type, *req, res);
 
     auto odg = res.to_string();
 
