@@ -8,6 +8,7 @@ constexpr int     REQ_BUF_SIZE = 4096;
 constexpr int     MAX_RETRIES  = 2;  // Maximum number of retries to get headers
 constexpr int     SLEEP_TIME_MS    = 500;  // Sleep time in milliseconds
 constexpr ssize_t MAX_HEADERS_SIZE = 16384;
+constexpr size_t  MAX_BODY_SIZE    = 16384;
 
 /**
  * @brief The dispatcher function to handle incoming requests.
@@ -31,6 +32,6 @@ void take_over(SOCKET_FD csock, Router& router);
  */
 std::size_t recv_headers(SOCKET_FD csock, std::string& request);
 
-void recv_body();
+void recv_body(SOCKET_FD csock, std::string& request, size_t length);
 
 #endif  // !DISPATCHER_HPP

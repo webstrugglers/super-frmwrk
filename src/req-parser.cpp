@@ -56,9 +56,6 @@ Request ReqParser::parseRequest(std::string& request) {
     parseHeaders(request, headers);
 
     parsedRequest.headers = headers;
-    std::string body      = std::move(request);
-    parsedRequest.body    = body;
-
     parseQueryParams(pathAndType.path, params);
     parsedRequest.query_params = params;
     return parsedRequest;
@@ -122,7 +119,7 @@ void ReqParser::parseHeaders(std::string& request, Headers& headers) const {
         headers[headername] = headervalue;
         pos                 = end_pos + 1;
     }
-    request.erase(0, end_pos + 1);
+    request.erase(0, end_pos);
 }
 /// Checks if line that is currently being parsed is not empty
 bool ReqParser::lineNotEmpty(std::string& line) const {
