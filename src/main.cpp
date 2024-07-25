@@ -4,14 +4,13 @@
 #include "router.hpp"
 #include "server.hpp"
 
-/*#define port 5000*/
-
-void hello_world(const Request& /*unused*/, Response& res) {
+void hello_world(const Request& req, Response& res) {
     res.send("Hello, world from controller function!!").status(OK);
 }
 
 void init_router(Router& router) {
     router.route(HTTP_GET, "/home", hello_world);
+    router.serve_static("./public/");
 }
 
 int main() {

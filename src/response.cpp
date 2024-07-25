@@ -6,11 +6,24 @@
 #include "response.hpp"
 #include <string>
 #include "http-status-codes.hpp"
+#include "logger.hpp"
 
 Response::Response()
-    : http_version("HTTP/1.1"),
+    : http_version("HTTP/1.0"),
       status_code(NOT_FOUND),
       status_message(http_status_message[NOT_FOUND]) {}
+
+Response& Response::set(const char* field, const char* value) {
+    this->headers.emplace(field, value);
+
+    return *this;
+}
+
+Response& Response::set(const std::basic_string<char>& field,
+                        const std::basic_string<char>& value) {
+    this->headers.emplace(field, value);
+    return *this;
+}
 
 Response& Response::status(HttpStatus code) {
     this->status_code    = code;
@@ -18,12 +31,37 @@ Response& Response::status(HttpStatus code) {
     return *this;
 }
 
-// WARN: kopirati string ili da bude const ref ili std::move()?
 Response& Response::send(std::string str) {
-    this->data.append(str);
-    headers["Content-Type"]   = "text/html";
+    this->data                = std::move(str);
+    headers["Content-Type"]   = "text/plain";
     headers["Content-Length"] = std::to_string(this->data.size());
 
+    return *this;
+}
+
+Response& Response::json(std::string str) {
+    this->data                = std::move(str);
+    headers["Content-Type"]   = "application/json";
+    headers["Content-Length"] = std::to_string(this->data.size());
+
+    return *this;
+}
+
+Response& Response::attachment(const std::filesystem::path& path) {
+    if (path.empty()) {
+        SafeLogger::log("File path is empty");
+        return *this;
+    }
+    if (!path.has_extension()) {
+        SafeLogger::log("File doesn't have extenstion.");
+        return *this;
+    }
+    if (path.is_absolute()) {
+        SafeLogger::log("Please provide relative path instead of absolue.");
+        return *this;
+    }
+
+    this->file_path = path;
     return *this;
 }
 
@@ -53,4 +91,8 @@ std::string Response::to_string() {
     }
 
     return res;
+}
+
+std::filesystem::path Response::file() const {
+    return this->file_path;
 }

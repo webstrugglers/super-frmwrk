@@ -1,7 +1,9 @@
 #ifndef ROUTER_HPP
 #define ROUTER_HPP
 
+#include <filesystem>
 #include <functional>
+#include <memory>
 #include "request.hpp"
 #include "response.hpp"
 
@@ -15,21 +17,22 @@
  */
 class Router {
 private:
-    std::unordered_map<PathAndType,
-                       std::function<void(const Request& req, Response& res)>>
-        routing_table; /**< Internal map that associates HTTP methods and paths
-                          with controller functions. */
+    std::unique_ptr<std::unordered_map<
+        PathAndType,
+        std::function<void(const Request& req, Response& res)>>>
+        routing_table; /**< Internal hashmap that associates HTTP methods and
+                          paths with controller functions. */
+
+    /**
+     * Hashmap that maps file extensions to their respective MIME types. Only
+     * contains common MIME types
+     * (defined by Mozilla
+     * developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
+     */
+    std::unique_ptr<std::unordered_map<std::string, std::string>> mimes;
 
 public:
     Router();
-
-    /**
-     * @brief Returns routing table used for routing
-     *
-     */
-    std::unordered_map<PathAndType,
-                       std::function<void(const Request& req, Response& res)>>&
-    table();
 
     /**
      * @brief Used internally to allow dispatcher to call appropriate
@@ -89,6 +92,17 @@ public:
     void post(const char* path,
               const std::function<void(const Request& req, Response& res)>&
                   controller);
+
+    /**
+     * Maps HTTP GET requests + path to files in the specified directory
+     *
+     * This method configures the router to serve static files located in the
+     * given directory. The path of the requested file is mapped relative to the
+     * specified directory.
+     *
+     * @param path The path to the directory containing static files.
+     */
+    void serve_static(const std::filesystem::path& path);
 };
 
 #endif  // !ROUTER_HPP
