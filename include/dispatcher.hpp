@@ -32,6 +32,6 @@ void take_over(SOCKET_FD csock, Router& router);
  */
 std::size_t recv_headers(SOCKET_FD csock, std::string& request);
 
-void recv_body(SOCKET_FD csock, std::string& request, size_t length);
+void recv_body(SOCKET_FD csock, std::string& request, size_t& length);
 
 #endif  // !DISPATCHER_HPP
