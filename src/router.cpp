@@ -152,23 +152,21 @@ void Router::call(const PathAndType& pat, const Request& req, Response& res) {
     }
 }
 
-// TODO:
-//      1. implementirati tako da putanja do direktorijuma nije bitna
-//      2. koristiti std::filesystem::recursive_directory_iterator da bi se
-//      prosli sub-direktorijumi
+// TODO: dinamicko resolvovanje rute
 void Router::serve_static(const std::filesystem::path& path) {
-    if (path.is_absolute()) {
-        SafeLogger::log("Provide relative path!");
-        exit(EXIT_FAILURE);
-    }
-
     if (!std::filesystem::is_directory(path)) {
         SafeLogger::log("Provided path must be directory");
         exit(EXIT_FAILURE);
     }
 
+    auto path_str = path.string();
+    if (path_str[path_str.length() - 1] == '/') {
+        path_str = path_str.substr(0, path_str.length() - 1);
+    }
+
     const std::string index = "index.html";
-    for (const auto& entry : std::filesystem::directory_iterator(path)) {
+    for (const auto& entry :
+         std::filesystem::recursive_directory_iterator(path_str)) {
         if (entry.is_regular_file()) {
             const auto& entry_path = entry.path();
             auto        entry_str  = entry_path.string();
@@ -177,19 +175,12 @@ void Router::serve_static(const std::filesystem::path& path) {
                 res.status(OK).attachment(entry_path);
             };
 
-            auto shorter_path = entry_path;
-            // check if path start with './' so we ignore ./
-            if (entry_str[0] == '.') {
-                shorter_path = std::filesystem::path(entry_str.substr(2));
-            }
+            auto shorter_path =
+                std::filesystem::path(entry_str.substr(path_str.length()));
             auto shorter_str = shorter_path.string();
 
-            SafeLogger::log(shorter_str);
-
-            //
             PathAndType pat(shorter_str.substr(shorter_str.find('/')),
                             HTTP_GET);
-            SafeLogger::log(pat.path);
 
             // map GET / to index.html
             if (entry_str.compare(entry_str.length() - index.length(),

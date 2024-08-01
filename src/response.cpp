@@ -56,11 +56,8 @@ Response& Response::attachment(const std::filesystem::path& path) {
         SafeLogger::log("File doesn't have extenstion.");
         return *this;
     }
-    if (path.is_absolute()) {
-        SafeLogger::log("Please provide relative path instead of absolue.");
-        return *this;
-    }
 
+    // file size will be calculated when serializing
     this->file_path = path;
     return *this;
 }

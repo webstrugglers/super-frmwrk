@@ -2,28 +2,249 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>About - Simple 3 Page Website</title>
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BISKA INC</title>
+    <link href="./styles.css" type="text/css" rel="stylesheet" />
   </head>
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
+    <!-- Header -->
+    <header class="absolute top-0 w-full bg-transparent px-6 py-14 z-50">
+      <nav class="container mx-auto flex justify-between items-center">
+        <!--logo-->
+        <a href="/" class="flex gap-2 lg:gap-7 items-center">
+          <div class="bg-white rounded-full w-14 h-14"></div>
+          <div class="text-white text-4xl font-cooper font-thin">BISKA INC</div>
+        </a>
+
+        <!--mobile menu-->
+        <div class="lg:hidden">
+          <div
+            id="menu"
+            class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
+          >
+            <a href="./index.html">HOME</a>
+            <a href="./careers.html">CAREERS</a>
+            <a href="./about.html">ABOUT</a>
+            <a href="./contact.html">CONTACT US</a>
+          </div>
+        </div>
+
+        <!--hamburger icon-->
+        <button
+          id="menu-btn"
+          aria-label="hamburger button"
+          class="w-12 h-12 lg:hidden"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            stroke="#FFF"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M5 6.5H19V8H5V6.5Z" fill="#FFF"></path>
+              <path d="M5 16.5H19V18H5V16.5Z" fill="#FFF"></path>
+              <path d="M5 11.5H19V13H5V11.5Z" fill="#FFF"></path>
+            </g>
+          </svg>
+        </button>
+
+        <!--nav links-->
+        <ul class="hidden lg:flex lg:space-x-11">
+          <li>
+            <a
+              href="./index.html"
+              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
+              >HOME</a
+            >
+          </li>
+          <li>
+            <a
+              href="./careers.html"
+              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
+              >CAREERS</a
+            >
+          </li>
+          <li>
+            <a
+              href="./about.html"
+              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
+              >ABOUT</a
+            >
+          </li>
+          <li>
+            <a
+              href="./contact.html"
+              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
+              >CONTACT US</a
+            >
+          </li>
         </ul>
       </nav>
     </header>
-    <main>
-      <section>
-        <h1>About Us</h1>
-        <p>This page provides information about our website.</p>
-      </section>
-    </main>
-    <footer>
-      <p>&copy; 2024 Simple 3 Page Website</p>
+
+    <!-- Hero Section -->
+    <section
+      id="hero"
+      class="relative bg-about_hero bg-no-repeat bg-cover bg-bottom px-6 py-44 lg:py-60"
+    >
+      <!-- Overlay -->
+      <div class="absolute inset-0 bg-ourRed opacity-30"></div>
+      <!--content-->
+      <div class="container relative z-20 mx-auto text-center">
+        <h1 class="mb-5 lg:mb-8">CONNECT WITH TRUCKING INDUSTRY</h1>
+        <p class="text-white text-xl lg:text-2xl">With BISKA INC</p>
+      </div>
+    </section>
+
+    <!--Our story section-->
+    <section>
+      <!--info-->
+      <div
+        class="container px-6 py-7 mx-auto flex flex-col gap-4 text-center md:py-9 md:flex-row md:justify-between"
+      >
+        <p class="text-xl">950 N Villa Ave, Villa Park IL</p>
+        <div><a class="text-xl" href="tel:+13318081989">(331) 808-1989</a></div>
+        <div>
+          <a class="text-xl" href="mailto:info@biskainc.com"
+            >info@biskainc.com</a
+          >
+        </div>
+      </div>
+      <!--separator-->
+      <div class="w-full border border-black"></div>
+      <!--services-->
+      <div class="container mx-auto px-6 py-8 mb-3 lg:mb-5 lg:py-14">
+        <div
+          class="grid grid-cols-1 justify-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          <div class="text-center">
+            <img
+              class="h-16 mx-auto"
+              src="img/About_1_ikona.svg"
+              alt="24 hours a day icon. 24/7 line symbol. Support service sign. Help assistance concept."
+            />
+            <p class="text-xl mt-2 md:mt-4">Availability</p>
+          </div>
+          <div class="text-center">
+            <img
+              class="h-16 mx-auto"
+              src="img/About_2_ikona.svg"
+              alt="Driver icon"
+            />
+            <p class="text-xl mt-2 md:mt-4">Professional drivers</p>
+          </div>
+          <div class="text-center">
+            <img
+              class="h-16 mx-auto"
+              src="img/About_3_ikona.svg"
+              alt="A delivery van with clock symbolishing delivery time, line vector icon"
+            />
+            <p class="text-xl mt-2 md:mt-4">On time deliveries</p>
+          </div>
+          <div class="text-center">
+            <img
+              class="h-16 mx-auto"
+              src="img/About_4_ikona.svg"
+              alt="Customer service icon"
+            />
+            <p class="text-xl mt-2 md:mt-4">Professional customer service</p>
+          </div>
+        </div>
+      </div>
+      <!--content-->
+      <div class="container mx-auto px-6">
+        <div
+          class="flex flex-col-reverse gap-8 items-center lg:gap-0 lg:flex-row"
+        >
+          <div class="lg:max-w-[50%]">
+            <h2 class="text-center mb-5">OUR STORY</h2>
+            <p>
+              Biska INC is a transport company specializing in general freight
+              transportation, using 53ft Dry Van shipping trailers.
+            </p>
+            <p>
+              With over 10 years of experience in the industry, we guarantee
+              your freight is in safe hands.
+            </p>
+            <p>
+              We began our business in Illinois, later we expanded our service
+              to the whole USA and Canada. With our several years of experience,
+              we offer our clients standard, special, and express services.
+            </p>
+          </div>
+          <div class="lg:max-w-[50%]">
+            <img
+              src="img/About_gore_desno.webp"
+              alt="Company and customers metaphor. Company as a root of tree and customers as leaves of tree."
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!--Our mission-->
+    <section class="pt-14 pb-20">
+      <div class="container mx-auto px-6">
+        <div
+          class="flex flex-col gap-8 items-center mb-12 md:mb-20 lg:gap-0 lg:flex-row"
+        >
+          <div class="lg:max-w-[50%]">
+            <img
+              src="img/About_dole_levo.webp"
+              alt="Abstract image of the world logistics for support import export business and transportation"
+            />
+          </div>
+          <div class="lg:max-w-[50%]">
+            <h2 class="text-center mb-5">OUR MISSION</h2>
+            <p>
+              We have focused on raising customer service to the highest
+              possible level.
+            </p>
+            <p>
+              Our dispatch service is available 24 hours a day, 365 days a year,
+              and we are always prepared to answer all your questions.
+            </p>
+            <p>
+              All trucks we offer are new generation which go through inspection
+              before each haul to make sure that everything will be safe and
+              secure.
+            </p>
+          </div>
+        </div>
+        <div class="xl:max-w-[80%] mx-auto">
+          <p>
+            We are very proud of our drivers, who have been carefully selected
+            based on their experience and high qualifications for the job who
+            make sure the freight is safe at all times.
+          </p>
+          <p>
+            If you should choose our company, rest assured that you have a
+            reliable and trustworthy partner who at all times fulfills all
+            safety and logistic requirements, which is precisely why we have
+            been in business for over 10 years.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-ourRose text-white py-6 mt-10 w-full">
+      <div class="container mx-auto text-center">
+        <p>&copy; 2024 BISKA INC. All rights reserved.</p>
+        <p>
+          950 N Villa Ave, Villa Park IL | (331) 808-1989 | info@biskainc.com
+        </p>
+      </div>
     </footer>
+
+    <!--script-->
+    <script src="./script.js"></script>
   </body>
 </html>
