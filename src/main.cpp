@@ -9,8 +9,8 @@ void hello_world(const Request& req, Response& res) {
 }
 
 void init_router(Router& router) {
-    router.route(HTTP_GET, "/home", hello_world);
-    router.serve_static("/home/mrda/Work/biskainc/dist/");
+    router.route(HTTP_GET, "/controller", hello_world);
+    router.serve_static("./public/");
 }
 
 int main() {

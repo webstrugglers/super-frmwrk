@@ -68,13 +68,15 @@ void take_over(SOCKET_FD csock, Router& router) {
             return;
         }
 
-        std::cout << request;
+        // std::cout << request;
 
         req = rqp.parseHeaderSection(request.substr(0, headers_end));
     }
 
     router.call(req->getPathAndType(), *req, res);
+
     auto odg = res.to_string();
+    std::cout << odg << std::endl;
 
     ssize_t sent_bytes = send(csock, odg.data(), odg.size(), 0);
     if (sent_bytes == -1) {

@@ -5,6 +5,7 @@
  */
 
 #include "router.hpp"
+#include <cstdlib>
 #include <filesystem>
 #include <string>
 #include "constants.hpp"
@@ -137,10 +138,11 @@ void Router::put(
     route(HTTP_PUT, path, controller);
 }
 
+// TODO: handle errors
 void Router::call(const PathAndType& pat, const Request& req, Response& res) {
-    auto func = this->routing_table->find(pat);
-    if (func != this->routing_table->end()) {
-        func->second(req, res);
+    auto route_handle_it = this->routing_table->find(pat);
+    if (route_handle_it != this->routing_table->end()) {
+        route_handle_it->second(req, res);
         auto file = res.file();
         if (!file.empty()) {
             res.set("Content-Type", mimes->at(file.extension().string()));
@@ -148,54 +150,71 @@ void Router::call(const PathAndType& pat, const Request& req, Response& res) {
                     std::to_string(std::filesystem::file_size(file)));
         }
     } else {
-        res.attachment("./public/notfound.html");
+        if (!(pat.path.find("..") == std::string::npos)) {
+            SafeLogger::log("Path traversal attempt");
+            return;
+        }
+        // If the requested function is not found, we will check if the client
+        // is trying to access a file that was created after the server started.
+        std::filesystem::path local = this->static_root;
+        local.concat(pat.path);
+        SafeLogger::log(local);
+        if (std::filesystem::exists(local)) {
+            auto controller = [local](const Request& /*req*/, Response& res2) {
+                res2.status(OK).attachment(local);
+            };
+            this->routing_table->emplace(pat, controller);
+            controller(req, res);
+        } else {
+            res.status(NOT_FOUND).attachment("./public/notfound.html");
+        }
     }
 }
 
 // TODO: dinamicko resolvovanje rute
 void Router::serve_static(const std::filesystem::path& path) {
-    if (!std::filesystem::is_directory(path)) {
-        SafeLogger::log("Provided path must be directory");
+    std::filesystem::path abs_path;
+    try {
+        abs_path = std::filesystem::canonical(path);
+    } catch (std::filesystem::filesystem_error& err) {
+        SafeLogger::log("Error converting to absolute path");
+        SafeLogger::log(err.what());
         exit(EXIT_FAILURE);
     }
 
-    auto path_str = path.string();
-    if (path_str[path_str.length() - 1] == '/') {
-        path_str = path_str.substr(0, path_str.length() - 1);
+    if (!std::filesystem::is_directory(abs_path)) {
+        SafeLogger::log("Router::serve_static Must provide directory!");
+        exit(EXIT_FAILURE);
     }
 
-    const std::string index = "index.html";
-    for (const auto& entry :
-         std::filesystem::recursive_directory_iterator(path_str)) {
-        if (entry.is_regular_file()) {
-            const auto& entry_path = entry.path();
-            auto        entry_str  = entry_path.string();
+    // save this path for dynamic routing in the future
+    this->static_root = abs_path;
 
-            auto func = [entry_path](const Request& /*req*/, Response& res) {
-                res.status(OK).attachment(entry_path);
+    {
+        // if path/index.html exists map GET / to it
+        auto index_path = abs_path;
+        index_path.concat("/index.html");
+        if (std::filesystem::exists(index_path)) {
+            auto index_func = [index_path](const Request& /*req*/,
+                                           Response& res) {
+                res.status(OK).attachment(index_path);
+            };
+            this->routing_table->emplace(PathAndType("/", HTTP_GET),
+                                         index_func);
+        }
+    }
+    for (const auto& entry :
+         std::filesystem::recursive_directory_iterator(abs_path)) {
+        if (entry.is_regular_file()) {
+            std::string path_str  = abs_path.string();
+            std::string entry_str = entry.path().string();
+            auto        func = [entry](const Request& /*req*/, Response res) {
+                res.status(OK).attachment(entry);
             };
 
-            auto shorter_path =
-                std::filesystem::path(entry_str.substr(path_str.length()));
-            auto shorter_str = shorter_path.string();
-
-            PathAndType pat(shorter_str.substr(shorter_str.find('/')),
-                            HTTP_GET);
-
-            // map GET / to index.html
-            if (entry_str.compare(entry_str.length() - index.length(),
-                                  index.length(), index) == 0) {
-                this->routing_table->emplace(PathAndType("/", HTTP_GET), func);
-            }
-
-            // insert path into the routing table
-            auto ret = this->routing_table->emplace(pat, func);
-            if (!ret.second) {
-                SafeLogger::log("You tried mapping Path (" + pat.path +
-                                ") and method type (" + pat.method_type +
-                                ") more than once");
-                exit(EXIT_FAILURE);
-            }
+            auto uri = entry_str.substr(path_str.length());
+            SafeLogger::log(uri);
+            this->routing_table->emplace(PathAndType(uri, HTTP_GET), func);
         }
     }
 }

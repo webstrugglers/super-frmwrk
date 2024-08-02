@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
+#include <vector>
 #include "request.hpp"
 #include "response.hpp"
 
@@ -30,6 +31,13 @@ private:
      * developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types)
      */
     std::unique_ptr<std::unordered_map<std::string, std::string>> mimes;
+
+    /**
+     * @brief Path to the directory where we look for static files
+     *
+     * This path is set by Router::serve_static method
+     */
+    std::filesystem::path static_root;
 
 public:
     Router();
