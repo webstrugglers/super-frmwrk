@@ -2,200 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BISKA INC</title>
-    <link href="styles.css" type="text/css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - My Website</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <!-- Header -->
-    <header class="absolute top-0 w-full bg-transparent px-6 py-14 z-50">
-      <nav class="container mx-auto flex justify-between items-center">
-        <!--logo-->
-        <a href="/" class="flex gap-2 lg:gap-7 items-center">
-          <div class="bg-white rounded-full w-14 h-14"></div>
-          <div class="text-white text-4xl font-cooper font-thin">BISKA INC</div>
-        </a>
-
-        <!--mobile menu-->
-        <div class="lg:hidden">
-          <div
-            id="menu"
-            class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
-          >
-            <a href="./index.html">HOME</a>
-            <a href="careers.html">CAREERS</a>
-            <a href="./about.html">ABOUT</a>
-            <a href="./contact.html">CONTACT US</a>
-          </div>
-        </div>
-
-        <!--hamburger icon-->
-        <button
-          id="menu-btn"
-          aria-label="hamburger button"
-          class="w-12 h-12 lg:hidden"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            stroke="#FFF"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              <path d="M5 6.5H19V8H5V6.5Z" fill="#FFF"></path>
-              <path d="M5 16.5H19V18H5V16.5Z" fill="#FFF"></path>
-              <path d="M5 11.5H19V13H5V11.5Z" fill="#FFF"></path>
-            </g>
-          </svg>
-        </button>
-
-        <!--nav links-->
-        <ul class="hidden lg:flex lg:space-x-11">
-          <li>
-            <a
-              href="./index.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >HOME</a
-            >
-          </li>
-          <li>
-            <a
-              href="./careers.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >CAREERS</a
-            >
-          </li>
-          <li>
-            <a
-              href="./about.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >ABOUT</a
-            >
-          </li>
-          <li>
-            <a
-              href="./contact.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >CONTACT US</a
-            >
-          </li>
+    <header>
+      <h1>Welcome to My Website</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </header>
-
-    <!-- Hero Section -->
-    <section
-      id="hero"
-      class="relative bg-home_hero bg-no-repeat bg-cover bg-bottom px-6 py-44 lg:pt-60 lg:pb-80"
-    >
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-ourRed opacity-30"></div>
-      <!--content-->
-      <div class="container relative z-20 mx-auto">
-        <div class="pb-10 text-center mx-auto lg:pb-0">
-          <h1>SAFELY DELIVERING YOUR FREIGHT SINCE 2014</h1>
-        </div>
-      </div>
-    </section>
-
-    <!-- Description section -->
-    <section id="description" class="px-6 pt-14 lg:pt-16">
-      <div class="container mx-auto">
-        <div class="text-center">
-          <h2 class="pb-8">DELIVERING YOUR FREIGHT ACROSS USA AND CANADA</h2>
-          <p class="lg:text-xl pb-4 lg:pb-4">
-            We offer reliable freight transportation at affordable prices
-          </p>
-          <p class="lg:text-xl pb-4 lg:pb-4">
-            With over 10 years of experience in the transportation industry and
-            millions of covered miles, we can say that we feel most at ease when
-            on the road.
-          </p>
-          <p class="lg:text-xl">
-            With a modern fleet, reliable and experience drivers, a dispatch
-            center that is at your service 24/7 and a network of coworkers all
-            over the country, we can guarantee reliable transportation of your
-            freight at the most competitive prices, stress free.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="px-6 pt-14 lg:pt-16">
-      <div
-        class="container mx-auto flex flex-col space-y-8 md:space-y-0 md:flex-row md:space-x-20 md:items-end"
-      >
-        <!--pink box-->
-        <div>
-          <h2
-            class="px-4 py-3 font-bold font-aileron text-center text-4xl border border-black sm:text-6xl lg:text-7xl lg:px-12 lg:py-6"
-          >
-            SERVICES
-          </h2>
-          <div class="bg-ourRose text-white px-3 py-6 lg:px-4 lg:py-14">
-            <p class="lg:text-xl">
-              Choose Biska INC for all your trucking needs.
-            </p>
-            <p class="lg:text-xl">
-              Biska INC offers a wide range of service levels.
-            </p>
-            <p class="lg:text-xl">
-              Whether you need to ship dry goods or specialized freight, you can
-              count on Biska INC. Our range of truck-based services are designed
-              to provide you with plenty of choices and flexibility in moving
-              your good from any point in USA or Canada.
-            </p>
-          </div>
-        </div>
-        <!--paragraph-->
-        <div class="">
-          <p class="mb-2 lg:text-xl lg:mb-5">
-            A 53 ft dry van is usually what comes to mind when you think of a
-            semi-truck and a trailer. The semi-truck tractor pulls a long
-            rectangular box on wheels which runs between 48 to 53 feet long,
-            102' wide and 110' high and has up to six axies.
-          </p>
-          <p class="mb-2 lg:text-xl lg:mb-5">
-            The maximum cargo weight of a 53-foot dry van trailer falls between
-            42.000 and 45.000 pounds
-          </p>
-          <p class="lg:text-xl">
-            A dry van is a type of semi-trailer that's fully enclosed to protect
-            shipments from outside elements. Designed to carry palletized boxed
-            or loose freight
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Truck image -->
-    <section id="truck" class="px-4 pt-14 lg:pt-16">
-      <div class="container mx-auto">
-        <img
-          src="./img/Home_BIG_TRUCK_dole.webp"
-          alt="Big white trailer truck"
-        />
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-ourRose text-white py-6 mt-10 w-full">
-      <div class="container mx-auto text-center">
-        <p>&copy; 2024 BISKA INC. All rights reserved.</p>
-        <p>
-          950 N Villa Ave, Villa Park IL | (331) 808-1989 | info@biskainc.com
-        </p>
-      </div>
+    <main>
+      <h2>Home Page</h2>
+      <p>
+        This is the home page of my website. Here you can find the latest
+        updates and information.
+      </p>
+    </main>
+    <footer>
+      <p>&copy; 2024 My Website</p>
     </footer>
-
-    <!-- comment -->
-    <script src="./script.js"></script>
   </body>
 </html>

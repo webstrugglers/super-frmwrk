@@ -3,191 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Us - Biska Inc</title>
-    <link href="/styles.css" type="text/css" rel="stylesheet" />
+    <title>Contact Us - My Website</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
-  <body class="bg-gray-100">
-    <!-- Header -->
-    <header class="absolute top-0 w-full bg-transparent px-6 py-14 z-50">
-      <nav class="container mx-auto flex justify-between items-center">
-        <!--logo-->
-        <a href="/" class="flex gap-2 lg:gap-7 items-center">
-          <div class="bg-white rounded-full w-14 h-14"></div>
-          <div class="text-white text-4xl font-cooper font-thin">BISKA INC</div>
-        </a>
-
-        <!--mobile menu-->
-        <div class="lg:hidden">
-          <div
-            id="menu"
-            class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
-          >
-            <a href="./index.html">HOME</a>
-            <a href="careers.html">CAREERS</a>
-            <a href="./about.html">ABOUT</a>
-            <a href="./contact.html">CONTACT US</a>
-          </div>
-        </div>
-
-        <!--hamburger icon-->
-        <button
-          id="menu-btn"
-          aria-label="hamburger button"
-          class="w-12 h-12 lg:hidden"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            stroke="#FFF"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g
-              id="SVGRepo_tracerCarrier"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              <path d="M5 6.5H19V8H5V6.5Z" fill="#FFF"></path>
-              <path d="M5 16.5H19V18H5V16.5Z" fill="#FFF"></path>
-              <path d="M5 11.5H19V13H5V11.5Z" fill="#FFF"></path>
-            </g>
-          </svg>
-        </button>
-
-        <!--nav links-->
-        <ul class="hidden lg:flex lg:space-x-11">
-          <li>
-            <a
-              href="./index.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >HOME</a
-            >
-          </li>
-          <li>
-            <a
-              href="./careers.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >CAREERS</a
-            >
-          </li>
-          <li>
-            <a
-              href="./about.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >ABOUT</a
-            >
-          </li>
-          <li>
-            <a
-              href="./contact.html"
-              class="text-2xl text-white font-aileron font-semibold hover:text-black transition-colors"
-              >CONTACT US</a
-            >
-          </li>
+  <body>
+    <header>
+      <h1>Contact Us</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav>
     </header>
-
-    <!-- Hero Section -->
-    <section
-      id="hero"
-      class="relative bg-contact_hero bg-no-repeat bg-cover bg-top px-6 py-44 lg:py-60"
-    >
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-ourRed opacity-30"></div>
-      <!--content-->
-      <div class="container relative z-20 mx-auto text-center">
-        <h1 class="mb-5 lg:mb-8">GET IN TOUCH WITH OUR SUPPORT TEAM</h1>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="px-6 py-14 lg:py-16">
-      <div class="container mx-auto">
-        <div
-          class="flex flex-col items-center space-y-7 lg:flex-row lg:items-start lg:space-y-0 lg:justify-between xl:justify-evenly"
-        >
-          <!--work time-->
-          <div>
-            <h2 class="text-center mb-6 lg:mb-8">OFFICE HOURS</h2>
-            <div class="border-2 border-ourRose flex">
-              <!--day-->
-              <div class="space-y-3 px-8 py-6 lg:px-16 lg:py-8">
-                <p class="text-center">MONDAY</p>
-                <p class="text-center">TUESDAY</p>
-                <p class="text-center">WEDNESDAY</p>
-                <p class="text-center">THURSDAY</p>
-                <p class="text-center">FRIDAY</p>
-                <p class="text-center">SATURDAY</p>
-                <p class="text-center">SUNDAY</p>
-              </div>
-              <!--vertical line-->
-              <div class="min-h-full bg-ourRose w-[2px]"></div>
-              <!--time-->
-              <div class="space-y-3 px-8 py-6 lg:px-16 lg:py-8">
-                <p class="text-center">8AM-4PM</p>
-                <p class="text-center">8AM-4PM</p>
-                <p class="text-center">8AM-4PM</p>
-                <p class="text-center">8AM-4PM</p>
-                <p class="text-center">8AM-4PM</p>
-                <p class="text-center">8AM-4PM</p>
-                <p class="text-center">8AM-4PM</p>
-              </div>
-            </div>
-          </div>
-          <!--boxes-->
-          <div class="flex flex-col items-center lg:pt-[60px]">
-            <div class="max-w-[400px] space-y-4 lg:space-y-20">
-              <!--call us box-->
-              <div class="px-16 py-5 bg-[#EFE5E7] flex flex-col text-center">
-                <h3 class="text-2xl font-bold mb-4 text-black">CALL US</h3>
-                <p class="text-xl text-black">
-                  GET IN TOUCH WITH OUR SUPPORT TEAM
-                </p>
-                <address class="text-xl mt-4 not-italic">
-                  <a class="text-xl" href="tel:+13318081989">(331) 808-1989</a>
-                </address>
-              </div>
-
-              <!--email us box-->
-              <div class="px-16 py-5 bg-[#E5D5D9] flex flex-col text-center">
-                <h3 class="text-2xl font-bold mb-4 text-black">EMAIL US</h3>
-                <p class="text-xl text-black">
-                  SEND US AN EMAIL AND WE WILL GET BACK TO YOU SOON
-                </p>
-                <address class="text-xl mt-4 not-italic">
-                  <a href="mailto:info@biskainc.com">info@biskainc.com</a>
-                </address>
-              </div>
-
-              <!--location box-->
-              <div class="px-16 py-5 bg-[#DDC6CB] flex flex-col text-center">
-                <h3 class="text-2xl font-bold mb-4 text-black">
-                  COMPANY HEADQUARTERS
-                </h3>
-                <p class="text-xl text-black"></p>
-                <p class="text-xl mt-4 text-black">
-                  950 N Villa Ave, Villa Park IL
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-ourRose text-white py-6 mt-10 w-full">
-      <div class="container mx-auto text-center">
-        <p>&copy; 2024 BISKA INC. All rights reserved.</p>
-        <p>
-          950 N Villa Ave, Villa Park IL | (331) 808-1989 | info@biskainc.com
-        </p>
-      </div>
+    <main>
+      <h2>Contact Us</h2>
+      <p>
+        If you have any questions, feel free to reach out to us using the form
+        below.
+      </p>
+      <form action="#" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required /><br />
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br />
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea
+        ><br />
+        <input type="submit" value="Send" />
+      </form>
+    </main>
+    <footer>
+      <p>&copy; 2024 My Website</p>
     </footer>
-
-    <!-- Script -->
-    <script src="./script.js"></script>
   </body>
 </html>
