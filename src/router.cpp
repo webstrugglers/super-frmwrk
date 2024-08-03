@@ -139,43 +139,115 @@ void Router::put(
 }
 
 // TODO: handle errors
-void Router::call(const PathAndType& pat, const Request& req, Response& res) {
-    auto route_handle_it = this->routing_table->find(pat);
+void Router::call(const Request& req, Response& res) {
+    auto route_handle_it = this->routing_table->find(req.getPathAndType());
     if (route_handle_it != this->routing_table->end()) {
-        route_handle_it->second(req, res);
-        auto file = res.file();
-        if (!file.empty()) {
-            res.set("Content-Type", mimes->at(file.extension().string()));
-            res.set("Content-Length",
-                    std::to_string(std::filesystem::file_size(file)));
-        }
+        handle_route(route_handle_it->second, req, res);
     } else {
-        if (!(pat.path.find("..") == std::string::npos)) {
-            SafeLogger::log("Path traversal attempt");
-            return;
-        }
-        // If the requested function is not found, we will check if the client
-        // is trying to access a file that was created after the server started.
-        std::filesystem::path local = this->static_root;
-        local.concat(pat.path);
-        SafeLogger::log(local);
-        if (std::filesystem::exists(local)) {
-            auto controller = [local](const Request& /*req*/, Response& res2) {
-                res2.status(OK).attachment(local);
+        potential_static(req, res);
+    }
+}
+
+void Router::serve_static(const std::filesystem::path& p) {
+    set_static_root(p);
+    map_root_to_index();
+
+    for (const auto& entry :
+         std::filesystem::recursive_directory_iterator(this->static_root)) {
+        if (entry.is_regular_file()) {
+            std::string path_str  = this->static_root.string();
+            std::string entry_str = entry.path().string();
+            auto        func = [entry](const Request& /*req*/, Response& res) {
+                res.status(OK).attachment(entry.path());
             };
-            this->routing_table->emplace(pat, controller);
-            controller(req, res);
-        } else {
-            res.status(NOT_FOUND).attachment("./public/notfound.html");
+
+            auto uri = entry_str.substr(path_str.length());
+            this->routing_table->emplace(PathAndType(uri, HTTP_GET), func);
         }
     }
 }
 
-// TODO: dinamicko resolvovanje rute
-void Router::serve_static(const std::filesystem::path& path) {
+void Router::handle_route(
+    std::function<void(const Request&, Response&)>& handler,
+    const Request&                                  req,
+    Response&                                       res) {
+    handler(req, res);
+
+    auto file = res.file();
+    if (std::filesystem::exists(file)) {
+        res.set("Content-Type", mimes->at(file.extension().string()));
+        res.set("Content-Length",
+                std::to_string(std::filesystem::file_size(file)));
+    } else {
+        res_not_found(req.getPathAndType(), res);
+    }
+}
+
+void Router::potential_static(const Request& req, Response& res) {
+    // If the requested function is not found, we will check if the client
+    // is trying to access a file that was created after the server started.
+    auto pat = req.getPathAndType();
+    if (!(pat.path.find("..") == std::string::npos)) {
+        SafeLogger::log("Path traversal attempt");
+        res.status(FORBIDDEN);
+        return;
+    }
+
+    std::filesystem::path local = this->static_root;
+    local.concat(pat.path);
+    try {
+        local = std::filesystem::weakly_canonical(local);
+    } catch (std::filesystem::filesystem_error& err) {
+        SafeLogger::log(err.what());
+        res.status(FORBIDDEN);
+        return;
+    }
+
+    if (is_req_file_legit(local)) {
+        auto controller = [local](const Request& /*req*/, Response& ress) {
+            ress.status(OK).attachment(local);
+        };
+        this->routing_table->emplace(pat, controller);
+        controller(req, res);
+    } else {
+        res_not_found(pat, res);
+    }
+}
+
+bool Router::is_req_file_legit(const std::filesystem::path& p) {
+    auto err = p.string().find(this->static_root.string());
+    if (err == std::string::npos) {
+        return false;
+    }
+    return std::filesystem::exists(p) && std::filesystem::is_regular_file(p);
+}
+
+void Router::res_not_found(const PathAndType& pat, Response& res) {
+    auto              str    = pat.path;
+    const std::string suffix = "html";
+    if (str.size() >= suffix.size() &&
+        (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0)) {
+        res.status(NOT_FOUND).attachment("./public/notfound.html");
+    } else {
+        res.status(NOT_FOUND);
+    }
+}
+
+void Router::map_root_to_index() {
+    auto index_path = this->static_root;
+    index_path.concat("/index.html");
+    if (std::filesystem::exists(index_path)) {
+        auto index_func = [index_path](const Request& /*req*/, Response& res) {
+            res.status(OK).attachment(index_path);
+        };
+        this->routing_table->emplace(PathAndType("/", HTTP_GET), index_func);
+    }
+}
+
+void Router::set_static_root(const std::filesystem::path& p) {
     std::filesystem::path abs_path;
     try {
-        abs_path = std::filesystem::canonical(path);
+        abs_path = std::filesystem::canonical(p);
     } catch (std::filesystem::filesystem_error& err) {
         SafeLogger::log("Error converting to absolute path");
         SafeLogger::log(err.what());
@@ -186,35 +258,5 @@ void Router::serve_static(const std::filesystem::path& path) {
         SafeLogger::log("Router::serve_static Must provide directory!");
         exit(EXIT_FAILURE);
     }
-
-    // save this path for dynamic routing in the future
     this->static_root = abs_path;
-
-    {
-        // if path/index.html exists map GET / to it
-        auto index_path = abs_path;
-        index_path.concat("/index.html");
-        if (std::filesystem::exists(index_path)) {
-            auto index_func = [index_path](const Request& /*req*/,
-                                           Response& res) {
-                res.status(OK).attachment(index_path);
-            };
-            this->routing_table->emplace(PathAndType("/", HTTP_GET),
-                                         index_func);
-        }
-    }
-    for (const auto& entry :
-         std::filesystem::recursive_directory_iterator(abs_path)) {
-        if (entry.is_regular_file()) {
-            std::string path_str  = abs_path.string();
-            std::string entry_str = entry.path().string();
-            auto        func = [entry](const Request& /*req*/, Response res) {
-                res.status(OK).attachment(entry);
-            };
-
-            auto uri = entry_str.substr(path_str.length());
-            SafeLogger::log(uri);
-            this->routing_table->emplace(PathAndType(uri, HTTP_GET), func);
-        }
-    }
 }

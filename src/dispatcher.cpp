@@ -13,9 +13,9 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <filesystem>
-#include <iostream>
 #include <string>
 #include "constants.hpp"
+#include "logger.hpp"
 #include "req-parser.hpp"
 
 std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
@@ -52,8 +52,6 @@ std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
 }
 
 void take_over(SOCKET_FD csock, Router& router) {
-    std::cout << "Hello, world from dispatcher\n";
-
     std::unique_ptr<Request> req;
     Response                 res;
 
@@ -68,15 +66,14 @@ void take_over(SOCKET_FD csock, Router& router) {
             return;
         }
 
-        // std::cout << request;
+        SafeLogger::log(request);
 
         req = rqp.parseHeaderSection(request.substr(0, headers_end));
     }
 
-    router.call(req->getPathAndType(), *req, res);
+    router.call(*req, res);
 
     auto odg = res.to_string();
-    std::cout << odg << std::endl;
 
     ssize_t sent_bytes = send(csock, odg.data(), odg.size(), 0);
     if (sent_bytes == -1) {
@@ -86,7 +83,7 @@ void take_over(SOCKET_FD csock, Router& router) {
     }
 
     auto file = res.file();
-    if (!file.empty()) {
+    if (std::filesystem::exists(file) && !file.empty()) {
         int fd = open(file.c_str(), O_RDONLY);
         if (fd == -1) {
             perror("open");

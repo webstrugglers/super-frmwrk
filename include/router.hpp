@@ -4,7 +4,7 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
-#include <vector>
+#include "path-and-type.hpp"
 #include "request.hpp"
 #include "response.hpp"
 
@@ -54,7 +54,7 @@ public:
      * @param req Reference to Request object representing HTTP request
      * @param res Reference to Response object that is manipulated by developer
      */
-    void call(const PathAndType& pat, const Request& req, Response& res);
+    void call(const Request& req, Response& res);
 
     /**
      * @brief Maps an HTTP method and path to a controller function.
@@ -102,15 +102,46 @@ public:
                   controller);
 
     /**
-     * Maps HTTP GET requests + path to files in the specified directory
+     * @brief Configures the router to serve static files from a specified
+     * directory.
      *
-     * This method configures the router to serve static files located in the
-     * given directory. The path of the requested file is mapped relative to the
-     * specified directory.
+     * This method sets up the router to serve static files located in the
+     * given directory and its subdirectories. It creates routes for each file,
+     * allowing them to be accessed via HTTP GET requests.
+     * Calling this method multiple times will result in undefined behaviour.
      *
-     * @param path The path to the directory containing static files.
+     * @param path The directory containing the static files to be served.
      */
     void serve_static(const std::filesystem::path& path);
+
+private:
+    void handle_route(std::function<void(const Request&, Response&)>& handler,
+                      const Request&                                  req,
+                      Response&                                       res);
+
+    void set_static_root(const std::filesystem::path& path);
+
+    /**
+     * @brief Sets not found status for response. If html document was
+     * requested, additionally returns page not found document
+     *
+     */
+    void res_not_found(const PathAndType& pat, Response& res);
+
+    /**
+     * @brief Attempts to locate the requested file if no handler is available.
+     *
+     */
+    void potential_static(const Request& req, Response& res);
+
+    /**
+     * @brief Verifies that the provided file path is both valid and points to
+     * an existing file.
+     */
+    bool is_req_file_legit(const std::filesystem::path& p);
+
+    /// if path/index.html exists map GET / to it
+    void map_root_to_index();
 };
 
 #endif  // !ROUTER_HPP

@@ -6,9 +6,6 @@
 #include <unordered_map>
 #include "http-status-codes.hpp"
 
-// http://expressjs.com/en/5x/api.html#res
-// po uzoru na express
-
 /**
  * @class Response
  * @brief A class to represent HTTP response. For developers to use.
@@ -39,8 +36,8 @@ public:
 
     /** Sets the response’s HTTP header field to value.
      * res.set('Content-Type', 'text/plain')
-     * @param field
-     * @param value
+     * @param field Header name
+     * @param value Header value
      */
     Response& set(const std::basic_string<char>& field,
                   const std::basic_string<char>& value);
