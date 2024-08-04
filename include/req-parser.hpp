@@ -2,8 +2,6 @@
 #define REQ_PARSER_HPP
 #include <memory>
 #include <string>
-#include "constants.hpp"
-#include "path-and-type.hpp"
 #include "request.hpp"
 using Headers     = std::unordered_map<std::string, std::string>;
 using QueryParams = std::unordered_map<std::string, std::string>;
@@ -26,15 +24,7 @@ public:
      * @param request raw HTTP request as a string
      * @return Request object.
      */
-    Request parseRequest(std::string& request);
-    /**
-     * @brief Independent method for parsing headers from HTTP Request.(Can be
-     * called anywhere in code and it will parse them).
-     *
-     * @param request Raw HTTP Request;
-     * @return Pointer to request.
-     */
-    std::unique_ptr<Request> parseHeaderSection(const std::string& str);
+    std::unique_ptr<Request> parseRequest(std::string& request);
 
 private:
     PathAndType parsePathAndType(std::string& request);
@@ -42,8 +32,6 @@ private:
     MethodType parseMethod(std::string& request);
 
     void parseHeaders(std::string& request, Headers& headers) const;
-
-    std::string parseBody(std::string& request) const;
 
     bool lineNotEmpty(std::string& line) const;
 

@@ -140,7 +140,7 @@ void Router::put(
 
 // TODO: handle errors
 void Router::call(const Request& req, Response& res) {
-    auto route_handle_it = this->routing_table->find(req.getPathAndType());
+    auto route_handle_it = this->routing_table->find(req.path_and_type);
     if (route_handle_it != this->routing_table->end()) {
         handle_route(route_handle_it->second, req, res);
     } else {
@@ -179,14 +179,14 @@ void Router::handle_route(
         res.set("Content-Length",
                 std::to_string(std::filesystem::file_size(file)));
     } else {
-        res_not_found(req.getPathAndType(), res);
+        res_not_found(req.path_and_type, res);
     }
 }
 
 void Router::potential_static(const Request& req, Response& res) {
     // If the requested function is not found, we will check if the client
     // is trying to access a file that was created after the server started.
-    auto pat = req.getPathAndType();
+    auto pat = req.path_and_type;
     if (!(pat.path.find("..") == std::string::npos)) {
         SafeLogger::log("Path traversal attempt");
         res.status(FORBIDDEN);

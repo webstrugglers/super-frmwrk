@@ -68,38 +68,38 @@ void take_over(SOCKET_FD csock, Router& router) {
             return;
         }
 
-        req           = rqp.parseHeaderSection(request.substr(0, headers_end));
         size_t length = 0;
-        req           = std::make_unique<Request>(rqp.parseRequest(request));
+        req           = rqp.parseRequest(request);
         auto x        = req->headers.find("Content-Length");
-        if (x == req->headers.end()) {
+        if (x != req->headers.end()) {
             req->body = "";
-        }
-        try {
-            length = std::stoul(req->headers.at("Content-Length"));
-        } catch (std::exception& e) {
-            std::cerr << "Invalid Content-Length" << std::endl;
-            close(csock);
-            return;
-        }
-        if (length > MAX_BODY_SIZE) {
-            req->body = "";
-            std::cerr << "You tried to post body thats larger than allowed!"
-                      << std::endl;
-            close(csock);
-            return;
-        }
-        if (request.length() !=
-            length) {  // ako je body vec ucitan ne moramo ici dalj
-            recv_body(csock, request, length);
-        }
+            try {
+                length = std::stoul(x->second);
+            } catch (std::exception& e) {
+                std::cerr << "Invalid Content-Length" << std::endl;
+                close(csock);
+                return;
+            }
+            if (length > MAX_BODY_SIZE) {
+                req->body = "";
+                std::cerr << "You tried to post body thats larger than allowed!"
+                          << std::endl;
+                close(csock);
+                return;
+            }
+            if (request.length() != length) {
+                recv_body(csock, request, length);
+            }
 
-        req->body = request;
+            req->body = request;
+        }
     }
 
     router.call(*req, res);
-
     auto odg = res.to_string();
+
+    SafeLogger::log(req->path_and_type.path);
+    SafeLogger::log(req->path_and_type.method_type);
 
     ssize_t sent_bytes = send(csock, odg.data(), odg.size(), 0);
     if (sent_bytes == -1) {

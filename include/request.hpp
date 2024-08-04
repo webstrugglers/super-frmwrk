@@ -3,7 +3,6 @@
 
 #include <string>
 #include <unordered_map>
-#include "constants.hpp"
 #include "path-and-type.hpp"
 
 /**
@@ -19,15 +18,9 @@ struct Request {
     std::string                                  body;
     std::unordered_map<std::string, std::string> headers;
     std::string                                  path_var;
-    std::unordered_map<std::string, std::string> query_params;
+    std::unordered_map<std::string, std::string> query;
 
-    explicit Request(
-        const PathAndType& new_path_and_type = PathAndType(),
-        std::string        new_body          = "",
-        const std::unordered_map<std::string, std::string>& new_headers  = {},
-        std::string                                         new_path_var = "",
-        const std::unordered_map<std::string, std::string>& new_query_params =
-            {});
+    Request();
 };
 
 #endif  // REQUEST_HPP
