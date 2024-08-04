@@ -8,12 +8,16 @@
  */
 
 #include "dispatcher.hpp"
+#include <fcntl.h>
+#include <sys/sendfile.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
 #include "constants.hpp"
+#include "logger.hpp"
 #include "req-parser.hpp"
 
 std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
@@ -50,8 +54,6 @@ std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
 }
 
 void take_over(SOCKET_FD csock, Router& router) {
-    std::cout << "Hello, world from dispatcher\n";
-
     std::unique_ptr<Request> req;
     Response                 res;
 
@@ -95,13 +97,41 @@ void take_over(SOCKET_FD csock, Router& router) {
         req->body = request;
     }
 
-    router.call(req->path_and_type, *req, res);
+    router.call(*req, res);
 
     auto odg = res.to_string();
 
-    // TODO: handle error
-    send(csock, odg.data(), odg.size(), 0);
-    close(csock);
+    ssize_t sent_bytes = send(csock, odg.data(), odg.size(), 0);
+    if (sent_bytes == -1) {
+        perror("send");
+        close(csock);
+        return;
+    }
+
+    auto file = res.file();
+    if (std::filesystem::exists(file) && !file.empty()) {
+        int fd = open(file.c_str(), O_RDONLY);
+        if (fd == -1) {
+            perror("open");
+            close(csock);
+            return;
+        }
+
+        off_t   offset = 0;
+        ssize_t sent_file_bytes =
+            sendfile(csock, fd, &offset, std::filesystem::file_size(file));
+        if (sent_file_bytes == -1) {
+            // Handle sendfile error
+            perror("sendfile");
+        }
+
+        close(fd);
+    }
+
+    if (close(csock) == -1) {
+        // Handle close error
+        perror("close");
+    }
 }
 void recv_body(int csock, std::string& request, size_t& length) {
     std::size_t bytes_received       = 0;
