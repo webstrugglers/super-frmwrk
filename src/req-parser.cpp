@@ -56,8 +56,6 @@ Request ReqParser::parseRequest(std::string& request) {
     parseHeaders(request, headers);
 
     parsedRequest.headers = headers;
-    std::string body      = std::move(request);
-    parsedRequest.body    = body;
 
     parseQueryParams(pathAndType.path, params);
     parsedRequest.query_params = params;
