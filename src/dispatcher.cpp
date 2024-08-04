@@ -13,6 +13,8 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <filesystem>
+#include <iostream>
+#include <memory>
 #include <string>
 #include "constants.hpp"
 #include "logger.hpp"
@@ -36,7 +38,7 @@ std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
             if (headers_end != std::string::npos) {
                 break;  // headers found
             }
-            if (total_bytes_received > MAX_HEADERS_SIZE) {
+            if (total_bytes_received >= MAX_HEADERS_SIZE) {
                 break;  // headers too big
             }
 
@@ -66,9 +68,33 @@ void take_over(SOCKET_FD csock, Router& router) {
             return;
         }
 
-        SafeLogger::log(request);
+        req           = rqp.parseHeaderSection(request.substr(0, headers_end));
+        size_t length = 0;
+        req           = std::make_unique<Request>(rqp.parseRequest(request));
+        auto x        = req->headers.find("Content-Length");
+        if (x == req->headers.end()) {
+            req->body = "";
+        }
+        try {
+            length = std::stoul(req->headers.at("Content-Length"));
+        } catch (std::exception& e) {
+            std::cerr << "Invalid Content-Length" << std::endl;
+            close(csock);
+            return;
+        }
+        if (length > MAX_BODY_SIZE) {
+            req->body = "";
+            std::cerr << "You tried to post body thats larger than allowed!"
+                      << std::endl;
+            close(csock);
+            return;
+        }
+        if (request.length() !=
+            length) {  // ako je body vec ucitan ne moramo ici dalj
+            recv_body(csock, request, length);
+        }
 
-        req = rqp.parseHeaderSection(request.substr(0, headers_end));
+        req->body = request;
     }
 
     router.call(*req, res);
@@ -105,5 +131,36 @@ void take_over(SOCKET_FD csock, Router& router) {
     if (close(csock) == -1) {
         // Handle close error
         perror("close");
+    }
+}
+void recv_body(int csock, std::string& request, size_t& length) {
+    std::size_t bytes_received       = 0;
+    std::size_t total_bytes_received = 0;
+    std::string buffer;
+    std::size_t start_length = request.length();
+
+    buffer.resize(length);
+    for (int i = 0; i <= MAX_RETRIES; ++i) {
+        bytes_received = recv(csock, buffer.data(), buffer.size(), 0);
+        if (bytes_received > 0) {
+            total_bytes_received += bytes_received;
+            request.append(buffer.data(), bytes_received);
+            std::cout << total_bytes_received << " " << MAX_BODY_SIZE
+                      << std::endl;
+            if (total_bytes_received > MAX_BODY_SIZE) {
+                break;  // body size too big
+            }
+
+            std::cout << bytes_received << " " << MAX_BODY_SIZE << std::endl;
+            if (bytes_received > length) {
+                break;
+            }
+            if (total_bytes_received == length - start_length) {
+                break;  // whole body read
+            }
+            --i;
+        } else {
+            break;
+        }
     }
 }
