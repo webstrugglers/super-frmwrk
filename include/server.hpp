@@ -1,6 +1,8 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
+#include <atomic>
+#include <csignal>
 #include <cstdint>
 
 #include "constants.hpp"
@@ -14,7 +16,9 @@
  */
 class Server {
 private:
-    SOCKET_FD ss;
+    SOCKET_FD         ss;
+    std::atomic<bool> stop_flag;
+    static Server*    me;
 
 public:
     Server();
@@ -34,6 +38,15 @@ public:
      * @param router Reference to the router
      */
     void start(std::uint16_t port, Router& router);
+
+    void handle_signal();
+
+private:
+    static void signal_handler(int signum) {
+        if (signum == SIGINT) {
+            me->handle_signal();
+        }
+    }
 };
 
 #endif  // !SERVER_HPP

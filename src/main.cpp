@@ -1,8 +1,9 @@
-#include <iostream>
 #include "constants.hpp"
 #include "request.hpp"
 #include "router.hpp"
 #include "server.hpp"
+
+#define port 5000
 
 void hello_world(const Request& req, Response& res) {
     res.send("Hello, world from controller function!!").status(OK);
@@ -15,9 +16,6 @@ void init_router(Router& router) {
 }
 
 int main() {
-    std::uint16_t port = 0;
-    std::cin >> port;
-
     Router router;
     init_router(std::ref(router));
 
