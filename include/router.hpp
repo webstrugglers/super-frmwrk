@@ -39,6 +39,8 @@ private:
      */
     std::filesystem::path static_root;
 
+    std::filesystem::path not_found_page;
+
 public:
     Router();
 
@@ -113,6 +115,13 @@ public:
      * @param path The directory containing the static files to be served.
      */
     void serve_static(const std::filesystem::path& path);
+
+    /**
+     * @brief Set your custom 404 page
+     *
+     * @param path Path to your "page not found" html document
+     */
+    void not_found(const std::filesystem::path& path);
 
 private:
     void handle_route(std::function<void(const Request&, Response&)>& handler,

@@ -22,16 +22,4 @@ constexpr size_t  MAX_BODY_SIZE    = 16384;
  */
 void take_over(SOCKET_FD csock, Router& router);
 
-/**
- * @brief Read request line and headers
- *
- * @param csock client socket
- * @param buffer to which buffer to read
- * @return The starting index of the payload. Returns std::string::npos in case
- * of a bad request (e.g. bad request, doesn't respect HTTP)
- */
-std::size_t recv_headers(SOCKET_FD csock, std::string& request);
-
-void recv_body(SOCKET_FD csock, std::string& request, size_t& length);
-
 #endif  // !DISPATCHER_HPP

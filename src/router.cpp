@@ -102,7 +102,8 @@ Router::Router()
               {".zip", "application/zip"},
               {".3gp", "video/3gpp"},
               {".3g2", "video/3gpp2"},
-              {".7z", "application/x-7z-compressed"}})) {}
+              {".7z", "application/x-7z-compressed"}})),
+      not_found_page("./public/notfound.html") {}
 
 void Router::route(
     const MethodType                                              method_type,
@@ -167,6 +168,17 @@ void Router::serve_static(const std::filesystem::path& p) {
     }
 }
 
+void Router::not_found(const std::filesystem::path& p) {
+    if (!std::filesystem::exists(p)) {
+        return;
+    }
+    if (p.extension().compare(".html") != 0) {
+        return;
+    }
+
+    this->not_found_page = p;
+}
+
 void Router::handle_route(
     std::function<void(const Request&, Response&)>& handler,
     const Request&                                  req,
@@ -223,10 +235,8 @@ bool Router::is_req_file_legit(const std::filesystem::path& p) {
 }
 
 void Router::res_not_found(const PathAndType& pat, Response& res) {
-    auto              str    = pat.path;
-    const std::string suffix = "html";
-    if (str.size() >= suffix.size() &&
-        (str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0)) {
+    std::filesystem::path p = std::filesystem::path(pat.path);
+    if (p.extension().compare(".html") == 0 || !p.has_extension()) {
         res.status(NOT_FOUND).attachment("./public/notfound.html");
     } else {
         res.status(NOT_FOUND);

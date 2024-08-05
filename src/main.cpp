@@ -11,10 +11,11 @@ void hello_world(const Request& req, Response& res) {
 void init_router(Router& router) {
     router.route(HTTP_GET, "/controller", hello_world);
     router.serve_static("./public/");
+    router.not_found("./public/notfound.html");
 }
 
 int main() {
-    std::uint16_t port;
+    std::uint16_t port = 0;
     std::cin >> port;
 
     Router router;
