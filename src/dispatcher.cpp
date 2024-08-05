@@ -17,7 +17,6 @@
 #include <memory>
 #include <string>
 #include "constants.hpp"
-#include "logger.hpp"
 #include "req-parser.hpp"
 
 /**
