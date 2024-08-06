@@ -4,7 +4,6 @@
  */
 
 #include "server.hpp"
-#include <arpa/inet.h>
 #include <asm-generic/socket.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -80,20 +79,25 @@ void Server::start(std::uint16_t port, Router& router) {
     // let dispatcher take over request
     while (!this->stop_flag.load()) {
         // accept connection
-        SOCKET_FD new_socket =
+        SOCKET_FD client_sock =
             accept(server_socket, (struct sockaddr*)&client_addr, &client_len);
-        if (new_socket == -1) {
+        if (client_sock == -1) {
             SafeLogger::log(errno);
             continue;
         }
 
-        std::string client_ip   = inet_ntoa(client_addr.sin_addr);
-        std::string client_port = std::to_string(ntohs(client_addr.sin_port));
-        SafeLogger::log("Connection accepted from " + client_ip + ":" +
-                        client_port);
+        struct timeval timeout {};
+        timeout.tv_sec  = 3;
+        timeout.tv_usec = 0;
+
+        if (setsockopt(client_sock, SOL_SOCKET, SO_RCVTIMEO, &timeout,
+                       sizeof timeout) < 0) {
+            SafeLogger::log(errno);
+            continue;
+        }
 
         std::thread dispatcher =
-            std::thread(take_over, new_socket, std::ref(router));
+            std::thread(take_over, client_sock, std::ref(router));
 
         dispatcher.detach();
     }
