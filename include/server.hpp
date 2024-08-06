@@ -3,7 +3,6 @@
 
 #include <atomic>
 #include <csignal>
-#include <cstdint>
 
 #include "constants.hpp"
 #include "router.hpp"

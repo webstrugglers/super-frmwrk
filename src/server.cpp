@@ -9,7 +9,6 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
-#include <csignal>
 #include <functional>
 #include <thread>
 #include "dispatcher.hpp"

@@ -4,7 +4,6 @@
  */
 
 #include "req-parser.hpp"
-#include <cstddef>
 #include <memory>
 #include <string>
 #include "constants.hpp"

@@ -4,7 +4,6 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
-#include "path-and-type.hpp"
 #include "request.hpp"
 #include "response.hpp"
 
@@ -149,8 +148,16 @@ private:
      */
     bool is_req_file_legit(const std::filesystem::path& p);
 
-    /// if path/index.html exists map GET / to it
+    /**
+     * @brief if path/index.html exists map GET / to it
+     */
     void map_root_to_index();
+
+    /**
+     * @brief set date header
+     *
+     */
+    void set_date_header(Response& res);
 };
 
 #endif  // !ROUTER_HPP

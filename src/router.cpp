@@ -5,14 +5,8 @@
  */
 
 #include "router.hpp"
-#include <cstdlib>
-#include <filesystem>
 #include <string>
-#include "constants.hpp"
-#include "http-status-codes.hpp"
 #include "logger.hpp"
-#include "path-and-type.hpp"
-#include "response.hpp"
 
 Router::Router()
     : routing_table(std::make_unique<std::unordered_map<
@@ -147,6 +141,8 @@ void Router::call(const Request& req, Response& res) {
     } else {
         potential_static(req, res);
     }
+
+    set_date_header(res);
 }
 
 void Router::serve_static(const std::filesystem::path& p) {
@@ -186,6 +182,11 @@ void Router::handle_route(
     handler(req, res);
 
     auto file = res.file();
+    SafeLogger::log(file.string());
+    if (file.empty()) {
+        return;
+    }
+
     if (std::filesystem::exists(file)) {
         res.set("Content-Type", mimes->at(file.extension().string()));
         res.set("Content-Length",
@@ -269,4 +270,15 @@ void Router::set_static_root(const std::filesystem::path& p) {
         exit(EXIT_FAILURE);
     }
     this->static_root = abs_path;
+}
+
+void Router::set_date_header(Response& res) {
+    std::time_t time = std::time({});
+
+    // Use a fixed-size buffer to format the date and time
+    std::array<char, std::size("Sun, 06 Nov 1994 08:49:37 GMT")> buffer{};
+
+    std::strftime(std::data(buffer), std::size(buffer),
+                  "%a, %d %b %Y %H:%M:%S GMT", std::gmtime(&time));
+    res.set("date", buffer.data());
 }
