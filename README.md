@@ -1,80 +1,102 @@
-# C++ HTTP Framework (WIP)
+# Super-framework (WIP)
 
-This project is a lightweight HTTP framework written in C++ designed for C++ projects. Our current roadmap includes the development of an HTTP 1.0 server, a router, and an easy way to populate the router with developer-defined controller functions.
+Super is a lightweight and expressive HTTP framework for C++ inspired by Express.js, designed to be simple, efficient, and flexible. The framework provides easy-to-use routing, a built-in web server, and a powerful response API.
 
 ## Table of Contents
 
-- [Overview](#overview)
 - [Features](#features)
-- [Usage](#usage)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
+- [Example Usage](#example-usage)
+- [Architecture](#framework-architecture)
+- [Plans](#planned-features)
+- [Getting started](#getting-started)
 - [License](#license)
-
-## Overview
-
-This HTTP framework provides a foundation for building web servers in C++. It features a modular design that allows for easy integration and extension. The core components include a server, a dispatcher thread, a request parser, a request object trimmer, a router, and a controller. We aim to have Express.js-like syntax.
-
-![Framework design](FRMWRKv3.png)
 
 ## Features
 
-- **HTTP 1.0 Server**: Basic server implementation for handling HTTP 1.0 requests.
-- **Router**: Efficient routing mechanism to map HTTP requests to appropriate handler functions.
-- **Request Handling**: Comprehensive request parsing and object trimming for normalized handling.
-- **Controller Integration**: Simplified method for developers to define and integrate controller functions.
+- **HTTP 1.0 Support**: The framework fully supports the HTTP 1.0 protocol, making it suitable for basic web applications.
+- **Static File Serving**: Serve static files from a specified directory effortlessly.
+- **Express.js-like Workflow**: The framework offers a familiar and straightforward workflow similar to Express.js.
+- **Easy Routing Mechanisms**: Define routes and handle HTTP methods with a clean and simple interface.
+- **Built-in Web Server**: The framework includes a built-in web server that uses blocking sockets with a timeout to manage connections.
+- **Thread-per-Request Model**: Each request is handled in its own thread, ensuring that the server remains responsive even under load. (Note: we don't use thread pool yet, but will implement it in the future)
+- **Simple Response API**: The response API is designed to be similar to Express.js, allowing you to send responses and set status codes with intuitive methods.
+- **Query Parameter Support**: Easily access and manipulate query parameters in your routes.
 
-## Usage
-
-Here is a basic example of how to set up and use the HTTP framework:
-
-1. **Initialize the server and router:**
+## Example Usage
 
 ```cpp
-#include "server.h"
-#include "router.h"
+#include "server.hpp"
+
+#define port 5000
+
+void hello_world(const Request& req, Response& res) {
+    res.send("Hello, world from controller function!!").status(OK);
+}
+
+void init_router(Router& router) {
+    router.route(HTTP_GET, "/controller", hello_world);
+    router.serve_static("./public/");
+}
 
 int main() {
-    Server server;
     Router router;
+    init_router(router);
 
-    // Define controller function
-    auto getProducts = [](const Request& req, Response& res) {
-        // Your logic here
-        res.send("Product list");
-        res.status(200);
-    };
-
-    // Populate the router
-    router.get("/api/v1/products", getProducts);
-
-    // Start the server
-    server.start(router);
+    Server server;
+    server.start(port, router);
 
     return 0;
 }
 ```
 
-2. **Defining a controller function:**
+## Framework architecture
+
+The architecture is designed to be modular and efficient. Below is an overview of the main components:
+
+1. **Server**: Listens for incoming requests and delegates them to the dispatcher thread.
+2. **Dispatcher Thread**: Is responsible for reading data from the socket, processing the request, and sending a response.
+3. **Request Parser**: Parses the raw HTTP request and generates a request object.
+4. **Router**: Routes the request to the appropriate controller based on the URL.
+5. **Controller**: Handles the logic for the request and prepares the response object (This is you).
+6. **Client**: Receives the serialized response object and processes the response.
+
+![Framework design](FRMWRKarch.png)
+
+The controller functions must adhere to the following signature:
 
 ```cpp
-void getProducts(const Request& req, Response& res) {
-    // Implement your logic...
-    res.status(200).send("Product list");
+void controller(const Request& req, Response& res) {
+    // body
 }
 ```
 
-3. **Populate the router:**
+## Planned Features
 
-```cpp
-router.get("/api/products", getProducts);
+- **Route Parameters**: Support for dynamic route parameters (path variables in Spring Boot).
+- **Thread Pool**: Implement a thread pool to handle requests more efficiently under high load.
+- **HTTP 1.1 Support**: Add support for HTTP 1.1 to take advantage of persistent connections and other improvements.
+- **Middleware Support**: Introduce middleware to allow for more modular and reusable code.
+
+## Getting started
+
+1. Clone the repository
+
+```sh
+git clone git@github.com:webstrugglers/super-frmwrk.git
+cd super-frmwrk
 ```
 
-## Roadmap
+2. Build the framework
 
-- **HTTP 1.1 and HTTP/2 Support**
-- **Middleware Support**
-- **Static File Serving**
+```sh
+make
+```
+
+3. Run
+
+```sh
+./superFrmwrk
+```
 
 ## License
 

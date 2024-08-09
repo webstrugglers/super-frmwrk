@@ -182,7 +182,6 @@ void Router::handle_route(
     handler(req, res);
 
     auto file = res.file();
-    SafeLogger::log(file.string());
     if (file.empty()) {
         return;
     }
@@ -278,7 +277,9 @@ void Router::set_date_header(Response& res) {
     // Use a fixed-size buffer to format the date and time
     std::array<char, std::size("Sun, 06 Nov 1994 08:49:37 GMT")> buffer{};
 
-    std::strftime(std::data(buffer), std::size(buffer),
-                  "%a, %d %b %Y %H:%M:%S GMT", std::gmtime(&time));
+    [[maybe_unused]]
+    auto x = std::strftime(std::data(buffer), std::size(buffer),
+                           "%a, %d %b %Y %H:%M:%S GMT", std::gmtime(&time));
+
     res.set("date", buffer.data());
 }

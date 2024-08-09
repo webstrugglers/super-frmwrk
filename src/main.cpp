@@ -1,6 +1,3 @@
-#include "constants.hpp"
-#include "request.hpp"
-#include "router.hpp"
 #include "server.hpp"
 
 #define port 5000
@@ -17,7 +14,7 @@ void init_router(Router& router) {
 
 int main() {
     Router router;
-    init_router(std::ref(router));
+    init_router(router);
 
     Server server;
     server.start(port, router);
