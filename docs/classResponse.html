@@ -69,28 +69,94 @@ $(function() {
 <div class="title">Response Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>A class to represent HTTP response. For developers to use.  
+ <a href="classResponse.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="response_8hpp_source.html">response.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac6e627ad5207cf157b437186535e41a7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#ac6e627ad5207cf157b437186535e41a7">set</a> (char *field, char &amp;value)</td></tr>
-<tr class="separator:ac6e627ad5207cf157b437186535e41a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46476076c75c6a92bd8cc221c8499d80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a46476076c75c6a92bd8cc221c8499d80">set</a> (const char *field, const char *value)</td></tr>
+<tr class="separator:a46476076c75c6a92bd8cc221c8499d80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa406177c1ca2ae7f601cd64ca0fd4c7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#aa406177c1ca2ae7f601cd64ca0fd4c7c">set</a> (const std::basic_string&lt; char &gt; &amp;field, const std::basic_string&lt; char &gt; &amp;value)</td></tr>
+<tr class="separator:aa406177c1ca2ae7f601cd64ca0fd4c7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36d551bcf0e16939a6ebc3f47ccc49e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a36d551bcf0e16939a6ebc3f47ccc49e4">status</a> (const HttpStatus status_code)</td></tr>
 <tr class="separator:a36d551bcf0e16939a6ebc3f47ccc49e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6aae52f3904149b9779661e2a24b3aec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a6aae52f3904149b9779661e2a24b3aec">body</a> (std::string str)</td></tr>
-<tr class="separator:a6aae52f3904149b9779661e2a24b3aec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78f4db47c9fb8a05c33caa5aa93f289a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a78f4db47c9fb8a05c33caa5aa93f289a">send</a> (std::string str)</td></tr>
+<tr class="separator:a78f4db47c9fb8a05c33caa5aa93f289a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad70a674061bf0e0b18dee13b7af5e5fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#ad70a674061bf0e0b18dee13b7af5e5fd">json</a> (std::string str)</td></tr>
+<tr class="separator:ad70a674061bf0e0b18dee13b7af5e5fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe17ccf626f52f8268480dd6d6b495ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classResponse.html">Response</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#afe17ccf626f52f8268480dd6d6b495ae">attachment</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memdesc:afe17ccf626f52f8268480dd6d6b495ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">[TODO:description]  <a href="classResponse.html#afe17ccf626f52f8268480dd6d6b495ae">More...</a><br /></td></tr>
+<tr class="separator:afe17ccf626f52f8268480dd6d6b495ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea95f486e37d324bf4eedbd606f5a280"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#aea95f486e37d324bf4eedbd606f5a280">to_string</a> ()</td></tr>
-<tr class="memdesc:aea95f486e37d324bf4eedbd606f5a280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns string (http) representation of <a class="el" href="classResponse.html">Response</a> object.  <a href="classResponse.html#aea95f486e37d324bf4eedbd606f5a280">More...</a><br /></td></tr>
+<tr class="memdesc:aea95f486e37d324bf4eedbd606f5a280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns string (http) representation of <a class="el" href="classResponse.html" title="A class to represent HTTP response. For developers to use.">Response</a> object.  <a href="classResponse.html#aea95f486e37d324bf4eedbd606f5a280">More...</a><br /></td></tr>
 <tr class="separator:aea95f486e37d324bf4eedbd606f5a280"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52e0a686d330afda5bac2bf4208991c0"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classResponse.html#a52e0a686d330afda5bac2bf4208991c0">file</a> () const</td></tr>
+<tr class="memdesc:a52e0a686d330afda5bac2bf4208991c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used internally.  <a href="classResponse.html#a52e0a686d330afda5bac2bf4208991c0">More...</a><br /></td></tr>
+<tr class="separator:a52e0a686d330afda5bac2bf4208991c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6aae52f3904149b9779661e2a24b3aec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6aae52f3904149b9779661e2a24b3aec">&#9670;&nbsp;</a></span>body()</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A class to represent HTTP response. For developers to use. </p>
+<p>This class will be transformed to HTTP response and sent to the client. Provides expressjs-like API for developer to manipulate and use for crafting responses(e.g. res.status(HttpStatus).send("Hello")). </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="afe17ccf626f52f8268480dd6d6b495ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe17ccf626f52f8268480dd6d6b495ae">&#9670;&nbsp;</a></span>attachment()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::body </td>
+          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::attachment </td>
+          <td>(</td>
+          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>[TODO:description] </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>[TODO:parameter] </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>[TODO:return] </dd></dl>
+
+</div>
+</div>
+<a id="a52e0a686d330afda5bac2bf4208991c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52e0a686d330afda5bac2bf4208991c0">&#9670;&nbsp;</a></span>file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path Response::file </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Used internally. </p>
+<p>Checks if the response should return file, so we can determine which syscall to call.</p>
+<dl class="section return"><dt>Returns</dt><dd>do we sendfile? </dd></dl>
+
+</div>
+</div>
+<a id="ad70a674061bf0e0b18dee13b7af5e5fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad70a674061bf0e0b18dee13b7af5e5fd">&#9670;&nbsp;</a></span>json()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::json </td>
           <td>(</td>
           <td class="paramtype">std::string&#160;</td>
           <td class="paramname"><em>str</em></td><td>)</td>
@@ -98,26 +164,45 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Sets the body for the response. When serializing response object, it will automatically assign the Content-Length HTTP response header field. </p>
+<p>Sets the body for the response. When serializing response object, it will automatically assign the Content-Length and Content-Type headers. </p>
 
 </div>
 </div>
-<a id="ac6e627ad5207cf157b437186535e41a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6e627ad5207cf157b437186535e41a7">&#9670;&nbsp;</a></span>set()</h2>
+<a id="a78f4db47c9fb8a05c33caa5aa93f289a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78f4db47c9fb8a05c33caa5aa93f289a">&#9670;&nbsp;</a></span>send()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classResponse.html">Response</a>&amp; Response::set </td>
+          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::send </td>
           <td>(</td>
-          <td class="paramtype">char *&#160;</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>str</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the body for the response. When serializing response object, it will automatically assign the Content-Length header. </p>
+
+</div>
+</div>
+<a id="a46476076c75c6a92bd8cc221c8499d80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46476076c75c6a92bd8cc221c8499d80">&#9670;&nbsp;</a></span>set() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::set </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>field</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char &amp;&#160;</td>
+          <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
@@ -131,6 +216,41 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">field</td><td></td></tr>
     <tr><td class="paramname">value</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa406177c1ca2ae7f601cd64ca0fd4c7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa406177c1ca2ae7f601cd64ca0fd4c7c">&#9670;&nbsp;</a></span>set() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classResponse.html">Response</a> &amp; Response::set </td>
+          <td>(</td>
+          <td class="paramtype">const std::basic_string&lt; char &gt; &amp;&#160;</td>
+          <td class="paramname"><em>field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::basic_string&lt; char &gt; &amp;&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the response’s HTTP header field to value. res.set('Content-Type', 'text/plain') </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">field</td><td>Header name </td></tr>
+    <tr><td class="paramname">value</td><td>Header value </td></tr>
   </table>
   </dd>
 </dl>
@@ -171,9 +291,9 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns string (http) representation of <a class="el" href="classResponse.html">Response</a> object. </p>
-<p>Converts <a class="el" href="classResponse.html">Response</a> object to string (http representation), which will be used by dispatcher. Generates status line, headers and optional body</p>
-<dl class="section return"><dt>Returns</dt><dd>String (http) representation of <a class="el" href="classResponse.html">Response</a> object </dd></dl>
+<p>Returns string (http) representation of <a class="el" href="classResponse.html" title="A class to represent HTTP response. For developers to use.">Response</a> object. </p>
+<p>Converts <a class="el" href="classResponse.html" title="A class to represent HTTP response. For developers to use.">Response</a> object to string (http representation), which will be used by dispatcher. Generates status line, headers and optional body</p>
+<dl class="section return"><dt>Returns</dt><dd>String (http) representation of <a class="el" href="classResponse.html" title="A class to represent HTTP response. For developers to use.">Response</a> object </dd></dl>
 
 </div>
 </div>

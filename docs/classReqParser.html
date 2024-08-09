@@ -69,25 +69,52 @@ $(function() {
 <div class="title">ReqParser Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Class that servers purpose of parsing raw HTTP request.  
+ <a href="classReqParser.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="req-parser_8hpp_source.html">req-parser.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5acc3f0d299fabac61ce5bdced542170"><td class="memItemLeft" align="right" valign="top"><a id="a5acc3f0d299fabac61ce5bdced542170"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parseReqLine</b> (std::string str)</td></tr>
-<tr class="separator:a5acc3f0d299fabac61ce5bdced542170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af959b3f5c1a1a57943a6230f470d226e"><td class="memItemLeft" align="right" valign="top"><a id="af959b3f5c1a1a57943a6230f470d226e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parseHeaders</b> (std::string str)</td></tr>
-<tr class="separator:af959b3f5c1a1a57943a6230f470d226e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d6355b9b7436f0e8ef4f329045426d2"><td class="memItemLeft" align="right" valign="top"><a id="a1d6355b9b7436f0e8ef4f329045426d2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>parseHeaderSection</b> (const std::string &amp;str)</td></tr>
-<tr class="separator:a1d6355b9b7436f0e8ef4f329045426d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1ac182291133d861b1b39386b1e35ab"><td class="memItemLeft" align="right" valign="top"><a id="aa1ac182291133d861b1b39386b1e35ab"></a>
-std::unique_ptr&lt; <a class="el" href="classRequest.html">Request</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>moveRequest</b> ()</td></tr>
-<tr class="separator:aa1ac182291133d861b1b39386b1e35ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfb7157f18b020d6593cd12038971f10"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="structRequest.html">Request</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classReqParser.html#abfb7157f18b020d6593cd12038971f10">parseRequest</a> (std::string &amp;request)</td></tr>
+<tr class="memdesc:abfb7157f18b020d6593cd12038971f10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes raw HTTP request as a string, returns <a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> object.  <a href="classReqParser.html#abfb7157f18b020d6593cd12038971f10">More...</a><br /></td></tr>
+<tr class="separator:abfb7157f18b020d6593cd12038971f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class that servers purpose of parsing raw HTTP request. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="abfb7157f18b020d6593cd12038971f10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfb7157f18b020d6593cd12038971f10">&#9670;&nbsp;</a></span>parseRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="structRequest.html">Request</a> &gt; ReqParser::parseRequest </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&#160;</td>
+          <td class="paramname"><em>request</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Takes raw HTTP request as a string, returns <a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">request</td><td>raw HTTP request as a string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> object.</dd></dl>
+<p>Parses raw HTTP <a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> directly from original request string and puts parsed data into field of <a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> object </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="req-parser_8hpp_source.html">req-parser.hpp</a></li>
-<li>req-parser.cpp</li>
+<li><a class="el" href="req-parser_8cpp.html">req-parser.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

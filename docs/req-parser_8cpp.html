@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Super-framework: Member List</title>
+<title>Super-framework: req-parser.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -60,23 +60,43 @@ $(function() {
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">PathAndType Member List</div>  </div>
+<div class="title">req-parser.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classPathAndType.html">PathAndType</a>, including all inherited members.</p>
-<table class="directory">
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>getMethodType</b>() const (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>getPath</b>() const (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>operator=</b>(const PathAndType &amp;pat) (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>operator==</b>(const PathAndType &amp;pat) const (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>PathAndType</b>(const std::string &amp;new_path=&quot;/&quot;, const MethodType new_method_type=HTTP_GET) (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"><span class="mlabel">explicit</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>setMethodType</b>(const MethodType new_method_type) (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>setPath</b>(const std::string &amp;new_path) (defined in <a class="el" href="classPathAndType.html">PathAndType</a>)</td><td class="entry"><a class="el" href="classPathAndType.html">PathAndType</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Parses raw HTTP request and returns a <a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> object.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;req-parser.hpp&quot;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &quot;constants.hpp&quot;</code><br />
+<code>#include &quot;request.hpp&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for req-parser.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="req-parser_8cpp__incl.png" border="0" usemap="#areq-parser_8cpp" alt=""/></div>
+<map name="areq-parser_8cpp" id="areq-parser_8cpp">
+<area shape="rect" title="Parses raw HTTP request and returns a Request object." alt="" coords="77,5,191,32"/>
+<area shape="rect" href="req-parser_8hpp_source.html" title=" " alt="" coords="76,80,192,107"/>
+<area shape="rect" title=" " alt="" coords="19,155,97,181"/>
+<area shape="rect" title=" " alt="" coords="14,229,73,256"/>
+<area shape="rect" href="request_8hpp_source.html" title=" " alt="" coords="171,155,270,181"/>
+<area shape="rect" href="constants_8hpp_source.html" title=" " alt="" coords="315,304,428,331"/>
+<area shape="rect" title=" " alt="" coords="97,229,221,256"/>
+<area shape="rect" href="path-and-type_8hpp_source.html" title=" " alt="" coords="245,229,388,256"/>
+<area shape="rect" title=" " alt="" coords="333,379,409,405"/>
+</map>
+</div>
+</div><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Parses raw HTTP request and returns a <a class="el" href="structRequest.html" title="A class to represent an HTTP request.">Request</a> object. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1
