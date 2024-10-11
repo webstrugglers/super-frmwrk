@@ -133,16 +133,30 @@ void Router::put(
     route(HTTP_PUT, path, controller);
 }
 
-// TODO: handle errors
-void Router::call(const Request& req, Response& res) {
-    auto route_handle_it = this->routing_table->find(req.path_and_type);
-    if (route_handle_it != this->routing_table->end()) {
-        handle_route(route_handle_it->second, req, res);
-    } else {
-        potential_static(req, res);
+
+bool Router::matches(const std::string& req_path, const std::string& route_path){
+    if (req_path == route_path){
+        return true;
     }
 
-    set_date_header(res);
+    //logic for comparing dynamic types
+    return match_dynamic_path(req_path, route_path); // new PathAndType method, not implemented
+
+}
+void Router::extract_path_params(const std::string& req_path, const std::string& route_path,
+        std::unordered_map<std::string, std::string>& path_params){
+    //yet to be implemented
+}
+void Router::call(const Request& req, Response& res) {
+    for (const auto& [path_and_type, handler] : *routing_table){
+        if (matches(req.path, path_and_type.path)){
+            //extract_path_params method call
+
+            handle_route(handler,req, res);
+            return;
+        }
+    }
+    potential_static(req, res);
 }
 
 void Router::serve_static(const std::filesystem::path& p) {

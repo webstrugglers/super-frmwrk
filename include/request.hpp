@@ -19,6 +19,7 @@ struct Request {
     std::unordered_map<std::string, std::string> headers;
     std::string                                  path_var;
     std::unordered_map<std::string, std::string> query;
+    std::unordered_map<std::string, std::string> path_params;
 
     Request();
 };
