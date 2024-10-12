@@ -133,16 +133,49 @@ void Router::put(
     route(HTTP_PUT, path, controller);
 }
 
-// bool Router::matches(const std::string& req_path,
-//                      const std::string& route_path) {
-//     if (req_path == route_path) {
-//         return true;
-//     }
-//
-//     // logic for comparing dynamic types
-//     // return match_dynamic_path(req_path, route_path); // new PathAndType
-//     // method, not implemented
-// }
+std::vector<std::string> Router::split(const std::string& str, char delimiter) {
+    std::vector<std::string> tokens;
+    std::string              token;
+    std::istringstream       tokenStream(str);
+    while (std::getline(tokenStream, token, delimiter)) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+bool Router::matches_dynamic_path(const std::string& req_path,
+                                  const std::string& route_path) {
+    std::regex dynamic_pattern(
+        R"(^https?://(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)\/(\d+)$)");
+    std::smatch match;
+
+    // split the into individual / separated url segments
+    std::vector<std::string> req_segments   = split(req_path, '/');
+    std::vector<std::string> route_segments = split(route_path, '/');
+
+    // check if there is the same number of segments
+    if (req_segments.size() != route_segments.size()) {
+        return false;
+    }
+    // check if the route segments match dynamic pattern
+    for (size_t i = 0; i < route_segments.size(); ++i) {
+        if (std::regex_match(route_segments[i], match, dynamic_pattern)) {
+            continue;
+        } else if (req_segments[i] != route_segments[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Router::matches(const std::string& req_path,
+                     const std::string& route_path) {
+    if (req_path == route_path) {
+        return true;
+    }
+
+    return matches_dynamic_path(req_path, route_path);
+}
 // void Router::extract_path_params(
 //     const std::string&                            req_path,
 //     const std::string&                            route_path,
@@ -150,14 +183,20 @@ void Router::put(
 //     // yet to be implemented
 // }
 void Router::call(const Request& req, Response& res) {
-    for (const auto& [path_and_type, handler] : *routing_table) {
-        // if (matches(req.path, path_and_type.path)){
-        //     //extract_path_params method call
-
-        //     handle_route(handler,req, res);
-        //     return;
-        // }
-    }
+//    auto route_handle_it = this->routing_table->find(req.path_and_type);
+//
+//    if (route_handle_it != this->routing_table->end()) {
+//        handle_route(route_handle_it->second, req, res);          
+//        return;
+//    }
+//
+//    for (const auto& [path_and_type, handler] : *routing_table) {
+//        if (matches(req.path, path_and_type.path)) {  
+//            handle_route(handler, req, res); 
+//            return;
+//        }
+//    }
+//
     potential_static(req, res);
 }
 

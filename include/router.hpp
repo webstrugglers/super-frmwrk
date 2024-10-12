@@ -4,6 +4,8 @@
 #include <filesystem>
 #include <functional>
 #include <memory>
+#include <regex>
+#include <vector>
 #include "request.hpp"
 #include "response.hpp"
 
@@ -164,8 +166,12 @@ private:
         const std::string&                            route_path,
         std::unordered_map<std::string, std::string>& path_params);
 
-    bool matches(const std::string& req_path,
-                         const std::string& route_path);
+    bool matches(const std::string& req_path, const std::string& route_path);
+
+    bool matches_dynamic_path(const std::string& req_path,
+                              const std::string& route_pat);
+
+    std::vector<std::string> split(const std::string& str, char delimiter);
 };
 
 #endif  // !ROUTER_HPP
