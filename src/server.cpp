@@ -7,6 +7,7 @@
 #include <asm-generic/socket.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <netinet/tcp.h>
 #include <unistd.h>
 #include <functional>
 #include <thread>
@@ -48,6 +49,12 @@ void Server::start(std::uint16_t port, Router& router) {
         SafeLogger::log(errno);
         close(server_socket);
         return;
+    }
+
+    int optval_tcp_nodelay= 1;
+    if(setsockopt(server_socket, IPPROTO_TCP, TCP_NODELAY, (char *) &optval_tcp_nodelay, 
+                    sizeof(int)) < 0) {
+        SafeLogger::log(errno);
     }
 
     struct sigaction a {};
