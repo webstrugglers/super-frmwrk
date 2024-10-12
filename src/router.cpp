@@ -133,28 +133,30 @@ void Router::put(
     route(HTTP_PUT, path, controller);
 }
 
-
-bool Router::matches(const std::string& req_path, const std::string& route_path){
-    if (req_path == route_path){
-        return true;
-    }
-
-    //logic for comparing dynamic types
-    return match_dynamic_path(req_path, route_path); // new PathAndType method, not implemented
-
-}
-void Router::extract_path_params(const std::string& req_path, const std::string& route_path,
-        std::unordered_map<std::string, std::string>& path_params){
-    //yet to be implemented
-}
+// bool Router::matches(const std::string& req_path,
+//                      const std::string& route_path) {
+//     if (req_path == route_path) {
+//         return true;
+//     }
+//
+//     // logic for comparing dynamic types
+//     // return match_dynamic_path(req_path, route_path); // new PathAndType
+//     // method, not implemented
+// }
+// void Router::extract_path_params(
+//     const std::string&                            req_path,
+//     const std::string&                            route_path,
+//     std::unordered_map<std::string, std::string>& path_params) {
+//     // yet to be implemented
+// }
 void Router::call(const Request& req, Response& res) {
-    for (const auto& [path_and_type, handler] : *routing_table){
-        if (matches(req.path, path_and_type.path)){
-            //extract_path_params method call
+    for (const auto& [path_and_type, handler] : *routing_table) {
+        // if (matches(req.path, path_and_type.path)){
+        //     //extract_path_params method call
 
-            handle_route(handler,req, res);
-            return;
-        }
+        //     handle_route(handler,req, res);
+        //     return;
+        // }
     }
     potential_static(req, res);
 }

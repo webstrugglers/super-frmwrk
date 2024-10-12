@@ -159,12 +159,12 @@ private:
      */
     void set_date_header(Response& res);
 
-    void Router::extract_path_params(
+    void extract_path_params(
         const std::string&                            req_path,
         const std::string&                            route_path,
         std::unordered_map<std::string, std::string>& path_params);
 
-    bool Router::matches(const std::string& req_path,
+    bool matches(const std::string& req_path,
                          const std::string& route_path);
 };
 
