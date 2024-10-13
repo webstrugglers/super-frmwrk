@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_3d_3d_46',['operator==',['../path-and-type_8cpp.html#a1dad103c775d5d739b8051820d983087',1,'path-and-type.cpp']]]
+  ['get_55',['get',['../classRouter.html#a7bc4ce5abc5d8522eaa3fd2b5eff4564',1,'Router']]]
 ];

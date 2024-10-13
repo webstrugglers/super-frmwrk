@@ -1,11 +1,5 @@
 var searchData=
 [
-  ['reqparser_11',['ReqParser',['../classReqParser.html',1,'']]],
-  ['request_12',['Request',['../classRequest.html',1,'']]],
-  ['request_2ecpp_13',['request.cpp',['../request_8cpp.html',1,'']]],
-  ['response_14',['Response',['../classResponse.html',1,'']]],
-  ['response_2ecpp_15',['response.cpp',['../response_8cpp.html',1,'']]],
-  ['route_16',['route',['../classRouter.html#aed151339ab9cebb5e0882b75e43da511',1,'Router']]],
-  ['router_17',['Router',['../classRouter.html',1,'']]],
-  ['router_2ecpp_18',['router.cpp',['../router_8cpp.html',1,'']]]
+  ['log_7',['log',['../classSafeLogger.html#a6bb77e05edcd1c468d2008270cbccdd2',1,'SafeLogger::log(const char *output)'],['../classSafeLogger.html#abee63527ba50561e4d4aefb9e3a399c6',1,'SafeLogger::log(const std::string &amp;output)'],['../classSafeLogger.html#ab9804d6360b4181a1cdbd73b3412611c',1,'SafeLogger::log(const int _errnum)']]],
+  ['logger_2ecpp_8',['logger.cpp',['../logger_8cpp.html',1,'']]]
 ];

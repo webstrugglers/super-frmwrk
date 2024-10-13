@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['table_0',['table',['../classRouter.html#aed4dd7b1afac6e6427a4419e1abc61bd',1,'Router']]],
-  ['table_20of_20contents_1',['Table of Contents',['../md_README.html#autotoc_md1',1,'']]],
-  ['take_5fover_2',['take_over',['../dispatcher_8cpp.html#a393215171b4db48f49f4b35fe0208ef1',1,'dispatcher.cpp']]]
+  ['parserequest_11',['parseRequest',['../classReqParser.html#abfb7157f18b020d6593cd12038971f10',1,'ReqParser']]],
+  ['path_2dand_2dtype_2ecpp_12',['path-and-type.cpp',['../path-and-type_8cpp.html',1,'']]],
+  ['pathandtype_13',['PathAndType',['../structPathAndType.html',1,'']]],
+  ['post_14',['post',['../classRouter.html#a15aa38ce85d4d181052b3238009bd72c',1,'Router']]],
+  ['put_15',['put',['../classRouter.html#ad1075e4b31b7b5e95b3f7fefbf34eae3',1,'Router']]]
 ];
