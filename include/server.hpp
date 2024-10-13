@@ -35,6 +35,8 @@ public:
      * connections.
      *
      * @param router Reference to the router
+     * 
+     * 
      */
     void start(std::uint16_t port, Router& router);
 
