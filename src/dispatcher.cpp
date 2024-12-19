@@ -27,7 +27,8 @@
  * @return The starting index of the payload. Returns std::string::npos in case
  * of a bad request (e.g. bad request, doesn't respect HTTP)
  */
-static std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
+namespace {
+std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
     ssize_t     bytes_received       = 0;
     ssize_t     total_bytes_received = 0;
     std::size_t headers_end          = std::string::npos;
@@ -59,7 +60,7 @@ static std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
     return headers_end;
 }
 
-static void recv_body(int csock, std::string& request, ssize_t length) {
+void recv_body(int csock, std::string& request, ssize_t length) {
     ssize_t     bytes_received       = 0;
     ssize_t     total_bytes_received = 0;
     std::string buffer;
@@ -88,6 +89,7 @@ static void recv_body(int csock, std::string& request, ssize_t length) {
         }
     }
 }
+}  // namespace
 
 void take_over(SOCKET_FD csock, Router& router) {
     std::unique_ptr<Request> req;
