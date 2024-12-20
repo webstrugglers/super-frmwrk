@@ -21,6 +21,35 @@
 
 namespace {
 /**
+ * Serves a static file to the specified client socket.
+ *
+ * This function checks if the given file exists and is non-empty,
+ * then uses the `sendfile` system call to transfer the file's contents
+ * directly to the client socket.
+ *
+ * @param file The path to the static file to be served.
+ * @param csock The client socket file descriptor to which the file will be
+ * sent.
+ */
+void serve_file(const std::filesystem::path& file, SOCKET_FD csock) noexcept {
+    if (std::filesystem::exists(file) && !file.empty()) {
+        int fd = open(file.c_str(), O_RDONLY);
+        if (fd == -1) {
+            perror("open");
+            return;
+        }
+
+        off_t   offset = 0;
+        ssize_t sent_file_bytes =
+            sendfile(csock, fd, &offset, std::filesystem::file_size(file));
+        if (sent_file_bytes == -1) {
+            // Handle sendfile error
+            perror("sendfile");
+        }
+    }
+}
+
+/**
  * @brief Read request line and headers
  *
  * @param csock client socket
@@ -28,7 +57,7 @@ namespace {
  * @return The starting index of the payload. Returns std::string::npos in case
  * of a bad request (e.g. bad request, doesn't respect HTTP)
  */
-auto recv_headers(SOCKET_FD csock, std::string& request) -> std::size_t {
+std::size_t recv_headers(SOCKET_FD csock, std::string& request) noexcept {
     ssize_t     bytes_received       = 0;
     ssize_t     total_bytes_received = 0;
     std::size_t headers_end          = std::string::npos;
@@ -60,7 +89,7 @@ auto recv_headers(SOCKET_FD csock, std::string& request) -> std::size_t {
     return headers_end;
 }
 
-void recv_body(int csock, std::string& request, ssize_t length) {
+void recv_body(int csock, std::string& request, ssize_t length) noexcept {
     ssize_t     bytes_received       = 0;
     ssize_t     total_bytes_received = 0;
     std::string buffer;
@@ -91,7 +120,7 @@ void recv_body(int csock, std::string& request, ssize_t length) {
 }
 }  // namespace
 
-void take_over(SOCKET_FD csock, Router& router) {
+void take_over(SOCKET_FD csock, Router& router) noexcept {
     std::unique_ptr<Request> req;
     Response                 res;
 
@@ -140,23 +169,9 @@ void take_over(SOCKET_FD csock, Router& router) {
         return;
     }
 
+    // serve file if there is one to serve
     const auto file = res.file();
-    if (std::filesystem::exists(file) && !file.empty()) {
-        int fd = open(file.c_str(), O_RDONLY);
-        if (fd == -1) {
-            perror("open");
-            close(csock);
-            return;
-        }
-
-        off_t   offset = 0;
-        ssize_t sent_file_bytes =
-            sendfile(csock, fd, &offset, std::filesystem::file_size(file));
-        if (sent_file_bytes == -1) {
-            // Handle sendfile error
-            perror("sendfile");
-        }
-    }
+    serve_file(file, csock);
 
     if (close(csock) == -1) {
         // Handle close error
