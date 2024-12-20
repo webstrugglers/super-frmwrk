@@ -12,6 +12,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include "constants.hpp"
 #include "logger.hpp"
 
 Router::Router() noexcept
@@ -257,7 +258,11 @@ bool Router::is_req_file_legit(const std::filesystem::path& p) const noexcept {
 }
 
 void Router::res_not_found(Response& res) const noexcept {
-    res.status(NOT_FOUND).attachment("./public/notfound.html");
+    if (!not_found_page.empty()) {
+        res.status(NOT_FOUND).attachment(this->not_found_page);
+    } else {
+        res.status(NOT_FOUND).attachment(PAGE_NOT_FOUND_HTML);
+    }
     res.set("Content-Type", "text/html");
 }
 
@@ -303,6 +308,7 @@ void Router::set_date_header(Response& res) const noexcept {
 void Router::compress_response(const Request& req,
                                Response&      res) const noexcept {
     const auto accept_encoding_header = req.headers.find("Accept-Encoding");
+
     if (accept_encoding_header == req.headers.end()) return;
 
     if (accept_encoding_header->second.find("br") != 0) {
@@ -311,6 +317,12 @@ void Router::compress_response(const Request& req,
         } else if (res.get_data().size() != 0) {
             compress_data_br(res);
         }
+
+        // set empty attachment
+        // this will signal dispatcher that there is no file to serve
+        // This is wanted behaviour because we already loaded the compressed
+        // file into the response data and set correct headers
+        res.attachment({});
     }
 }
 
