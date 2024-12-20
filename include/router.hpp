@@ -41,7 +41,7 @@ private:
     std::filesystem::path not_found_page;
 
 public:
-    Router();
+    Router() noexcept;
 
     /**
      * @brief Used internally to allow dispatcher to call appropriate
@@ -55,7 +55,7 @@ public:
      * @param req Reference to Request object representing HTTP request
      * @param res Reference to Response object that is manipulated by developer
      */
-    void call(const Request& req, Response& res);
+    void call(const Request& req, Response& res) noexcept;
 
     /**
      * @brief Maps an HTTP method and path to a controller function.
@@ -71,7 +71,7 @@ public:
     void route(const MethodType method_type,
                const char*      path,
                const std::function<void(const Request& req, Response& res)>&
-                   controller);
+                   controller) noexcept;
 
     /**
      * @brief Same as Router::route(HTTP_GET, path, controller)
@@ -81,7 +81,7 @@ public:
      */
     void get(const char* path,
              const std::function<void(const Request& req, Response& res)>&
-                 controller);
+                 controller) noexcept;
 
     /**
      * @brief Same as Router::route(HTTP_PUT, path, controller)
@@ -91,7 +91,7 @@ public:
      */
     void put(const char* path,
              const std::function<void(const Request& req, Response& res)>&
-                 controller);
+                 controller) noexcept;
     /**
      * @brief Same as Router::route(HTTP_POST, path, controller)
      *
@@ -100,7 +100,7 @@ public:
      */
     void post(const char* path,
               const std::function<void(const Request& req, Response& res)>&
-                  controller);
+                  controller) noexcept;
 
     /**
      * @brief Configures the router to serve static files from a specified
@@ -113,51 +113,61 @@ public:
      *
      * @param path The directory containing the static files to be served.
      */
-    void serve_static(const std::filesystem::path& path);
+    void serve_static(const std::filesystem::path& path) noexcept;
 
     /**
      * @brief Set your custom 404 page
      *
      * @param path Path to your "page not found" html document
      */
-    void not_found(const std::filesystem::path& path);
+    void not_found(const std::filesystem::path& path) noexcept;
 
 private:
     void handle_route(std::function<void(const Request&, Response&)>& handler,
                       const Request&                                  req,
-                      Response&                                       res);
+                      Response& res) noexcept;
 
-    void set_static_root(const std::filesystem::path& path);
+    void set_static_root(const std::filesystem::path& path) noexcept;
 
     /**
      * @brief Sets not found status for response. If html document was
      * requested, additionally returns page not found document
      *
      */
-    void res_not_found(const PathAndType& pat, Response& res);
+    void res_not_found(const PathAndType& pat, Response& res) noexcept;
 
     /**
      * @brief Attempts to locate the requested file if no handler is available.
      *
      */
-    void potential_static(const Request& req, Response& res);
+    void potential_static(const Request& req, Response& res) noexcept;
 
     /**
      * @brief Verifies that the provided file path is both valid and points to
      * an existing file.
      */
-    bool is_req_file_legit(const std::filesystem::path& p);
+    bool is_req_file_legit(const std::filesystem::path& p) noexcept;
 
     /**
      * @brief if path/index.html exists map GET / to it
      */
-    void map_root_to_index();
+    void map_root_to_index() noexcept;
 
     /**
      * @brief set date header
      *
      */
-    void set_date_header(Response& res);
+    void set_date_header(Response& res) noexcept;
+
+    /**
+     * @brief compress response if clients supports it.
+     * (Currently only supports compression using Brotli algorithm)
+     */
+    void compress_response(const Request& req, Response& res) const noexcept;
+
+    void compress_data_br(Response& res) const noexcept;
+
+    void compress_file_br(Response& res) const noexcept;
 };
 
 #endif  // !ROUTER_HPP

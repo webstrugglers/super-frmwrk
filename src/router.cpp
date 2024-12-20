@@ -5,10 +5,15 @@
  */
 
 #include "router.hpp"
+#include <brotli/encode.h>
+#include <brotli/types.h>
+#include <cstdint>
+#include <filesystem>
+#include <iostream>
 #include <string>
 #include "logger.hpp"
 
-Router::Router()
+Router::Router() noexcept
     : routing_table(std::make_unique<std::unordered_map<
                         PathAndType,
                         std::function<void(const Request&, Response&)>>>()),
@@ -99,10 +104,10 @@ Router::Router()
               {".7z", "application/x-7z-compressed"}})),
       not_found_page("./public/notfound.html") {}
 
-void Router::route(
-    const MethodType                                              method_type,
-    const char*                                                   path,
-    const std::function<void(const Request& req, Response& res)>& controller) {
+void Router::route(const MethodType method_type,
+                   const char*      path,
+                   const std::function<void(const Request& req, Response& res)>&
+                       controller) noexcept {
     PathAndType pat = PathAndType(path, method_type);
 
     auto inserted = routing_table->insert(std::pair(pat, controller)).second;
@@ -115,26 +120,26 @@ void Router::route(
     }
 }
 
-void Router::get(
-    const char*                                                   path,
-    const std::function<void(const Request& req, Response& res)>& controller) {
+void Router::get(const char* path,
+                 const std::function<void(const Request& req, Response& res)>&
+                     controller) noexcept {
     route(HTTP_GET, path, controller);
 }
 
-void Router::post(
-    const char*                                                   path,
-    const std::function<void(const Request& req, Response& res)>& controller) {
+void Router::post(const char* path,
+                  const std::function<void(const Request& req, Response& res)>&
+                      controller) noexcept {
     route(HTTP_POST, path, controller);
 }
 
-void Router::put(
-    const char*                                                   path,
-    const std::function<void(const Request& req, Response& res)>& controller) {
+void Router::put(const char* path,
+                 const std::function<void(const Request& req, Response& res)>&
+                     controller) noexcept {
     route(HTTP_PUT, path, controller);
 }
 
 // TODO: handle errors
-void Router::call(const Request& req, Response& res) {
+void Router::call(const Request& req, Response& res) noexcept {
     auto route_handle_it = this->routing_table->find(req.path_and_type);
     if (route_handle_it != this->routing_table->end()) {
         handle_route(route_handle_it->second, req, res);
@@ -142,10 +147,12 @@ void Router::call(const Request& req, Response& res) {
         potential_static(req, res);
     }
 
+    /*compress_response(req, res);*/
+
     set_date_header(res);
 }
 
-void Router::serve_static(const std::filesystem::path& p) {
+void Router::serve_static(const std::filesystem::path& p) noexcept {
     set_static_root(p);
     map_root_to_index();
 
@@ -164,7 +171,7 @@ void Router::serve_static(const std::filesystem::path& p) {
     }
 }
 
-void Router::not_found(const std::filesystem::path& p) {
+void Router::not_found(const std::filesystem::path& p) noexcept {
     if (!std::filesystem::exists(p)) {
         return;
     }
@@ -178,7 +185,7 @@ void Router::not_found(const std::filesystem::path& p) {
 void Router::handle_route(
     std::function<void(const Request&, Response&)>& handler,
     const Request&                                  req,
-    Response&                                       res) {
+    Response&                                       res) noexcept {
     handler(req, res);
 
     auto file = res.file();
@@ -195,7 +202,7 @@ void Router::handle_route(
     }
 }
 
-void Router::potential_static(const Request& req, Response& res) {
+void Router::potential_static(const Request& req, Response& res) noexcept {
     // If the requested function is not found, we will check if the client
     // is trying to access a file that was created after the server started.
     auto pat = req.path_and_type;
@@ -216,17 +223,17 @@ void Router::potential_static(const Request& req, Response& res) {
     }
 
     if (is_req_file_legit(local)) {
-        auto controller = [local](const Request& /*req*/, Response& ress) {
+        auto handler = [local](const Request& /*req*/, Response& ress) {
             ress.status(OK).attachment(local);
         };
-        this->routing_table->emplace(pat, controller);
-        controller(req, res);
+        this->routing_table->emplace(pat, handler);
+        handler(req, res);
     } else {
         res_not_found(pat, res);
     }
 }
 
-bool Router::is_req_file_legit(const std::filesystem::path& p) {
+bool Router::is_req_file_legit(const std::filesystem::path& p) noexcept {
     auto err = p.string().find(this->static_root.string());
     if (err == std::string::npos) {
         return false;
@@ -234,7 +241,7 @@ bool Router::is_req_file_legit(const std::filesystem::path& p) {
     return std::filesystem::exists(p) && std::filesystem::is_regular_file(p);
 }
 
-void Router::res_not_found(const PathAndType& pat, Response& res) {
+void Router::res_not_found(const PathAndType& pat, Response& res) noexcept {
     std::filesystem::path p = std::filesystem::path(pat.path);
     if (p.extension().compare(".html") == 0 || !p.has_extension()) {
         res.status(NOT_FOUND).attachment("./public/notfound.html");
@@ -243,7 +250,7 @@ void Router::res_not_found(const PathAndType& pat, Response& res) {
     }
 }
 
-void Router::map_root_to_index() {
+void Router::map_root_to_index() noexcept {
     auto index_path = this->static_root;
     index_path.concat("/index.html");
     if (std::filesystem::exists(index_path)) {
@@ -254,7 +261,7 @@ void Router::map_root_to_index() {
     }
 }
 
-void Router::set_static_root(const std::filesystem::path& p) {
+void Router::set_static_root(const std::filesystem::path& p) noexcept {
     std::filesystem::path abs_path;
     try {
         abs_path = std::filesystem::canonical(p);
@@ -271,15 +278,50 @@ void Router::set_static_root(const std::filesystem::path& p) {
     this->static_root = abs_path;
 }
 
-void Router::set_date_header(Response& res) {
-    std::time_t time = std::time({});
+void Router::set_date_header(Response& res) noexcept {
+    const std::time_t time = std::time({});
 
-    // Use a fixed-size buffer to format the date and time
     std::array<char, std::size("Sun, 06 Nov 1994 08:49:37 GMT")> buffer{};
 
-    [[maybe_unused]]
-    auto x = std::strftime(std::data(buffer), std::size(buffer),
-                           "%a, %d %b %Y %H:%M:%S GMT", std::gmtime(&time));
+    std::strftime(std::data(buffer), std::size(buffer),
+                  "%a, %d %b %Y %H:%M:%S GMT", std::gmtime(&time));
 
     res.set("date", buffer.data());
+}
+
+void Router::compress_response(const Request& req,
+                               Response&      res) const noexcept {
+    const auto accept_encoding_header = req.headers.find("Accept-Encoding");
+    if (accept_encoding_header == req.headers.end()) return;
+
+    if (accept_encoding_header->second.find("br") != 0) {
+        if (std::filesystem::exists(res.file())) {
+            compress_file_br(res);
+        } else {
+            compress_data_br(res);
+        }
+    }
+}
+
+void Router::compress_data_br(Response& res) const noexcept {
+    const auto& input_data  = res.get_data();
+    const auto  input_size  = input_data.size();
+    size_t      output_size = BrotliEncoderMaxCompressedSize(input_size);
+
+    std::string output(output_size, 0);
+
+    BROTLI_BOOL success = BrotliEncoderCompress(
+        BROTLI_DEFAULT_QUALITY, BROTLI_DEFAULT_WINDOW, BROTLI_DEFAULT_MODE,
+        input_size, reinterpret_cast<const uint8_t*>(input_data.data()),
+        &output_size, reinterpret_cast<uint8_t*>(output.data()));
+
+    output.resize(output_size);
+    if (success == BROTLI_TRUE) {
+        res.send(output);
+        res.set("content-encoding", "br");
+    }
+}
+
+void Router::compress_file_br(Response& res) const noexcept {
+    std::filesystem::path file = res.file();
 }
