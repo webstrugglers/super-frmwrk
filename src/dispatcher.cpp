@@ -19,6 +19,7 @@
 #include "constants.hpp"
 #include "req-parser.hpp"
 
+namespace {
 /**
  * @brief Read request line and headers
  *
@@ -27,8 +28,7 @@
  * @return The starting index of the payload. Returns std::string::npos in case
  * of a bad request (e.g. bad request, doesn't respect HTTP)
  */
-namespace {
-std::size_t recv_headers(SOCKET_FD csock, std::string& request) {
+auto recv_headers(SOCKET_FD csock, std::string& request) -> std::size_t {
     ssize_t     bytes_received       = 0;
     ssize_t     total_bytes_received = 0;
     std::size_t headers_end          = std::string::npos;
@@ -131,16 +131,16 @@ void take_over(SOCKET_FD csock, Router& router) {
     }
 
     router.call(*req, res);
-    auto odg = res.to_string();
+    const auto odg = res.to_string();
 
-    ssize_t sent_bytes = send(csock, odg.data(), odg.size(), 0);
+    const ssize_t sent_bytes = send(csock, odg.data(), odg.size(), 0);
     if (sent_bytes == -1) {
         perror("send");
         close(csock);
         return;
     }
 
-    auto file = res.file();
+    const auto file = res.file();
     if (std::filesystem::exists(file) && !file.empty()) {
         int fd = open(file.c_str(), O_RDONLY);
         if (fd == -1) {
