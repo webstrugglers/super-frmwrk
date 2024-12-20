@@ -123,10 +123,20 @@ public:
     void not_found(const std::filesystem::path& path) noexcept;
 
 private:
+    /*
+     * Handle request. Invokes user-defined handler and prepares response to
+     * serve file.
+     */
     void handle_route(std::function<void(const Request&, Response&)>& handler,
                       const Request&                                  req,
                       Response& res) noexcept;
 
+    /**
+     * Sets the root directory for serving static files (e.g., HTML, CSS, JS).
+     *
+     * @param path The path to the directory containing static files to be
+     * served.
+     */
     void set_static_root(const std::filesystem::path& path) noexcept;
 
     /**
@@ -149,7 +159,7 @@ private:
     bool is_req_file_legit(const std::filesystem::path& p) const noexcept;
 
     /**
-     * @brief if path/index.html exists map GET / to it
+     * @brief if path/index.html exists map 'GET /' to it
      */
     void map_root_to_index() noexcept;
 
@@ -165,12 +175,26 @@ private:
      */
     void compress_response(const Request& req, Response& res) const noexcept;
 
+    /**
+     * @brief compress response data using brotli library
+     */
     void compress_data_br(Response& res) const noexcept;
 
+    /**
+     * @brief compress response file using brotli library
+     */
     void compress_file_br(Response& res) const noexcept;
 
+    /**
+     * @brief Use one-shot compression when compressing response small (<10MiB)
+     * files
+     */
     void oneshot_compress_file_br(Response& res) const noexcept;
 
+    /**
+     * @brief Use stream-based compression when compressing response large
+     * (>10MiB) files
+     */
     void streaming_compress_file_br(Response& res) const noexcept;
 };
 #endif  // !ROUTER_HPP

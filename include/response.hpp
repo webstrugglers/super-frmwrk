@@ -16,13 +16,13 @@
  */
 class Response {
 private:
-    std::string http_version; /**< The HTTP version (e.g., "HTTP/1.1") */
     HttpStatus  status_code;
+    std::string http_version;   /**< The HTTP version (e.g., "HTTP/1.1") */
     std::string status_message; /**< The status message associated with the
                                    status code. */
-    std::unordered_map<std::string, std::string> headers;
     std::string data; /**< Represents the content of the HTTP response body.*/
     std::filesystem::path file_path; /**< Represents file that should be sent.*/
+    std::unordered_map<std::string, std::string> headers;
 
 public:
     Response();
@@ -63,10 +63,14 @@ public:
     Response& json(std::string str);
 
     /**
-     * @brief [TODO:description]
+     * Sets the response to serve a file as an attachment.
      *
-     * @param path [TODO:parameter]
-     * @return [TODO:return]
+     * This function assigns the specified file path to the response,
+     * indicating that the file should be sent as part of the HTTP response.
+     * The file size will be determined during the serialization process.
+     *
+     * @param path The file path to be attached to the response.
+     * @return A reference to the current `Response` object for method chaining.
      */
     Response& attachment(const std::filesystem::path& path);
 
