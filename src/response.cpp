@@ -25,7 +25,7 @@ Response& Response::set(const std::basic_string<char>& field,
     return *this;
 }
 
-Response& Response::status(HttpStatus code) {
+Response& Response::status(const HttpStatus code) {
     this->status_code    = code;
     this->status_message = http_status_message[code];
     return *this;
@@ -92,4 +92,8 @@ std::string Response::to_string() {
 
 std::filesystem::path Response::file() const {
     return this->file_path;
+}
+
+const std::string& Response::get_data() const noexcept {
+    return this->data;
 }

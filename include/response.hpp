@@ -45,7 +45,7 @@ public:
     /**
      * Sets the HTTP status code and message for the response.
      */
-    Response& status(const HttpStatus status_code);
+    Response& status(HttpStatus status_code);
 
     /** Sets the body for the response.
      * When serializing response object, it will automatically assign the
@@ -82,9 +82,14 @@ public:
      * Checks if the response should return file, so we can determine which
      * syscall to call.
      *
-     * @return do we sendfile?
+     * @return file path to the file
      */
     std::filesystem::path file() const;
+
+    /**
+     * Returns const reference to the reponse body data.
+     */
+    const std::string& get_data() const noexcept;
 
 private:
     // TODO: lista todo stvari za ovaj objekat
