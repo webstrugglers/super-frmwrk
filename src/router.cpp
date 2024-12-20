@@ -1,12 +1,13 @@
 /**
  * @file
  * @brief Implements Router class for mapping http request to specified
- * controllers
+ * handlers
  */
 
 #include "router.hpp"
 #include <brotli/encode.h>
 #include <brotli/types.h>
+#include <array>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -107,10 +108,10 @@ Router::Router() noexcept
 void Router::route(const MethodType method_type,
                    const char*      path,
                    const std::function<void(const Request& req, Response& res)>&
-                       controller) noexcept {
-    PathAndType pat = PathAndType(path, method_type);
+                       handler) noexcept {
+    const PathAndType pat = PathAndType(path, method_type);
 
-    auto inserted = routing_table->insert(std::pair(pat, controller)).second;
+    const auto inserted = routing_table->insert(std::pair(pat, handler)).second;
 
     if (!inserted) {
         SafeLogger::log("You tried mapping Path (" + pat.path +
@@ -122,27 +123,27 @@ void Router::route(const MethodType method_type,
 
 void Router::get(const char* path,
                  const std::function<void(const Request& req, Response& res)>&
-                     controller) noexcept {
-    route(HTTP_GET, path, controller);
+                     handler) noexcept {
+    route(HTTP_GET, path, handler);
 }
 
 void Router::post(const char* path,
                   const std::function<void(const Request& req, Response& res)>&
-                      controller) noexcept {
-    route(HTTP_POST, path, controller);
+                      handler) noexcept {
+    route(HTTP_POST, path, handler);
 }
 
 void Router::put(const char* path,
                  const std::function<void(const Request& req, Response& res)>&
-                     controller) noexcept {
-    route(HTTP_PUT, path, controller);
+                     handler) noexcept {
+    route(HTTP_PUT, path, handler);
 }
 
 // TODO: handle errors
 void Router::call(const Request& req, Response& res) noexcept {
-    const auto route_handle_it = this->routing_table->find(req.path_and_type);
-    if (route_handle_it != this->routing_table->end()) {
-        handle_route(route_handle_it->second, req, res);
+    const auto route_handler_it = this->routing_table->find(req.path_and_type);
+    if (route_handler_it != routing_table->end()) {
+        handle_route(route_handler_it->second, req, res);
     } else {
         potential_static(req, res);
     }
@@ -188,24 +189,29 @@ void Router::handle_route(
     Response&                                       res) noexcept {
     handler(req, res);
 
-    auto file = res.file();
+    const auto file = res.file();
     if (file.empty()) {
         return;
     }
 
     if (std::filesystem::exists(file)) {
-        res.set("Content-Type", mimes->at(file.extension().string()));
+        const auto it = mimes->find(file.extension().string());
+        if (it != mimes->end()) {
+            res.set("Content-Type", it->second);
+        } else {
+            res.set("Content-Type", "text/plain");
+        }
         res.set("Content-Length",
                 std::to_string(std::filesystem::file_size(file)));
     } else {
-        res_not_found(req.path_and_type, res);
+        res_not_found(res);
     }
 }
 
 void Router::potential_static(const Request& req, Response& res) noexcept {
-    // If the requested function is not found, we will check if the client
+    // If the appropriate handler is not found, we will check if the client
     // is trying to access a file that was created after the server started.
-    auto pat = req.path_and_type;
+    const auto pat = req.path_and_type;
     if (!(pat.path.find("..") == std::string::npos)) {
         SafeLogger::log("Path traversal attempt");
         res.status(FORBIDDEN);
@@ -214,6 +220,7 @@ void Router::potential_static(const Request& req, Response& res) noexcept {
 
     std::filesystem::path local = this->static_root;
     local.concat(pat.path);
+
     try {
         local = std::filesystem::weakly_canonical(local);
     } catch (std::filesystem::filesystem_error& err) {
@@ -225,33 +232,33 @@ void Router::potential_static(const Request& req, Response& res) noexcept {
     if (is_req_file_legit(local)) {
         auto handler = [local, this](const Request& /*req*/, Response& ress) {
             ress.status(OK).attachment(local);
-            ress.set("Content-Type",
-                     this->mimes->at(local.extension().string()));
+            const auto it = mimes->find(local.extension().string());
+            if (it != mimes->end()) {
+                ress.set("Content-Type", it->second);
+            } else {
+                ress.set("Content-Type", "text/plain");
+            }
             ress.set("Content-Length",
                      std::to_string(std::filesystem::file_size(local)));
         };
         this->routing_table->emplace(pat, handler);
         handler(req, res);
     } else {
-        res_not_found(pat, res);
+        res_not_found(res);
     }
 }
 
-bool Router::is_req_file_legit(const std::filesystem::path& p) noexcept {
-    auto err = p.string().find(this->static_root.string());
+bool Router::is_req_file_legit(const std::filesystem::path& p) const noexcept {
+    const auto err = p.string().find(this->static_root.string());
     if (err == std::string::npos) {
         return false;
     }
     return std::filesystem::exists(p) && std::filesystem::is_regular_file(p);
 }
 
-void Router::res_not_found(const PathAndType& pat, Response& res) noexcept {
-    std::filesystem::path p = std::filesystem::path(pat.path);
-    if (p.extension().compare(".html") == 0 || !p.has_extension()) {
-        res.status(NOT_FOUND).attachment("./public/notfound.html");
-    } else {
-        res.status(NOT_FOUND);
-    }
+void Router::res_not_found(Response& res) const noexcept {
+    res.status(NOT_FOUND).attachment("./public/notfound.html");
+    res.set("Content-Type", "text/html");
 }
 
 void Router::map_root_to_index() noexcept {
@@ -282,7 +289,7 @@ void Router::set_static_root(const std::filesystem::path& p) noexcept {
     this->static_root = abs_path;
 }
 
-void Router::set_date_header(Response& res) noexcept {
+void Router::set_date_header(Response& res) const noexcept {
     const std::time_t time = std::time({});
 
     std::array<char, std::size("Sun, 06 Nov 1994 08:49:37 GMT")> buffer{};
@@ -327,8 +334,8 @@ void Router::compress_data_br(Response& res) const noexcept {
 }
 
 void Router::compress_file_br(Response& res) const noexcept {
-    auto             file      = res.file();
-    size_t           file_size = std::filesystem::file_size(file);
+    const auto       file      = res.file();
+    const size_t     file_size = std::filesystem::file_size(file);
     constexpr size_t MEMORY_LIMIT =
         static_cast<long>(10 * 1024) * 1024;  // 10 MB
 
@@ -342,18 +349,15 @@ void Router::compress_file_br(Response& res) const noexcept {
 }
 
 void Router::oneshot_compress_file_br(Response& res) const noexcept {
-    // remember content type because res.send() will overwrite it later
-    const auto                          file         = res.file();
-    std::pair<std::string, std::string> content_type = {
-        "Content-Type", mimes->at(file.extension().string())};
+    const auto file = res.file();
 
+    // load file into memory
     std::ifstream file_stream(file, std::ios::binary);
     if (!file_stream) {
         return;
     }
-
-    std::string input_data((std::istreambuf_iterator<char>(file_stream)),
-                           std::istreambuf_iterator<char>());
+    const std::string input_data((std::istreambuf_iterator<char>(file_stream)),
+                                 std::istreambuf_iterator<char>());
 
     const size_t input_size  = input_data.size();
     size_t       output_size = BrotliEncoderMaxCompressedSize(input_size);
@@ -369,12 +373,81 @@ void Router::oneshot_compress_file_br(Response& res) const noexcept {
         output.resize(output_size);
         res.send(output);
         res.set("content-encoding", "br");
-        res.set(content_type.first, content_type.second);
     }
 }
 
 void Router::streaming_compress_file_br(Response& res) const noexcept {
-    // remember content type
-    std::pair<std::string, std::string> mime = {
-        "Content-Type", mimes->at(res.file().extension().string())};
+    const auto file = res.file();
+
+    std::ifstream file_stream(file, std::ios::binary);
+    if (!file_stream) {
+        return;
+    }
+
+    auto* enc = BrotliEncoderCreateInstance(nullptr, nullptr, nullptr);
+    if (enc == nullptr) {
+        return;
+    }
+
+    BrotliEncoderSetParameter(enc, BROTLI_PARAM_QUALITY,
+                              BROTLI_DEFAULT_QUALITY);
+    BrotliEncoderSetParameter(enc, BROTLI_PARAM_LGWIN, BROTLI_DEFAULT_WINDOW);
+
+    std::array<uint8_t, 4096> input_buffer;
+    std::array<uint8_t, 4096> output_buffer;
+    std::string               compressed_data;
+    size_t                    total_read = 0;
+
+    while (file_stream) {
+        // Read data into the input buffer
+        file_stream.read(reinterpret_cast<char*>(input_buffer.data()), 4096);
+        const size_t bytes_read = file_stream.gcount();
+        total_read += bytes_read;
+
+        if (bytes_read == 0) {
+            break;
+        }
+
+        // Compress the input data
+        const uint8_t* next_in  = input_buffer.data();
+        size_t         avail_in = bytes_read;
+
+        while (avail_in > 0) {
+            uint8_t* next_out  = output_buffer.data();
+            size_t   avail_out = 4096;
+
+            BrotliEncoderOperation op = BROTLI_OPERATION_PROCESS;
+            if (file_stream.eof()) {
+                op = BROTLI_OPERATION_FINISH;
+            }
+
+            if (BrotliEncoderCompressStream(enc, op, &avail_in, &next_in,
+                                            &avail_out, &next_out,
+                                            nullptr) == 0) {
+                BrotliEncoderDestroyInstance(enc);
+                return;
+            }
+
+            // Append the compressed data to the output string
+            compressed_data.append(
+                reinterpret_cast<char*>(output_buffer.data()),
+                4096 - avail_out);
+        }
+    }
+
+    // Finalize compression
+    while (BrotliEncoderHasMoreOutput(enc) != 0) {
+        uint8_t* next_out  = output_buffer.data();
+        size_t   avail_out = 4096;
+
+        BrotliEncoderCompressStream(enc, BROTLI_OPERATION_FINISH, nullptr,
+                                    nullptr, &avail_out, &next_out, nullptr);
+
+        compressed_data.append(reinterpret_cast<char*>(output_buffer.data()),
+                               4096 - avail_out);
+    }
+
+    BrotliEncoderDestroyInstance(enc);
+    res.send(compressed_data);
+    res.set("content-encoding", "br");
 }
