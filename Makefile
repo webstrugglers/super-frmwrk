@@ -1,13 +1,14 @@
-# compiler flags
+# Compiler and linker flags
 CXX := g++
-CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Iinclude
+CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic -Iinclude -I/usr/include/brotli
+LDFLAGS := -L/usr/lib64 -lbrotlienc -lbrotlicommon
 
 # Directories
 SRCDIR := src
 BUILDDIR := build
 INCLUDEDIR := include
 DOCDIR := docs
-#
+
 # Files
 SOURCES := $(wildcard $(SRCDIR)/*.cpp)
 OBJECTS := $(patsubst $(SRCDIR)/%.cpp, $(BUILDDIR)/%.o, $(SOURCES))
@@ -19,7 +20,7 @@ TARGET := superFrmwrk
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@ $(LDFLAGS)  # Explicitly include LDFLAGS here
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp | $(BUILDDIR)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
