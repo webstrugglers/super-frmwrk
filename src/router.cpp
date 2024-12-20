@@ -223,8 +223,12 @@ void Router::potential_static(const Request& req, Response& res) noexcept {
     }
 
     if (is_req_file_legit(local)) {
-        auto handler = [local](const Request& /*req*/, Response& ress) {
+        auto handler = [local, this](const Request& /*req*/, Response& ress) {
             ress.status(OK).attachment(local);
+            ress.set("Content-Type",
+                     this->mimes->at(local.extension().string()));
+            ress.set("Content-Length",
+                     std::to_string(std::filesystem::file_size(local)));
         };
         this->routing_table->emplace(pat, handler);
         handler(req, res);
