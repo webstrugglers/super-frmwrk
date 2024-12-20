@@ -168,6 +168,9 @@ private:
     void compress_data_br(Response& res) const noexcept;
 
     void compress_file_br(Response& res) const noexcept;
-};
 
+    void oneshot_compress_file_br(Response& res) const noexcept;
+
+    void streaming_compress_file_br(Response& res) const noexcept;
+};
 #endif  // !ROUTER_HPP

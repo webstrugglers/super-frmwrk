@@ -7,8 +7,8 @@
 #include "router.hpp"
 #include <brotli/encode.h>
 #include <brotli/types.h>
-#include <cstdint>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include "logger.hpp"
@@ -140,14 +140,14 @@ void Router::put(const char* path,
 
 // TODO: handle errors
 void Router::call(const Request& req, Response& res) noexcept {
-    auto route_handle_it = this->routing_table->find(req.path_and_type);
+    const auto route_handle_it = this->routing_table->find(req.path_and_type);
     if (route_handle_it != this->routing_table->end()) {
         handle_route(route_handle_it->second, req, res);
     } else {
         potential_static(req, res);
     }
 
-    /*compress_response(req, res);*/
+    compress_response(req, res);
 
     set_date_header(res);
 }
@@ -301,7 +301,7 @@ void Router::compress_response(const Request& req,
     if (accept_encoding_header->second.find("br") != 0) {
         if (std::filesystem::exists(res.file())) {
             compress_file_br(res);
-        } else {
+        } else if (res.get_data().size() != 0) {
             compress_data_br(res);
         }
     }
@@ -327,5 +327,54 @@ void Router::compress_data_br(Response& res) const noexcept {
 }
 
 void Router::compress_file_br(Response& res) const noexcept {
-    std::filesystem::path file = res.file();
+    auto             file      = res.file();
+    size_t           file_size = std::filesystem::file_size(file);
+    constexpr size_t MEMORY_LIMIT =
+        static_cast<long>(10 * 1024) * 1024;  // 10 MB
+
+    if (file_size <= MEMORY_LIMIT) {
+        // Use one-shot compression for small files
+        oneshot_compress_file_br(res);
+    } else {
+        // Use streaming compression for large files
+        streaming_compress_file_br(res);
+    }
+}
+
+void Router::oneshot_compress_file_br(Response& res) const noexcept {
+    // remember content type because res.send() will overwrite it later
+    const auto                          file         = res.file();
+    std::pair<std::string, std::string> content_type = {
+        "Content-Type", mimes->at(file.extension().string())};
+
+    std::ifstream file_stream(file, std::ios::binary);
+    if (!file_stream) {
+        return;
+    }
+
+    std::string input_data((std::istreambuf_iterator<char>(file_stream)),
+                           std::istreambuf_iterator<char>());
+
+    const size_t input_size  = input_data.size();
+    size_t       output_size = BrotliEncoderMaxCompressedSize(input_size);
+
+    // Compress the data
+    std::string output(output_size, 0);
+    BROTLI_BOOL success = BrotliEncoderCompress(
+        BROTLI_DEFAULT_QUALITY, BROTLI_DEFAULT_WINDOW, BROTLI_DEFAULT_MODE,
+        input_size, reinterpret_cast<const uint8_t*>(input_data.data()),
+        &output_size, reinterpret_cast<uint8_t*>(output.data()));
+
+    if (success == BROTLI_TRUE) {
+        output.resize(output_size);
+        res.send(output);
+        res.set("content-encoding", "br");
+        res.set(content_type.first, content_type.second);
+    }
+}
+
+void Router::streaming_compress_file_br(Response& res) const noexcept {
+    // remember content type
+    std::pair<std::string, std::string> mime = {
+        "Content-Type", mimes->at(res.file().extension().string())};
 }
