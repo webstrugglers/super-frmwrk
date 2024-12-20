@@ -32,8 +32,11 @@ Response& Response::status(const HttpStatus code) {
 }
 
 Response& Response::send(std::string str) {
-    this->data                = std::move(str);
-    headers["Content-Type"]   = "text/plain";
+    this->data = std::move(str);
+
+    // don't update Content-Type header if it already exists
+    // this is usefull if we want to alter data
+    headers.emplace("Content-Type", "text/plain");
     headers["Content-Length"] = std::to_string(this->data.size());
 
     return *this;

@@ -50,6 +50,9 @@ public:
     /** Sets the body for the response.
      * When serializing response object, it will automatically assign the
      * Content-Length header.
+     * It sets Content-Type header to text/plain if DATA IS NOT present in
+     * response body. If DATA IS present in response body this function will
+     * just update the data.
      */
     Response& send(std::string str);
 
