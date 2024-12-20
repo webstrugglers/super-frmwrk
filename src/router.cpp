@@ -311,7 +311,7 @@ void Router::compress_response(const Request& req,
 
     if (accept_encoding_header == req.headers.end()) return;
 
-    if (accept_encoding_header->second.find("br") != 0) {
+    if (accept_encoding_header->second.find("br") != std::string::npos) {
         if (std::filesystem::exists(res.file())) {
             compress_file_br(res);
         } else if (res.get_data().size() != 0) {
