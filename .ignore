@@ -1,1 +1,21 @@
 docs/
+.git/
+.vscode/
+.cache/
+
+# Ignore build directory
+build/
+
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore compiled object files
+*.o
+*.obj
+
+# Ignore executables
+*.exe
+*.out
+
+superFrmwrk
