@@ -20,6 +20,6 @@ constexpr ssize_t MAX_BODY_SIZE    = 16384;
  * @param csock The socket file descriptor for the client connection.
  * @param router Reference to the router
  */
-void take_over(SOCKET_FD csock, Router& router);
+void take_over(SOCKET_FD csock, Router& router) noexcept;
 
 #endif  // !DISPATCHER_HPP
