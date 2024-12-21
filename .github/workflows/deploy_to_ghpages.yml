@@ -5,6 +5,8 @@ on:
   workflow_run:
     workflows: ["Update Doxygen Docs"]
     types: [completed]
+    branches:
+      - "main"
 
 permissions:
   contents: write
