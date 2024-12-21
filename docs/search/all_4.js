@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['log_5',['log',['../classSafeLogger.html#a6bb77e05edcd1c468d2008270cbccdd2',1,'SafeLogger::log(const char *output)'],['../classSafeLogger.html#abee63527ba50561e4d4aefb9e3a399c6',1,'SafeLogger::log(const std::string &amp;output)'],['../classSafeLogger.html#ab9804d6360b4181a1cdbd73b3412611c',1,'SafeLogger::log(const int _errnum)']]],
-  ['logger_2ecpp_6',['logger.cpp',['../logger_8cpp.html',1,'']]]
+  ['features_0',['features',['../md_README.html#autotoc_md2',1,'Features'],['../md_README.html#autotoc_md5',1,'Planned Features']]],
+  ['file_1',['file',['../classResponse.html#a52e0a686d330afda5bac2bf4208991c0',1,'Response']]],
+  ['framework_20architecture_2',['Framework architecture',['../md_README.html#autotoc_md4',1,'']]],
+  ['framework_20wip_3',['Super-framework (WIP)',['../md_README.html',1,'']]]
 ];

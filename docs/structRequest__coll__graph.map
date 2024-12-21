@@ -1,0 +1,5 @@
+<map id="Request" name="Request">
+<area shape="rect" id="Node000001" title="A class to represent an HTTP request." alt="" coords="21,93,95,119"/>
+<area shape="rect" id="Node000002" href="$structPathAndType.html" title="Encapsulates an http method and uri path." alt="" coords="5,5,111,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="61,45,61,93,55,93,55,45"/>
+</map>
