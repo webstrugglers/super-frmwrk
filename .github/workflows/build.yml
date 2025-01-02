@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up dependencies
-        run: sudo apt install -y g++ make
+        run: sudo apt install -y g++ make libbrotli1 libbrotli-dev
 
       - name: Build project
         run: make

@@ -16,13 +16,13 @@
  */
 class Response {
 private:
-    std::string http_version; /**< The HTTP version (e.g., "HTTP/1.1") */
     HttpStatus  status_code;
+    std::string http_version;   /**< The HTTP version (e.g., "HTTP/1.1") */
     std::string status_message; /**< The status message associated with the
                                    status code. */
-    std::unordered_map<std::string, std::string> headers;
     std::string data; /**< Represents the content of the HTTP response body.*/
     std::filesystem::path file_path; /**< Represents file that should be sent.*/
+    std::unordered_map<std::string, std::string> headers;
 
 public:
     Response();
@@ -45,11 +45,14 @@ public:
     /**
      * Sets the HTTP status code and message for the response.
      */
-    Response& status(const HttpStatus status_code);
+    Response& status(HttpStatus status_code);
 
     /** Sets the body for the response.
      * When serializing response object, it will automatically assign the
      * Content-Length header.
+     * It sets Content-Type header to text/plain if DATA IS NOT present in
+     * response body. If DATA IS present in response body this function will
+     * just update the data.
      */
     Response& send(std::string str);
 
@@ -60,10 +63,14 @@ public:
     Response& json(std::string str);
 
     /**
-     * @brief [TODO:description]
+     * Sets the response to serve a file as an attachment.
      *
-     * @param path [TODO:parameter]
-     * @return [TODO:return]
+     * This function assigns the specified file path to the response,
+     * indicating that the file should be sent as part of the HTTP response.
+     * The file size will be determined during the serialization process.
+     *
+     * @param path The file path to be attached to the response.
+     * @return A reference to the current `Response` object for method chaining.
      */
     Response& attachment(const std::filesystem::path& path);
 
@@ -82,9 +89,14 @@ public:
      * Checks if the response should return file, so we can determine which
      * syscall to call.
      *
-     * @return do we sendfile?
+     * @return file path to the file
      */
     std::filesystem::path file() const;
+
+    /**
+     * Returns const reference to the reponse body data.
+     */
+    const std::string& get_data() const noexcept;
 
 private:
     // TODO: lista todo stvari za ovaj objekat

@@ -6,11 +6,10 @@
 #include "response.hpp"
 #include <string>
 #include "http-status-codes.hpp"
-#include "logger.hpp"
 
 Response::Response()
-    : http_version("HTTP/1.0"),
-      status_code(NOT_FOUND),
+    : status_code(NOT_FOUND),
+      http_version("HTTP/1.0"),
       status_message(http_status_message[NOT_FOUND]) {}
 
 Response& Response::set(const char* field, const char* value) {
@@ -25,15 +24,18 @@ Response& Response::set(const std::basic_string<char>& field,
     return *this;
 }
 
-Response& Response::status(HttpStatus code) {
+Response& Response::status(const HttpStatus code) {
     this->status_code    = code;
     this->status_message = http_status_message[code];
     return *this;
 }
 
 Response& Response::send(std::string str) {
-    this->data                = std::move(str);
-    headers["Content-Type"]   = "text/plain";
+    this->data = std::move(str);
+
+    // don't update Content-Type header if it already exists
+    // this is usefull if we want to alter data
+    headers.emplace("Content-Type", "text/plain");
     headers["Content-Length"] = std::to_string(this->data.size());
 
     return *this;
@@ -48,15 +50,6 @@ Response& Response::json(std::string str) {
 }
 
 Response& Response::attachment(const std::filesystem::path& path) {
-    if (path.empty()) {
-        SafeLogger::log("File path is empty");
-        return *this;
-    }
-    if (!path.has_extension()) {
-        SafeLogger::log("File doesn't have extenstion.");
-        return *this;
-    }
-
     // file size will be calculated when serializing
     this->file_path = path;
     return *this;
@@ -92,4 +85,8 @@ std::string Response::to_string() {
 
 std::filesystem::path Response::file() const {
     return this->file_path;
+}
+
+const std::string& Response::get_data() const noexcept {
+    return this->data;
 }

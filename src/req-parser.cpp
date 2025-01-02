@@ -4,10 +4,33 @@
  */
 
 #include "req-parser.hpp"
+#include <algorithm>
 #include <memory>
 #include <string>
 #include "constants.hpp"
 #include "request.hpp"
+
+namespace {
+// trim from start (in place)
+inline void ltrim(std::string& s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+                return !std::isspace(ch);
+            }));
+}
+
+// trim from end (in place)
+inline void rtrim(std::string& s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(),
+                         [](unsigned char ch) { return !std::isspace(ch); })
+                .base(),
+            s.end());
+}
+
+inline void trim(std::string& s) {
+    rtrim(s);
+    ltrim(s);
+}
+}  // namespace
 
 ReqParser::ReqParser() : req(std::make_unique<Request>()) {}
 
@@ -73,22 +96,24 @@ MethodType ReqParser::parseMethod(std::string& request) {
 
 /// Parses headers from HTTP Request into unordered_map
 void ReqParser::parseHeaders(std::string& request, Headers& headers) const {
-    size_t      pos             = 0;
-    size_t      end_pos         = 0;
-    size_t      separator_index = 0;
+    size_t      pos       = 0;
+    size_t      end_pos   = 0;
+    size_t      separator = 0;
     std::string headername;
     std::string headervalue = "alo";
-    while (((end_pos = request.find('\n', pos)) != std::string::npos)) {
-        separator_index = request.find(':', pos);
-        if (separator_index == std::string::npos || separator_index > end_pos) {
+    while ((end_pos = request.find('\n', pos)) != std::string::npos) {
+        separator = request.find(':', pos);
+        if (separator == std::string::npos || separator > end_pos) {
             break;
         }
-        headername = request.substr(pos, separator_index - pos);
-        // TODO: handle case without whitespaces
-        headervalue =
-            request.substr(separator_index + 2, end_pos - separator_index - 3);
-        headers[headername] = headervalue;
-        pos                 = end_pos + 1;
+
+        headername = request.substr(pos, separator - pos);
+        trim(headername);
+        headervalue = request.substr(separator + 1, end_pos - separator - 1);
+        trim(headervalue);
+
+        headers.insert({headername, headervalue});
+        pos = end_pos + 1;
     }
     request.erase(0, end_pos + 1);
 }

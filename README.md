@@ -30,11 +30,11 @@ Super is a lightweight and expressive HTTP framework for C++ inspired by Express
 #define port 5000
 
 void hello_world(const Request& req, Response& res) {
-    res.send("Hello, world from controller function!!").status(OK);
+    res.send("Hello, world from handler function!!").status(OK);
 }
 
 void init_router(Router& router) {
-    router.route(HTTP_GET, "/controller", hello_world);
+    router.route(HTTP_GET, "/handler", hello_world);
     router.serve_static("./public/");
 }
 
@@ -56,16 +56,16 @@ The architecture is designed to be modular and efficient. Below is an overview o
 1. **Server**: Listens for incoming requests and delegates them to the dispatcher thread.
 2. **Dispatcher Thread**: Is responsible for reading data from the socket, processing the request, and sending a response.
 3. **Request Parser**: Parses the raw HTTP request and generates a request object.
-4. **Router**: Routes the request to the appropriate controller based on the URL.
-5. **Controller**: Handles the logic for the request and prepares the response object (This is you).
+4. **Router**: Routes the request to the appropriate handler based on the URL.
+5. **handler**: Handles the logic for the request and prepares the response object (This is you).
 6. **Client**: Receives the serialized response object and processes the response.
 
 ![Framework design](FRMWRKarch.png)
 
-The controller functions must adhere to the following signature:
+The handler functions must adhere to the following signature:
 
 ```cpp
-void controller(const Request& req, Response& res) {
+void handler(const Request& req, Response& res) {
     // body
 }
 ```
