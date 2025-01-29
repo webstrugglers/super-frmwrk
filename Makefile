@@ -1,6 +1,6 @@
 # Compiler and linker flags
 CXX := g++
-CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Wshadow -Wpessimizing-move -Wnon-virtual-dtor -Wnrvo -pedantic -Iinclude -I/usr/include/brotli
+CXXFLAGS := -pthread -std=c++17 -Wall -Wextra -Wshadow -Wpessimizing-move -Wnon-virtual-dtor -pedantic -Iinclude -I/usr/include/brotli
 LDFLAGS := -L/usr/lib64 -lbrotlienc -lbrotlicommon
 
 # Directories
