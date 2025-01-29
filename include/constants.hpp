@@ -1,11 +1,13 @@
 #ifndef CONSTANTS_HPP
 #define CONSTANTS_HPP
 
+#include <cstdint>
 #include <ostream>
+#include <unordered_map>
 
 #define SOCKET_FD int
 
-enum MethodType {
+enum MethodType : std::uint8_t {
     HTTP_GET,
     HTTP_HEAD,
     HTTP_POST,
@@ -149,5 +151,9 @@ inline std::string methodTypeToString(MethodType mt) {
 inline std::string operator+(const std::string& str, const MethodType mt) {
     return str + methodTypeToString(mt);
 }
+
+namespace super {
+using Headers = std::unordered_map<std::string, std::string>;
+}  // namespace super
 
 #endif  // !CONSTANTS_HPP

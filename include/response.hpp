@@ -4,6 +4,7 @@
 #include <filesystem>
 #include <string>
 #include <unordered_map>
+#include "constants.hpp"
 #include "http-status-codes.hpp"
 
 /**
@@ -33,6 +34,14 @@ public:
      * @param value
      */
     Response& set(const char* field, const char* value);
+
+    /** Sets the response’s HTTP header field to value.
+     * Accepts unordered_map of headers.
+     * res.set({{'header-name', 'value'}, {'header-name', 'value'}})
+     * @param field
+     * @param value
+     */
+    Response& set(const super::Headers& _headers);
 
     /** Sets the response’s HTTP header field to value.
      * res.set('Content-Type', 'text/plain')
@@ -81,7 +90,7 @@ public:
      *
      * @return String (http) representation of Response object
      */
-    std::string to_string();
+    std::string to_string() const;
 
     /**
      * @brief Used internally.

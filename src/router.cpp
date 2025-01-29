@@ -140,7 +140,6 @@ void Router::put(const char* path,
     route(HTTP_PUT, path, handler);
 }
 
-// TODO: handle errors
 void Router::call(const Request& req, Response& res) noexcept {
     const auto route_handler_it = this->routing_table->find(req.path_and_type);
     if (route_handler_it != routing_table->end()) {

@@ -2,6 +2,7 @@ Checks: >
   -*,
   bugprone-*,
   google-*,
+  -google-explicit-constructor,
   misc-*,
   modernize-*,
   performance-*,
@@ -16,6 +17,7 @@ Checks: >
   -readability-magic-numbers,
   -readability-identifier-length,
   -modernize-use-trailing-return-type,
+
   misc-const-correctness
 
 WarningsAsErrors: ""

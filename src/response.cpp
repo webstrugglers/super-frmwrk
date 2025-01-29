@@ -24,6 +24,14 @@ Response& Response::set(const std::basic_string<char>& field,
     return *this;
 }
 
+Response& Response::set(const super::Headers& _headers) {
+    for (const auto& pair : _headers) {
+        this->headers.emplace(pair);
+    }
+
+    return *this;
+}
+
 Response& Response::status(const HttpStatus code) {
     this->status_code    = code;
     this->status_message = http_status_message[code];
@@ -55,13 +63,13 @@ Response& Response::attachment(const std::filesystem::path& path) {
     return *this;
 }
 
-std::string Response::to_string() {
+std::string Response::to_string() const {
     // create response str
     std::string res;
     res.reserve(this->http_version.length() +
                 std::to_string(http_status_code[this->status_code]).length() +
                 sizeof(http_status_message[this->status_code]) + 4 +
-                this->headers.size() * 64);  // 4 for the spaces and CRLF
+                (this->headers.size() * 64));  // 4 for the spaces and CRLF
 
     res.append(this->http_version)
         .append(" ")

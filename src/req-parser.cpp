@@ -95,7 +95,8 @@ MethodType ReqParser::parseMethod(std::string& request) {
 }
 
 /// Parses headers from HTTP Request into unordered_map
-void ReqParser::parseHeaders(std::string& request, Headers& headers) const {
+void ReqParser::parseHeaders(std::string&    request,
+                             super::Headers& headers) const {
     size_t      pos       = 0;
     size_t      end_pos   = 0;
     size_t      separator = 0;
