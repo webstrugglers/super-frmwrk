@@ -8,6 +8,7 @@
  * @brief This file implements HTTP status enums, codes and corresponding
  * messages
  */
+#include <cstdint>
 #define HTTP_STATUS_CODES                                                      \
     X(CONTINUE, "CONTINUE", 100)                                               \
     X(SWITCHING_PROTOCOLS, "SWITCHING PROTOCOLS", 101)                         \
@@ -74,7 +75,7 @@
 #define X(HttpStatusMessage, HttpStatusString, HttpStatusCode) \
     HttpStatusMessage,
 /// Enum for status codes
-enum HttpStatus : int { HTTP_STATUS_CODES };
+enum HttpStatus : std::uint8_t { HTTP_STATUS_CODES };
 #undef X
 
 #define X(HttpStatusMessage, HttpStatusString, HttpStatusCode) HttpStatusString,

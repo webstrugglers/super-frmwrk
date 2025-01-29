@@ -4,5 +4,7 @@
 -Wshadow
 -Wnon-virtual-dtor
 -pedantic
+-Wnrvo
+-Wpessimizing-move
 -lbrotli
 -Iinclude

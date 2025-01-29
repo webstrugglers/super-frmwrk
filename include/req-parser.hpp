@@ -2,8 +2,9 @@
 #define REQ_PARSER_HPP
 #include <memory>
 #include <string>
+#include "constants.hpp"
 #include "request.hpp"
-using Headers     = std::unordered_map<std::string, std::string>;
+
 using QueryParams = std::unordered_map<std::string, std::string>;
 /**
  * @class ReqParser
@@ -31,7 +32,7 @@ private:
 
     MethodType parseMethod(std::string& request);
 
-    void parseHeaders(std::string& request, Headers& headers) const;
+    void parseHeaders(std::string& request, super::Headers& headers) const;
 
     bool lineNotEmpty(std::string& line) const;
 
