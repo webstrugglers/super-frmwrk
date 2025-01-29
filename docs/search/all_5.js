@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['operator_3d_3d_7',['operator==',['../path-and-type_8cpp.html#a1dad103c775d5d739b8051820d983087',1,'path-and-type.cpp']]]
+  ['get_0',['get',['../classRouter.html#a7cdf2288572433ae17c343433b85b83a',1,'Router']]],
+  ['get_5fdata_1',['get_data',['../classResponse.html#a9f2f657fad76f1f24318302407a546df',1,'Response']]],
+  ['getting_20started_2',['Getting started',['../md_README.html#autotoc_md6',1,'']]]
 ];

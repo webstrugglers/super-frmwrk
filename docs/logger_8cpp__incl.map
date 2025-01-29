@@ -1,9 +1,15 @@
 <map id="logger.cpp" name="logger.cpp">
-<area shape="rect" id="node1" title="Implements SafeLogger class which is used for thread safe logging." alt="" coords="183,5,272,32"/>
-<area shape="rect" id="node2" href="$logger_8hpp_source.html" title=" " alt="" coords="79,80,170,107"/>
-<area shape="rect" id="node6" title=" " alt="" coords="194,80,261,107"/>
-<area shape="rect" id="node7" title=" " alt="" coords="285,80,365,107"/>
-<area shape="rect" id="node3" title=" " alt="" coords="5,155,68,181"/>
-<area shape="rect" id="node4" title=" " alt="" coords="93,155,157,181"/>
-<area shape="rect" id="node5" title=" " alt="" coords="181,155,239,181"/>
+<area shape="rect" id="Node000001" title="Implements SafeLogger class which is used for thread safe logging." alt="" coords="183,5,272,31"/>
+<area shape="rect" id="Node000002" href="$logger_8hpp_source.html" title=" " alt="" coords="79,79,170,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,33,154,73,151,68,209,28"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="194,79,261,104"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="230,31,230,65,225,65,225,31"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="285,79,365,104"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="245,29,299,68,296,72,241,33"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,152,68,177"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,106,63,145,60,141,109,102"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="93,152,157,177"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="127,104,127,138,122,138,122,104"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="181,152,239,177"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="140,102,187,141,184,145,137,106"/>
 </map>

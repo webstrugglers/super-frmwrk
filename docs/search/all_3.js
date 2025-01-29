@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['hash_3c_20pathandtype_20_3e_4',['hash&lt; PathAndType &gt;',['../structstd_1_1hash_3_01PathAndType_01_4.html',1,'std']]]
+  ['example_20usage_0',['Example Usage',['../md_README.html#autotoc_md3',1,'']]],
+  ['expected_1',['Expected',['../classsuper_1_1Expected.html',1,'super']]]
 ];

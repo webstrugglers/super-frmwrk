@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['path_2dand_2dtype_2ecpp_8',['path-and-type.cpp',['../path-and-type_8cpp.html',1,'']]],
-  ['pathandtype_9',['PathAndType',['../structPathAndType.html',1,'']]],
-  ['post_10',['post',['../classRouter.html#a15aa38ce85d4d181052b3238009bd72c',1,'Router']]]
+  ['hash_3c_20pathandtype_20_3e_0',['hash&lt; PathAndType &gt;',['../structstd_1_1hash_3_01PathAndType_01_4.html',1,'std']]],
+  ['httperror_1',['HttpError',['../classsuper_1_1HttpError.html',1,'super']]]
 ];

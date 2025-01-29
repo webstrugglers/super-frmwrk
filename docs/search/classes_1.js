@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['pathandtype_29',['PathAndType',['../structPathAndType.html',1,'']]]
+  ['hash_3c_20pathandtype_20_3e_0',['hash&lt; PathAndType &gt;',['../structstd_1_1hash_3_01PathAndType_01_4.html',1,'std']]],
+  ['httperror_1',['HttpError',['../classsuper_1_1HttpError.html',1,'super']]]
 ];
