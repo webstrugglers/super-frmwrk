@@ -1,9 +1,6 @@
 #ifndef SERVER_HPP
 #define SERVER_HPP
 
-#include <atomic>
-#include <csignal>
-
 #include "constants.hpp"
 #include "router.hpp"
 
@@ -15,14 +12,19 @@
  */
 class Server {
 private:
-    SOCKET_FD         ss;
-    std::atomic<bool> stop_flag;
-    static Server*    me;
+    SOCKET_FD ss;
 
 public:
-    Server();
+    Server() : ss(-1) {};
 
     ~Server();
+
+    // No two servers should be running at the same time
+
+    Server(const Server&)            = delete;
+    Server& operator=(const Server&) = delete;
+    Server(Server&&)                 = delete;
+    Server& operator=(Server&&)      = delete;
 
     /**
      * @brief Starts the server on the given port.
@@ -35,19 +37,10 @@ public:
      * connections.
      *
      * @param router Reference to the router
-     * 
-     * 
+     *
+     *
      */
     void start(std::uint16_t port, Router& router);
-
-    void handle_signal();
-
-private:
-    static void signal_handler(int signum) {
-        if (signum == SIGINT) {
-            me->handle_signal();
-        }
-    }
 };
 
 #endif  // !SERVER_HPP

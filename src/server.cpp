@@ -6,19 +6,13 @@
 #include "server.hpp"
 #include <asm-generic/socket.h>
 #include <netinet/in.h>
-#include <sys/socket.h>
 #include <netinet/tcp.h>
+#include <sys/socket.h>
 #include <unistd.h>
 #include <functional>
 #include <thread>
 #include "dispatcher.hpp"
 #include "logger.hpp"
-
-Server* Server::me = nullptr;
-
-Server::Server() : ss(-1), stop_flag(false) {
-    Server::me = this;
-}
 
 Server::~Server() {
     if (this->ss != -1) {
@@ -30,7 +24,7 @@ void Server::start(std::uint16_t port, Router& router) {
     uint16_t  network_port  = htons(port);
     SOCKET_FD server_socket = -1;
 
-    struct sockaddr_in address {};
+    struct sockaddr_in address{};
     address.sin_family      = AF_INET;
     address.sin_addr.s_addr = INADDR_ANY;
     address.sin_port        = network_port;
@@ -51,17 +45,11 @@ void Server::start(std::uint16_t port, Router& router) {
         return;
     }
 
-    int optval_tcp_nodelay= 1;
-    if(setsockopt(server_socket, IPPROTO_TCP, TCP_NODELAY, (char *) &optval_tcp_nodelay, 
-                    sizeof(int)) < 0) {
+    int optval_tcp_nodelay = 1;
+    if (setsockopt(server_socket, IPPROTO_TCP, TCP_NODELAY,
+                   (char*)&optval_tcp_nodelay, sizeof(int)) < 0) {
         SafeLogger::log(errno);
     }
-
-    struct sigaction a {};
-    a.sa_handler = Server::signal_handler;
-    a.sa_flags   = 0;
-    sigemptyset(&a.sa_mask);
-    sigaction(SIGINT, &a, NULL);
 
     if (bind(server_socket, (struct sockaddr*)&address, sizeof(address)) ==
         -1) {
@@ -79,12 +67,12 @@ void Server::start(std::uint16_t port, Router& router) {
 
     SafeLogger::log("Server listening on port " + std::to_string(port));
 
-    struct sockaddr_in client_addr {};
+    struct sockaddr_in client_addr{};
     socklen_t          client_len = sizeof(client_addr);
 
     // server loop
     // let dispatcher take over request
-    while (!this->stop_flag.load()) {
+    while (true) {
         // accept connection
         SOCKET_FD client_sock =
             accept(server_socket, (struct sockaddr*)&client_addr, &client_len);
@@ -93,7 +81,7 @@ void Server::start(std::uint16_t port, Router& router) {
             continue;
         }
 
-        struct timeval timeout {};
+        struct timeval timeout{};
         timeout.tv_sec  = 3;
         timeout.tv_usec = 0;
 
@@ -110,8 +98,4 @@ void Server::start(std::uint16_t port, Router& router) {
     }
     close(this->ss);
     this->ss = -1;
-}
-
-void Server::handle_signal() {
-    this->stop_flag.store(true);
 }
