@@ -12,12 +12,14 @@
  */
 class Server {
 private:
-    SOCKET_FD ss;
+    SOCKET_FD ss;  // server socket file descriptor
 
 public:
     Server() : ss(-1) {};
 
     ~Server();
+
+    void configure_server_socket() const noexcept;
 
     // No two servers should be running at the same time
 

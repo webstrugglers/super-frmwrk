@@ -20,48 +20,49 @@ Server::~Server() {
     }
 }
 
-void Server::start(std::uint16_t port, Router& router) {
-    uint16_t  network_port  = htons(port);
-    SOCKET_FD server_socket = -1;
-
-    struct sockaddr_in address{};
-    address.sin_family      = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port        = network_port;
-
-    // create socket fd
-    server_socket = socket(AF_INET, SOCK_STREAM, 0);
-    if (server_socket < 0) {
-        SafeLogger::log(errno);
-        return;
-    }
-    this->ss = server_socket;
-
+void Server::configure_server_socket() const noexcept {
     int optval = 1;
-    if (setsockopt(server_socket, SOL_SOCKET, SO_REUSEADDR, &optval,
+    if (setsockopt(this->ss, SOL_SOCKET, SO_REUSEADDR, &optval,
                    sizeof(optval)) < 0) {
         SafeLogger::log(errno);
-        close(server_socket);
-        return;
     }
 
     int optval_tcp_nodelay = 1;
-    if (setsockopt(server_socket, IPPROTO_TCP, TCP_NODELAY,
-                   (char*)&optval_tcp_nodelay, sizeof(int)) < 0) {
+    if (setsockopt(this->ss, IPPROTO_TCP, TCP_NODELAY,
+                   reinterpret_cast<char*>(&optval_tcp_nodelay),
+                   sizeof(int)) < 0) {
         SafeLogger::log(errno);
     }
+}
 
-    if (bind(server_socket, (struct sockaddr*)&address, sizeof(address)) ==
-        -1) {
+void Server::start(std::uint16_t port, Router& router) {
+    struct sockaddr_in address{};
+    address.sin_family      = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY;
+    address.sin_port        = htons(port);
+
+    // create socket fd
+    this->ss = socket(AF_INET, SOCK_STREAM, 0);
+    if (this->ss < 0) {
         SafeLogger::log(errno);
-        close(server_socket);
+        return;
+    }
+
+    // configure socket
+    configure_server_socket();
+
+    // bind socket to port
+    if (bind(this->ss, reinterpret_cast<struct sockaddr*>(&address),
+             sizeof(address)) == -1) {
+        SafeLogger::log(errno);
+        close(this->ss);
         return;
     }
 
     // start listening
-    if (listen(server_socket, 10) == -1) {
+    if (listen(this->ss, 10) == -1) {
         SafeLogger::log(errno);
-        close(server_socket);
+        close(this->ss);
         return;
     }
 
@@ -71,11 +72,11 @@ void Server::start(std::uint16_t port, Router& router) {
     socklen_t          client_len = sizeof(client_addr);
 
     // server loop
-    // let dispatcher take over request
     while (true) {
         // accept connection
         SOCKET_FD client_sock =
-            accept(server_socket, (struct sockaddr*)&client_addr, &client_len);
+            accept(this->ss, reinterpret_cast<struct sockaddr*>(&client_addr),
+                   &client_len);
         if (client_sock == -1) {
             SafeLogger::log(errno);
             continue;
@@ -91,11 +92,14 @@ void Server::start(std::uint16_t port, Router& router) {
             continue;
         }
 
+        // let dispatcher take over request
         std::thread dispatcher =
             std::thread(take_over, client_sock, std::ref(router));
 
         dispatcher.detach();
     }
-    close(this->ss);
+    if (this->ss != -1) {
+        close(this->ss);
+    }
     this->ss = -1;
 }
